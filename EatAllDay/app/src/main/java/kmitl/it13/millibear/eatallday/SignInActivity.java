@@ -1,41 +1,30 @@
 package kmitl.it13.millibear.eatallday;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
-public class SignInActivity extends AppCompatActivity
-implements View.OnClickListener{
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
-    private TextView mSignUp;
+public class SignInActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
-        bindWidget();
-        setWidgetEventListener();
+        ButterKnife.bind(this);
     }
 
-    private void bindWidget(){
-
-        mSignUp = (TextView) findViewById(R.id.tv_sign_up);
+    @OnTextChanged(R.id.et_email)
+    public void onTextChanged(CharSequence text) {
+        String featureName = text.toString();
+        Toast.makeText(this, "name : " + featureName, Toast.LENGTH_SHORT).show();
     }
 
-    private void setWidgetEventListener(){
-
-        mSignUp.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        if(view.getId() == R.id.tv_sign_up){
-            Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-            startActivity(intent);
-        }
+    @OnClick(R.id.btn_sign_in)
+    public void signIn(){
+        Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
     }
 }
