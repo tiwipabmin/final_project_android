@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
-                android:inputType="text" />
+                android:inputType="textPassword" />
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
@@ -183,7 +183,7 @@
     </LinearLayout>
 
     <info.hoang8f.widget.FButton
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/btn_verify"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
@@ -199,6 +199,7 @@
         fbutton:shadowHeight="1dp" />
 
     <TextView
+        android:id="@+id/tv_sign_in"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
