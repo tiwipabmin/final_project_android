@@ -1,12 +1,7 @@
 package kmitl.it13.millibear.eatallday;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import kmitl.it13.millibear.eatallday.view.AlertDialogFragment;
+import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
