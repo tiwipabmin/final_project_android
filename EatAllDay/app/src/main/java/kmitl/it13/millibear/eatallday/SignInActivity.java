@@ -1,11 +1,13 @@
 package kmitl.it13.millibear.eatallday;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,18 +15,26 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import kmitl.it13.millibear.eatallday.api.ConnectServer;
 import kmitl.it13.millibear.eatallday.api.User;
+import kmitl.it13.millibear.eatallday.api.UserApi;
+import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
 import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
 
 public class SignInActivity extends AppCompatActivity {
 
+    @BindView(R.id.et_email)
+    EditText et_email;
+
+    @BindView(R.id.et_password)
+    EditText et_password;
+
     String mEmail, mPassword;
     User mUser;
-    DatabaseReference mDatabase;
+    DatabaseReference mChildUser;
     ProgressFragment progress;
 
     @Override
@@ -38,7 +48,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void initialInstance() {
 
-        mDatabase = ConnectServer.getConnectServer().getDatabase();
+        mChildUser = UserApi.getUserApi().getChildUser();
 
         progress = new ProgressFragment();
     }
@@ -62,29 +72,31 @@ public class SignInActivity extends AppCompatActivity {
 
         if (!TextUtils.isEmpty(mEmail) && !TextUtils.isEmpty(mPassword)) {
             progress.show(getSupportFragmentManager(), "progress");
-            mDatabase.child("user")
-                    .orderByChild("email")
+            mChildUser.orderByChild("email")
                     .equalTo(mEmail)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 mUser = ds.getValue(User.class);
                                 mUser.setUserId(String.valueOf(ds.getKey()));
                             }
 
-                            if(mUser == null){
-                                Toast.makeText(SignInActivity.this
-                                        , "Error: Could not fetch user."
-                                        , Toast.LENGTH_SHORT)
-                                        .show();
+                            if (mUser == null) {
+
+                                DialogFragment alertDialog = new AlertDialogFragment()
+                                        .newInstance("email or password is invalid.");
+                                et_email.setText("");
+                                et_password.setText("");
+                                alertDialog.show(getSupportFragmentManager(), "alertDialog");
+
                             } else {
                                 progress.dismiss();
                                 authentication(mUser.getPassword());
                             }
 
-                            if(progress.isVisible()) {
+                            if (progress.isVisible()) {
                                 progress.dismiss();
                             }
                         }
@@ -97,12 +109,17 @@ public class SignInActivity extends AppCompatActivity {
                                     .show();
                         }
                     });
+        } else {
+
+            DialogFragment alertDialog = new AlertDialogFragment()
+                    .newInstance("Please enter your email or password");
+            alertDialog.show(getSupportFragmentManager(), "alertDialog");
         }
 
     }
 
-    private void authentication(String password){
-        if(mPassword.equals(password)){
+    private void authentication(String password) {
+        if (mPassword.equals(password)) {
             Intent intent = new Intent(SignInActivity.this, LobbyRoomActivity.class);
             intent.putExtra("user", mUser);
             startActivity(intent);

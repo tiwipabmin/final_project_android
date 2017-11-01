@@ -35,7 +35,7 @@ public class AlertDialogFragment extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((SignUpActivity) getActivity()).finish();
+                        dismiss();
                     }
                 });
 

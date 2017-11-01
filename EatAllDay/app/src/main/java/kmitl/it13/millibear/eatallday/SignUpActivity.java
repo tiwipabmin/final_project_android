@@ -6,18 +6,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
+import kmitl.it13.millibear.eatallday.api.UserApi;
+import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
     String mEmail, mFacebook, mName, mPassword;
+    DatabaseReference mChildUser;
+    UserApi userApi;
+    DialogFragment progress;
 
     @BindView(R.id.et_email)
     EditText et_email;
@@ -36,6 +49,17 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+
+        initialInstance();
+    }
+
+    void initialInstance(){
+
+        mChildUser = UserApi.getUserApi().getChildUser();
+
+        userApi = UserApi.getUserApi();
+
+        progress = new ProgressFragment();
     }
 
     @OnClick(R.id.btn_verify)
@@ -67,8 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         if(allValid){
-            DialogFragment alertDialog = new AlertDialogFragment().newInstance("sign up complete!");
-            alertDialog.show(getSupportFragmentManager(), "alertDialog");
+            progress.show(getSupportFragmentManager(), "progress");
+            createAccount();
         }
     }
 
@@ -141,5 +165,28 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    void createAccount() {
+
+        mChildUser.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long currentId = 0;
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    currentId = Long.valueOf(ds.getKey()) + 1;
+                }
+
+                userApi.newUser(String.valueOf(currentId), mName, mEmail, mPassword, mFacebook);
+                progress.dismiss();
+                SignUpActivity.this.finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
