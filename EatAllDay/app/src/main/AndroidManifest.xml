@@ -19,7 +19,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SplashScreenActivity" />
-        <activity android:name=".LobbyRoomActivity"></activity>
+        <activity android:name=".LobbyRoomActivity" />
+        <activity android:name=".TabBarActivity"></activity>
     </application>
 
 </manifest>

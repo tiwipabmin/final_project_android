@@ -26,6 +26,8 @@ import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
 
 public class SignInActivity extends AppCompatActivity {
 
+    public static final int SIGN_IN_ACTIVITY_NUMBER = 1901;
+
     @BindView(R.id.et_email)
     EditText et_email;
 
@@ -120,7 +122,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void authentication(String password) {
         if (mPassword.equals(password)) {
-            Intent intent = new Intent(SignInActivity.this, LobbyRoomActivity.class);
+            Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
             intent.putExtra("user", mUser);
             startActivity(intent);
         }
@@ -130,7 +132,21 @@ public class SignInActivity extends AppCompatActivity {
     void onSignUpTouched() {
 
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, SIGN_IN_ACTIVITY_NUMBER);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SIGN_IN_ACTIVITY_NUMBER) {
+            if (resultCode == RESULT_OK) {
+
+                Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
+                startActivity(intent);
+
+                SignInActivity.this.finish();
+            }
+        }
+    }
 }

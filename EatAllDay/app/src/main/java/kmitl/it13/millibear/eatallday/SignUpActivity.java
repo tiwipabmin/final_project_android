@@ -25,7 +25,7 @@ import butterknife.OnTextChanged;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements UserApi.UserApiListener {
 
     String mEmail, mFacebook, mName, mPassword;
     DatabaseReference mChildUser;
@@ -51,6 +51,12 @@ public class SignUpActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initialInstance();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserApi.getUserApi().setListener(this);
     }
 
     void initialInstance(){
@@ -92,15 +98,14 @@ public class SignUpActivity extends AppCompatActivity {
 
         if(allValid){
             progress.show(getSupportFragmentManager(), "progress");
-            createAccount();
+            mChildUser.limitToLast(1).addListenerForSingleValueEvent(UserApi.getUserApi());
         }
     }
 
     @OnClick(R.id.tv_sign_in)
     void onSignInButtonTouched() {
 
-        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
-        startActivity(intent);
+        SignUpActivity.this.finish();
     }
 
     @OnTextChanged(value = R.id.et_email,
@@ -167,26 +172,17 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    void createAccount() {
+    void createNewAccount(long lastUserId, String name, String email, String password, String facebook) {
 
-        mChildUser.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                long currentId = 0;
+//        userApi.newUser(String.valueOf(lastUserId), name, email, password, facebook);
+        progress.dismiss();
+        setResult(RESULT_OK);
+        SignUpActivity.this.finish();
+    }
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    currentId = Long.valueOf(ds.getKey()) + 1;
-                }
+    @Override
+    public void userIdResponse(long lastUserId) {
 
-                userApi.newUser(String.valueOf(currentId), mName, mEmail, mPassword, mFacebook);
-                progress.dismiss();
-                SignUpActivity.this.finish();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        createNewAccount(lastUserId, mName, mEmail, mPassword, mFacebook);
     }
 }
