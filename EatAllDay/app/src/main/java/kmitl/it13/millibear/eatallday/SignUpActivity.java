@@ -174,7 +174,7 @@ public class SignUpActivity extends AppCompatActivity implements UserApi.UserApi
 
     void createNewAccount(long lastUserId, String name, String email, String password, String facebook) {
 
-//        userApi.newUser(String.valueOf(lastUserId), name, email, password, facebook);
+        userApi.newUser(String.valueOf(lastUserId), name, email, password, facebook);
         progress.dismiss();
         setResult(RESULT_OK);
         SignUpActivity.this.finish();

@@ -9,10 +9,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by tiwip on 11/1/2017.
- */
-
 public class UserApi implements ValueEventListener{
 
     public interface UserApiListener {
@@ -47,11 +43,7 @@ public class UserApi implements ValueEventListener{
 
 
     public void newUser(String userId, String name, String email, String password, String facebook){
-        HashMap<String, Object> user = new HashMap<>();
-        user.put("name", name);
-        user.put("email", email);
-        user.put("password", password);
-        user.put("facebook", facebook);
+        User user = new User(name, email, password, facebook);
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/user/" + Long.valueOf(userId), user);
@@ -59,6 +51,9 @@ public class UserApi implements ValueEventListener{
         FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
     }
 
+    /*
+    * fetch last id from child user
+    */
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         long lastUserId = 0;

@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
 import kmitl.it13.millibear.eatallday.api.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
