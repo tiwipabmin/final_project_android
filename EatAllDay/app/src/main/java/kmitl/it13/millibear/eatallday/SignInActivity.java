@@ -126,6 +126,7 @@ public class SignInActivity extends AppCompatActivity {
             Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
             intent.putExtra("user", mUser);
             startActivity(intent);
+            finish();
         }
     }
 

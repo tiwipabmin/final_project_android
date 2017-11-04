@@ -2,6 +2,7 @@ package kmitl.it13.millibear.eatallday.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,13 +11,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.SignInActivity;
+import kmitl.it13.millibear.eatallday.TabBarActivity;
 import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
 
 /**
@@ -24,13 +29,15 @@ import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
  */
 public class LobbyRoomFragment extends Fragment {
 
-//    @BindView(R.id.profile)
-//    RecyclerView profile;
+    @BindView(R.id.profile)
+    RecyclerView profile;
+
+    @BindView(R.id.iv_logout)
+    ImageView iv_logout;
 
     private List<String> viewType;
     private List<Object> data;
     private PostAdapter postAdapter;
-    private RecyclerView profile;
 
     public LobbyRoomFragment() {
         // Required empty public constructor
@@ -56,9 +63,17 @@ public class LobbyRoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lobby_room, container, false);
-        profile = rootView.findViewById(R.id.profile);
+        ButterKnife.bind(this, rootView);
         initialInstance(getContext());
         return rootView;
+    }
+
+    @OnClick(R.id.iv_logout)
+    void onLogOutTouched(){
+
+        Intent intent = new Intent(getActivity(), SignInActivity.class);
+        startActivity(intent);
+        ((TabBarActivity) getActivity()).finish();
     }
 
 }
