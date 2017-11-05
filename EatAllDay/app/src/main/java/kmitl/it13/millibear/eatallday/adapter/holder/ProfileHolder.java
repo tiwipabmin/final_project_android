@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.R;
 
 /**
@@ -16,16 +17,19 @@ import kmitl.it13.millibear.eatallday.R;
 public class ProfileHolder extends RecyclerView.ViewHolder{
 
     @BindView(R.id.tv_facebook)
-    TextView tv_facebook;
+    public TextView tv_facebook;
 
     @BindView(R.id.tv_name)
-    TextView tv_name;
+    public TextView tv_name;
 
     @BindView(R.id.iv_image)
-    ImageView iv_image;
+    public CircleImageView iv_image;
+
+    @BindView(R.id.tv_description)
+    public TextView tv_description;
 
     public ProfileHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(itemView);
+        ButterKnife.bind(this, itemView);
     }
 }

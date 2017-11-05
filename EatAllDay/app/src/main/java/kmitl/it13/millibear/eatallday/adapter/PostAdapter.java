@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,7 @@ import java.util.List;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.holder.FoodHistoryHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ProfileHolder;
+import kmitl.it13.millibear.eatallday.api.History;
 import kmitl.it13.millibear.eatallday.api.User;
 
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -21,19 +25,36 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private User mUser;
-    private List<Object> data;
-    private List<String> viewType;
+    private List<History> mStorage;
+    private List<String> mViewType;
+    private boolean isLoadingAdded = false;
 
-    public PostAdapter(Context mContext, User mUser, List<Object> data, List<String> viewType) {
+    public PostAdapter(Context mContext, User mUser, List<History> mStorage, List<String> mViewType) {
         this.mContext = mContext;
         this.mUser = mUser;
-        this.data = data;
-        this.viewType = viewType;
+        this.mStorage = mStorage;
+        this.mViewType = mViewType;
     }
 
-    public PostAdapter(Context mContext, List<String> viewType) {
+    public PostAdapter(Context mContext, List<String> mViewType) {
         this.mContext = mContext;
-        this.viewType = viewType;
+        this.mViewType = mViewType;
+    }
+
+    public PostAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public void setStorage(List<History> mStorage) {
+        this.mStorage = mStorage;
+    }
+
+    public void setViewType(List<String> mViewType) {
+        this.mViewType = mViewType;
+    }
+
+    public void setUser(User mUser) {
+        this.mUser = mUser;
     }
 
     @Override
@@ -80,29 +101,97 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         Log.i("Lifecycle", "getItemCount : ");
-        return 3;
+        return mViewType == null ? 0 : mViewType.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(viewType.get(position).equals("profile")){
+        if(mViewType.get(position).equals("profile")){
             return PROFILE;
-        } else if(viewType.get(position).equals("food")){
+        } else if(mViewType.get(position).equals("food")){
             return FOOD;
-        } else if(viewType.get(position).equals("restaurant")){
+        } else if(mViewType.get(position).equals("restaurant")){
             return RESTAURANT;
-        } else if(viewType.get(position).equals("all")){
+        } else if(mViewType.get(position).equals("all")){
             return ALL;
         }
         return -1;
     }
 
     private void configureProfileViewHolder(ProfileHolder profileHolder, int position){
-
+        Glide.with(mContext).load(mUser.getImage()).into(profileHolder.iv_image);
+        profileHolder.tv_name.setText(mUser.getName());
+        profileHolder.tv_facebook.setText(mUser.getFacebook());
+        profileHolder.tv_description.setText(mUser.getDescription());
     }
 
     private void configureFoodHistoryViewHolder(FoodHistoryHolder foodHistoryHolder, int position){
+        Glide.with(mContext).load(mUser.getImage()).into(foodHistoryHolder.iv_userImage);
+        Glide.with(mContext).load(mStorage.get(position).getFoodImage()).into(foodHistoryHolder.iv_foodImage);
+        foodHistoryHolder.tv_cost.setText(mStorage.get(position).getCost());
+        foodHistoryHolder.tv_foodName.setText(mStorage.get(position).getFoodName());
+        foodHistoryHolder.tv_number_of_people.setText(mStorage.get(position).getNumberOfPeople());
+        foodHistoryHolder.tv_username.setText(mUser.getName());
+        foodHistoryHolder.tv_piece.setText(mStorage.get(position).getPiece());
+        foodHistoryHolder.tv_topic.setText(mStorage.get(position).getHistoryName());
+    }
 
+    public void addData(History data) {
+        this.mStorage.add(data);
+        notifyItemInserted(this.mStorage.size() - 1);
+    }
+
+    public void addType(String type){
+        this.mViewType.add(type);
+    }
+
+    public void addAll(List<String> viewType, List<History> storage) {
+        for(String type : viewType){
+            addType(type);
+        }
+        for (History data : storage) {
+            addData(data);
+        }
+    }
+
+    public void remove(Object data) {
+        int position = mStorage.indexOf(data);
+        if (position > -1) {
+            mStorage.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public void clear() {
+        isLoadingAdded = false;
+        while (getItemCount() > 0) {
+            remove(getItem(0));
+        }
+    }
+
+    public boolean isEmpty() {
+        return getItemCount() == 0;
+    }
+
+//    public void addLoadingFooter() {
+//        isLoadingAdded = true;
+//        add(new Movie());
+//    }
+
+//    public void removeLoadingFooter() {
+//        isLoadingAdded = false;
+//
+//        int position = movies.size() - 1;
+//        Movie item = getItem(position);
+//
+//        if (item != null) {
+//            movies.remove(position);
+//            notifyItemRemoved(position);
+//        }
+//    }
+
+    public Object getItem(int position) {
+        return mStorage.get(position);
     }
 
 }

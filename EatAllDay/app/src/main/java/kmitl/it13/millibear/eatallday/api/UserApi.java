@@ -1,5 +1,7 @@
 package kmitl.it13.millibear.eatallday.api;
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -59,7 +61,9 @@ public class UserApi implements ValueEventListener{
         long lastUserId = 0;
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            lastUserId = Long.valueOf(ds.getKey()) + 1;
+            if(Long.valueOf(ds.getKey()) != 0){
+                lastUserId = Long.valueOf(ds.getKey()) + 1;
+            }
         }
 
         listener.userIdResponse(lastUserId);

@@ -1,5 +1,6 @@
 package kmitl.it13.millibear.eatallday;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import kmitl.it13.millibear.eatallday.api.User;
 import kmitl.it13.millibear.eatallday.fragment.CommunicationRoomFragment;
 import kmitl.it13.millibear.eatallday.fragment.KitchenRoomFragment;
 import kmitl.it13.millibear.eatallday.fragment.LobbyRoomFragment;
@@ -25,18 +27,22 @@ public class TabBarActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
+    private User mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_bar);
         ButterKnife.bind(TabBarActivity.this);
 
+        Intent intent = getIntent();
+        mUser = intent.getParcelableExtra("user");
+
         initialInstance();
         setting();
     }
 
     private void initialInstance(){
-
 
     }
 
@@ -49,7 +55,7 @@ public class TabBarActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new LobbyRoomFragment(), "LOBBY");
+        adapter.addFragment(new LobbyRoomFragment().newInstance(mUser), "LOBBY");
         adapter.addFragment(new KitchenRoomFragment(), "KITCHEN");
         adapter.addFragment(new CommunicationRoomFragment(), "COMMUNICATION");
         viewPager.setAdapter(adapter);

@@ -12,6 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +29,9 @@ import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SignInActivity;
 import kmitl.it13.millibear.eatallday.TabBarActivity;
 import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
+import kmitl.it13.millibear.eatallday.api.History;
+import kmitl.it13.millibear.eatallday.api.HistoryApi;
+import kmitl.it13.millibear.eatallday.api.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,9 +44,11 @@ public class LobbyRoomFragment extends Fragment {
     @BindView(R.id.iv_logout)
     ImageView iv_logout;
 
-    private List<String> viewType;
-    private List<Object> data;
-    private PostAdapter postAdapter;
+    private List<String> mViewType;
+    private List<History> mStorage;
+    private PostAdapter mPostAdapter;
+    private User mUser;
+    private DatabaseReference childHistory;
 
     public LobbyRoomFragment() {
         // Required empty public constructor
@@ -46,17 +57,55 @@ public class LobbyRoomFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        mUser = args.getParcelable("user");
     }
 
     private void initialInstance(Context context){
 
-        viewType = new ArrayList<>();
-        viewType.add("profile");
-        viewType.add("profile");
-        viewType.add("profile");
-        postAdapter = new PostAdapter(context, viewType);
-        profile.setAdapter(postAdapter);
-        profile.setLayoutManager(new LinearLayoutManager(context));
+        childHistory = HistoryApi.getHistoryApi().getChildHistory();
+
+        mStorage = new ArrayList<>();
+        History deception = new History();
+        mStorage.add(deception);
+
+        mViewType = new ArrayList<>();
+        mViewType.add("profile");
+        mPostAdapter = new PostAdapter(context);
+    }
+
+    private void setting(){
+
+        Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
+
+        childHistory.orderByChild("userId")
+                .equalTo(mUser.getUserId())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    History history = ds.getValue(History.class);
+
+                    assert history != null;
+                    history.setHisId(String.valueOf(ds.getKey()));
+
+                    mStorage.add(history);
+                    mViewType.add(history.getType());
+
+                }
+                mPostAdapter.setStorage(mStorage);
+                mPostAdapter.setViewType(mViewType);
+                mPostAdapter.setUser(mUser);
+                profile.setAdapter(mPostAdapter);
+                profile.setLayoutManager(new LinearLayoutManager(getActivity()));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getActivity(), databaseError + "", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -65,7 +114,16 @@ public class LobbyRoomFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lobby_room, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance(getContext());
+        setting();
         return rootView;
+    }
+
+    public static LobbyRoomFragment newInstance(User user) {
+        Bundle args = new Bundle();
+        args.putParcelable("user", user);
+        LobbyRoomFragment fragment = new LobbyRoomFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @OnClick(R.id.iv_logout)

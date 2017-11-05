@@ -13,7 +13,7 @@ public class User implements Parcelable {
     private String name;
     private String email;
     private String password;
-    private String describe;
+    private String description;
     private String image;
     private String money;
     private String facebook;
@@ -33,7 +33,7 @@ public class User implements Parcelable {
         name = in.readString();
         email = in.readString();
         password = in.readString();
-        describe = in.readString();
+        description = in.readString();
         image = in.readString();
         money = in.readString();
         facebook = in.readString();
@@ -75,12 +75,12 @@ public class User implements Parcelable {
         this.email = email;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDescribe(String description) {
+        this.description = description;
     }
 
     public String getImage() {
@@ -126,7 +126,7 @@ public class User implements Parcelable {
         dest.writeString(name);
         dest.writeString(email);
         dest.writeString(password);
-        dest.writeString(describe);
+        dest.writeString(description);
         dest.writeString(image);
         dest.writeString(money);
         dest.writeString(facebook);
