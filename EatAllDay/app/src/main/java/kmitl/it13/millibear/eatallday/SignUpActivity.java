@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import kmitl.it13.millibear.eatallday.api.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
+import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
 import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -180,33 +183,49 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
-    void createNewAccount(String name, String email, String password, String facebook) {
+    void createNewAccount(final String name, final String email, String password, final String facebook) {
 
-//        userApi.newUser(String.valueOf(lastUserId), name, email, password, facebook);
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Toast.makeText(SignUpActivity.this, String.valueOf(task), Toast.LENGTH_SHORT).show();
+
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                    assert user != null;
+                                    String uId = user.getUid();
+
+                                    Toast.makeText(SignUpActivity.this, uId, Toast.LENGTH_SHORT).show();
+
+                                    User newUser = new User(uId, name, email, facebook);
+
+                                    userApi.newUser(SignUpActivity.this, newUser);
+
+                                    goToLobby(newUser);
+                                    progress.dismiss();
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
 
-                                progress.dismiss();
-                                setResult(RESULT_OK);
-                                SignUpActivity.this.finish();
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                DialogFragment alertDialog = new AlertDialogFragment()
+                        .newInstance("Registration failed.");
+                alertDialog.show(getSupportFragmentManager(), "alertDialog");
+            }
+        });
     }
 
-//    @Override
-//    public void userIdResponse(long lastUserId) {
-//
-//        createNewAccount(lastUserId, mName, mEmail, mPassword, mFacebook);
-//    }
+    private void goToLobby(User newUser){
+        Intent intent = new Intent(SignUpActivity.this, TabBarActivity.class);
+        intent.putExtra("user", newUser);
+        startActivity(intent);
+        finish();
+    }
 }

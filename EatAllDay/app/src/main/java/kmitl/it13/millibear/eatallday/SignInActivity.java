@@ -1,3 +1,4 @@
+
 package kmitl.it13.millibear.eatallday;
 
 import android.content.Intent;
@@ -19,11 +20,15 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +40,8 @@ import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
 import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
 
-public class SignInActivity extends AppCompatActivity {
-
-    public static final int SIGN_IN_ACTIVITY_NUMBER = 1901;
+public class SignInActivity extends AppCompatActivity
+        implements ValueEventListener {
 
     @BindView(R.id.et_email)
     EditText et_email;
@@ -83,8 +87,7 @@ public class SignInActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                AccessToken.getCurrentAccessToken().getDeclinedPermissions();
-                Toast.makeText(SignInActivity.this, String.valueOf(loginResult.getRecentlyGrantedPermissions()), Toast.LENGTH_SHORT).show();
+                
             }
 
             @Override
@@ -96,6 +99,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onError(FacebookException exception) {
                 LoginManager.getInstance().logOut();
                 Toast.makeText(SignInActivity.this, String.valueOf(exception), Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -118,69 +122,43 @@ public class SignInActivity extends AppCompatActivity {
     void onSignInTouched() {
 
         if (!TextUtils.isEmpty(mEmail) && !TextUtils.isEmpty(mPassword)) {
+
             progress.show(getSupportFragmentManager(), "progress");
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(mEmail, mPassword)
+
+            firebaseAuth.signInWithEmailAndPassword(mEmail, mPassword)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.i("Access complete!", "signInWithEmail:success");
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                Toast.makeText(SignInActivity.this, String.valueOf(task), Toast.LENGTH_SHORT).show();
+
+                                final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                                assert user != null;
+                                final String uId = user.getUid();
+
+                                Toast.makeText(SignInActivity.this, String.valueOf(uId), Toast.LENGTH_SHORT).show();
+
+                                mChildUser.orderByChild(uId)
+                                        .addListenerForSingleValueEvent(SignInActivity.this);
+
                             } else {
-                                // If sign in fails, display a message to the user.
+
                                 Log.i("Access is denied!", String.valueOf(task.getException()));
-                                Toast.makeText(SignInActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                                progress.dismiss();
                             }
 
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(SignInActivity.this, "Task Null",
-                                        Toast.LENGTH_SHORT).show();
-                            }
                         }
-                    });
-//            mChildUser.orderByChild("email")
-//                    .equalTo(mEmail)
-//                    .addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//                                mUser = ds.getValue(User.class);
-//                                mUser.setUserId(String.valueOf(ds.getKey()));
-//                            }
-//
-//                            if (mUser == null) {
-//
-//                                DialogFragment alertDialog = new AlertDialogFragment()
-//                                        .newInstance("email or password is invalid.");
-//                                et_email.setText("");
-//                                et_password.setText("");
-//                                alertDialog.show(getSupportFragmentManager(), "alertDialog");
-//
-//                            } else {
-//                                progress.dismiss();
-//                                authentication(mUser.getPassword());
-//                            }
-//
-//                            if (progress.isVisible()) {
-//                                progress.dismiss();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//                            Toast.makeText(SignInActivity.this
-//                                    , "Database error: ".concat(databaseError.getMessage())
-//                                    , Toast.LENGTH_SHORT)
-//                                    .show();
-//                        }
-//                    });
-        } else
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    DialogFragment alertDialog = new AlertDialogFragment()
+                            .newInstance("Connection server is denied");
+                    alertDialog.show(getSupportFragmentManager(), "alertDialog");
+                    progress.dismiss();
+                }
+            });
 
-        {
+        } else {
 
             DialogFragment alertDialog = new AlertDialogFragment()
                     .newInstance("Please enter your email or password");
@@ -189,9 +167,9 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private void goToLobby(FirebaseUser user) {
+    private void goToLobby(User user) {
         Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
-        intent.putExtra("user", mUser);
+        intent.putExtra("user", user);
         startActivity(intent);
         finish();
     }
@@ -200,22 +178,44 @@ public class SignInActivity extends AppCompatActivity {
     void onSignUpTouched() {
 
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-        startActivityForResult(intent, SIGN_IN_ACTIVITY_NUMBER);
+        startActivity(intent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 
-        if (requestCode == SIGN_IN_ACTIVITY_NUMBER) {
-            if (resultCode == RESULT_OK) {
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
-                startActivity(intent);
-
-                SignInActivity.this.finish();
-            }
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            mUser = ds.getValue(User.class);
+            mUser.setUserId(ds.getKey());
         }
+
+        if (mUser == null) {
+
+            DialogFragment alertDialog = new AlertDialogFragment()
+                    .newInstance("email or password is invalid.");
+            et_email.setText("");
+            et_password.setText("");
+            alertDialog.show(getSupportFragmentManager(), "alertDialog");
+
+        } else {
+            progress.dismiss();
+            goToLobby(mUser);
+        }
+
+        if (progress.isVisible()) {
+            progress.dismiss();
+        }
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 }

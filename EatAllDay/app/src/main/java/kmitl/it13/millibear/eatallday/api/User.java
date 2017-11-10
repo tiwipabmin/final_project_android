@@ -12,20 +12,24 @@ public class User implements Parcelable {
     private String userId;
     private String name;
     private String email;
-    private String password;
-    private String description;
-    private String image;
-    private String money;
+    private String description = "Eat all day.";
+    private String image = "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png";
+    private String money = "0";
     private String facebook;
 
-    public User() {
+    public User(String userId, String name, String email, String facebook) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.facebook = facebook;
     }
+
+    public User(){}
 
     protected User(Parcel in) {
         userId = in.readString();
         name = in.readString();
         email = in.readString();
-        password = in.readString();
         description = in.readString();
         image = in.readString();
         money = in.readString();
@@ -54,7 +58,6 @@ public class User implements Parcelable {
         dest.writeString(userId);
         dest.writeString(name);
         dest.writeString(email);
-        dest.writeString(password);
         dest.writeString(description);
         dest.writeString(image);
         dest.writeString(money);
@@ -83,14 +86,6 @@ public class User implements Parcelable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getDescription() {
