@@ -9,11 +9,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.api.User;
 import kmitl.it13.millibear.eatallday.fragment.CommunicationRoomFragment;
 import kmitl.it13.millibear.eatallday.fragment.KitchenRoomFragment;
@@ -57,8 +61,17 @@ public class TabBarActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new LobbyRoomFragment().newInstance(mUser), "LOBBY");
         adapter.addFragment(new KitchenRoomFragment(), "KITCHEN");
-        adapter.addFragment(new CommunicationRoomFragment(), "COMMUNICATION");
+        adapter.addFragment(new CommunicationRoomFragment(), "SOCIAL");
         viewPager.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.iv_logout)
+    void onLogOutTouched(){
+        LoginManager.getInstance().logOut();
+
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {

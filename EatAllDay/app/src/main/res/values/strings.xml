@@ -14,6 +14,9 @@
     <string name="host">Host</string>
     <string name="default_topic">Menu to day</string>
     <string name="default_name_food">Pizza</string>
+    <string name="eat_all_day">EatAllDay</string>
+    <string name="facebook_app_id">871168826390720</string>
+    <string name="fb_login_protocol_scheme">fb871168826390720</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

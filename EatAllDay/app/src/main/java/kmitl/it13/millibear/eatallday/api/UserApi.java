@@ -44,14 +44,14 @@ public class UserApi implements ValueEventListener{
 
 
 
-    public void newUser(String userId, String name, String email, String password, String facebook){
-        User user = new User(name, email, password, facebook);
-
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/user/" + Long.valueOf(userId), user);
-
-        FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
-    }
+//    public void newUser(String userId, String name, String email, String password, String facebook){
+//        User user = new User(name, email, password, facebook);
+//
+//        Map<String, Object> childUpdates = new HashMap<>();
+//        childUpdates.put("/user/" + Long.valueOf(userId), user);
+//
+//        FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
+//    }
 
     /*
     * fetch last id from child user
@@ -60,13 +60,13 @@ public class UserApi implements ValueEventListener{
     public void onDataChange(DataSnapshot dataSnapshot) {
         long lastUserId = 0;
 
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            if(Long.valueOf(ds.getKey()) != 0){
-                lastUserId = Long.valueOf(ds.getKey()) + 1;
-            }
-        }
+//        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//            if(Long.valueOf(ds.getKey()) != 0){
+//                lastUserId = Long.valueOf(ds.getKey()) + 1;
+//            }
+//        }
 
-        listener.userIdResponse(lastUserId);
+//        listener.userIdResponse(lastUserId);
     }
 
     @Override

@@ -5,39 +5,6 @@
     android:orientation="vertical"
     tools:context="kmitl.it13.millibear.eatallday.fragment.LobbyRoomFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/iv_bell"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_bell" />
-
-        <ImageView
-            android:id="@+id/iv_user"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/iv_bell"
-            android:background="@drawable/ic_user" />
-
-        <ImageView
-            android:id="@+id/iv_logout"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/ic_logout" />
-
-    </RelativeLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

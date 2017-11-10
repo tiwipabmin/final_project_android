@@ -21,13 +21,6 @@ public class User implements Parcelable {
     public User() {
     }
 
-    public User(String name, String email, String password, String facebook) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.facebook = facebook;
-    }
-
     protected User(Parcel in) {
         userId = in.readString();
         name = in.readString();
@@ -50,6 +43,23 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userId);
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(description);
+        dest.writeString(image);
+        dest.writeString(money);
+        dest.writeString(facebook);
+    }
 
     public String getUserId() {
         return userId;
@@ -75,11 +85,19 @@ public class User implements Parcelable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public void setDescribe(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -105,30 +123,5 @@ public class User implements Parcelable {
 
     public void setFacebook(String facebook) {
         this.facebook = facebook;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(userId);
-        dest.writeString(name);
-        dest.writeString(email);
-        dest.writeString(password);
-        dest.writeString(description);
-        dest.writeString(image);
-        dest.writeString(money);
-        dest.writeString(facebook);
     }
 }

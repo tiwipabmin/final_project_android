@@ -41,9 +41,6 @@ public class LobbyRoomFragment extends Fragment {
     @BindView(R.id.profile)
     RecyclerView profile;
 
-    @BindView(R.id.iv_logout)
-    ImageView iv_logout;
-
     private List<String> mViewType;
     private List<History> mStorage;
     private PostAdapter mPostAdapter;
@@ -124,14 +121,6 @@ public class LobbyRoomFragment extends Fragment {
         LobbyRoomFragment fragment = new LobbyRoomFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @OnClick(R.id.iv_logout)
-    void onLogOutTouched(){
-
-        Intent intent = new Intent(getActivity(), SignInActivity.class);
-        startActivity(intent);
-        ((TabBarActivity) getActivity()).finish();
     }
 
 }
