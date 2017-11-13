@@ -17,6 +17,19 @@
     <string name="eat_all_day">EatAllDay</string>
     <string name="facebook_app_id">871168826390720</string>
     <string name="fb_login_protocol_scheme">fb871168826390720</string>
+    <string name="btn_add_element">Add food or restaurant</string>
+    <string name="btn_random_now">Random now!</string>
+    <string name="hint_cost">cost</string>
+    <string name="title_dialog_type_element">Type</string>
+    <string name="label_food">Food</string>
+    <string name="label_restaurant">Restaurant</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_add">Add now!</string>
+
+    <string-array name="items_type_element">
+        <item><font fgcolor='#336600'>Food</font></item>
+        <item><font fgcolor='#336600'>Restaurant</font></item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

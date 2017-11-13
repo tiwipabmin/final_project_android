@@ -6,9 +6,10 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import kmitl.it13.millibear.eatallday.model.User;
 
 public class UserApi {
 

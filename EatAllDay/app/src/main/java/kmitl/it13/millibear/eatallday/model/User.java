@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday.api;
+package kmitl.it13.millibear.eatallday.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

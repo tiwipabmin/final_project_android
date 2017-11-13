@@ -6,18 +6,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.holder.FoodHistoryHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ProfileHolder;
-import kmitl.it13.millibear.eatallday.api.History;
-import kmitl.it13.millibear.eatallday.api.User;
+import kmitl.it13.millibear.eatallday.model.History;
+import kmitl.it13.millibear.eatallday.model.User;
 
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

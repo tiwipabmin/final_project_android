@@ -12,10 +12,11 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import kmitl.it13.millibear.eatallday.api.AuthenticationApi;
-import kmitl.it13.millibear.eatallday.api.User;
+import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
 import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
@@ -58,6 +59,7 @@ public class SignInActivity extends AppCompatActivity
     ProgressFragment progress;
     CallbackManager callbackManager;
     FirebaseAuth firebaseAuth;
+    ProfileTracker profileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +86,30 @@ public class SignInActivity extends AppCompatActivity
 
         loginButton.setReadPermissions("email", "public_profile", "user_friends");
         // Callback registration
+        LoginManager.getInstance().logOut();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                
+                Profile profile = Profile.getCurrentProfile();
+                final UserApi userApi = UserApi.getUserApi();
+                final User user = new User(profile.getId(), profile.getName(), profile.getFirstName(), profile.getFirstName() + " " + profile.getLastName());
+                userApi.getChildUser().child(user.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.getValue() == null){
+                            userApi.newUser(SignInActivity.this, user);
+                        }
+                        Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
+                        intent.putExtra("user", user);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -217,5 +239,10 @@ public class SignInActivity extends AppCompatActivity
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
