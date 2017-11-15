@@ -6,14 +6,14 @@ package kmitl.it13.millibear.eatallday.model;
 
 public class Food {
 
-    private long id;
+    private Long id;
     private String name;
-    private long cost;
+    private Long cost;
     private String description;
     private String userId;
     private String image;
 
-    public Food(long id, String name, long cost, String description, String userId, String image) {
+    public Food(Long id, String name, Long cost, String description, String userId, String image) {
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -25,11 +25,11 @@ public class Food {
     public Food() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,11 +41,11 @@ public class Food {
         this.name = name;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 

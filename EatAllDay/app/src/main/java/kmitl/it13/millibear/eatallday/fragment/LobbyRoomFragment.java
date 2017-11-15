@@ -23,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.SignInActivity;
 import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
@@ -52,6 +53,7 @@ public class LobbyRoomFragment extends Fragment {
 
         Bundle args = getArguments();
         mUser = args.getParcelable("user");
+        Toast.makeText(getActivity(), mUser.getUserId(), Toast.LENGTH_SHORT).show();
     }
 
     private void initialInstance(Context context){
@@ -67,9 +69,7 @@ public class LobbyRoomFragment extends Fragment {
         mPostAdapter = new PostAdapter(context);
     }
 
-    private void setting(){
-
-        Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
+    private void setUp(){
 
         childHistory.orderByChild("userId")
                 .equalTo(mUser.getUserId())
@@ -106,7 +106,7 @@ public class LobbyRoomFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lobby_room, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance(getContext());
-        setting();
+        setUp();
         return rootView;
     }
 

@@ -97,6 +97,7 @@ public class SignInActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getValue() == null){
+                            Toast.makeText(SignInActivity.this, dataSnapshot.getValue()+"", Toast.LENGTH_SHORT).show();
                             userApi.newUser(SignInActivity.this, user);
                         }
                         Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);

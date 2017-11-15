@@ -10,27 +10,45 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.AddElementActivity;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.api.FoodApi;
+import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KitchenRoomFragment extends Fragment implements TypeElementDialogFragment.TypeElementDialogFragmentListener{
+public class KitchenRoomFragment extends Fragment implements TypeElementDialogFragment.TypeElementDialogFragmentListener, FoodApi.FoodApiListener{
 
     @BindView(R.id.btn_add)
     Button btn_add;
+
+    @BindView(R.id.iv_test)
+    ImageView iv_test;
 
     private Intent addElementIntent;
     private User mUser;
 
     public KitchenRoomFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FoodApi.getFoodApi().setListener(this);
     }
 
     @Override
@@ -45,6 +63,24 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
     private void initialInstance(){
 
         addElementIntent = new Intent(getActivity(), AddElementActivity.class);
+
+        FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(mUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Food food = null;
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+
+                    Toast.makeText(KitchenRoomFragment.this.getActivity(), ds + "", Toast.LENGTH_SHORT).show();
+//                    food = ds.getValue(Food.class);
+                }
+//                Glide.with(KitchenRoomFragment.this.getActivity()).load(food.getImage()).into(iv_test);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -85,5 +121,10 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
         addElementIntent.putExtra("type", "restaurant");
         addElementIntent.putExtra("userId", mUser.getUserId());
         startActivity(addElementIntent);
+    }
+
+    @Override
+    public void onCreateObjectFoodApi(long id) {
+
     }
 }

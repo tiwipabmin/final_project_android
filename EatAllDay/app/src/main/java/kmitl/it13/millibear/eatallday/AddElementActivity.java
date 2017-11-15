@@ -17,7 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -48,6 +51,15 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
     @BindView(R.id.iv_element)
     ImageView iv_element;
 
+    @BindView(R.id.et_cost)
+    EditText et_cost;
+
+    @BindView(R.id.ic_equal)
+    ImageView ic_equal;
+
+    @BindView(R.id.tv_type)
+    TextView tv_type;
+
     private String mDescription = "None", mName, mCost, mUserId, mType, mImage;
     private FoodApi foodApi;
     private long id;
@@ -70,12 +82,21 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
         ButterKnife.bind(AddElementActivity.this);
         checkPermission();
         initialInstance();
+        setUp();
     }
 
     private void initialInstance() {
 
         foodApi = FoodApi.getFoodApi();
+    }
 
+    private void setUp(){
+
+        if(mType.equals("restaurant")){
+            ic_equal.setVisibility(View.GONE);
+            et_cost.setVisibility(View.GONE);
+            tv_type.setText(R.string.label_restaurant);
+        }
     }
 
     @OnClick(R.id.iv_element)
@@ -90,13 +111,17 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
 
     @OnClick(R.id.btn_add)
     public void onBtnAddTouched(){
-        if(!mCost.isEmpty() && !mName.isEmpty() && mImage != null && mType.equals("food")){
+        if(mType.equals("food") && !mCost.isEmpty() && !mName.isEmpty() && mImage != null){
+
             Toast.makeText(AddElementActivity.this, "Add New Food", Toast.LENGTH_SHORT).show();
+
             Food newFood = new Food(id, mName, Long.valueOf(mCost), mDescription, mUserId, mImage);
             foodApi.newFood(AddElementActivity.this, id, newFood);
             finish();
+        } else if(mType.equals("restaurant")){
+            Toast.makeText(AddElementActivity.this, "Restaurant", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(AddElementActivity.this, "Error! Add New Food" + ", image : " + id, Toast.LENGTH_SHORT).show();
+
     }
 
     @OnTextChanged(value = R.id.et_name,
