@@ -70,7 +70,7 @@
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
             android:hint="@string/hint_cost"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:textAlignment="center" />
 
     </LinearLayout>

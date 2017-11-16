@@ -80,7 +80,7 @@ public class LobbyRoomFragment extends Fragment {
                     History history = ds.getValue(History.class);
 
                     assert history != null;
-                    history.setHisId(String.valueOf(ds.getKey()));
+                    history.setHisId(Long.valueOf(ds.getKey()));
 
                     mStorage.add(history);
                     mViewType.add(history.getType());

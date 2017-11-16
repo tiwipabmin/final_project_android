@@ -126,11 +126,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void configureFoodHistoryViewHolder(FoodHistoryHolder foodHistoryHolder, int position){
         Glide.with(mContext).load(mUser.getImage()).into(foodHistoryHolder.iv_userImage);
         Glide.with(mContext).load(mStorage.get(position).getFoodImage()).into(foodHistoryHolder.iv_foodImage);
-        foodHistoryHolder.tv_cost.setText(mStorage.get(position).getCost());
+        foodHistoryHolder.tv_cost.setText(String.valueOf(mStorage.get(position).getCost()));
         foodHistoryHolder.tv_foodName.setText(mStorage.get(position).getFoodName());
-        foodHistoryHolder.tv_number_of_people.setText(mStorage.get(position).getNumberOfPeople());
+        foodHistoryHolder.tv_number_of_people.setText(String.valueOf(mStorage.get(position).getNumberOfPeople()));
         foodHistoryHolder.tv_username.setText(mUser.getName());
-        foodHistoryHolder.tv_piece.setText(mStorage.get(position).getPiece());
+        foodHistoryHolder.tv_piece.setText(String.valueOf(mStorage.get(position).getPiece()));
         foodHistoryHolder.tv_topic.setText(mStorage.get(position).getHistoryName());
     }
 

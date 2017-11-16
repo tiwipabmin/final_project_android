@@ -18,6 +18,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,6 +42,7 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
 
     private Intent addElementIntent;
     private User mUser;
+    private ArrayList<Food> mMenu;
 
     public KitchenRoomFragment() {
         // Required empty public constructor
@@ -67,11 +70,10 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
         FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(mUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Food food = null;
+                mMenu = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
-
-                    Toast.makeText(KitchenRoomFragment.this.getActivity(), ds + "", Toast.LENGTH_SHORT).show();
-//                    food = ds.getValue(Food.class);
+                    mMenu.add(ds.getValue(Food.class));
+//                    Toast.makeText(KitchenRoomFragment.this.getActivity(), ds.getValue(Food.class) + "", Toast.LENGTH_SHORT).show();
                 }
 //                Glide.with(KitchenRoomFragment.this.getActivity()).load(food.getImage()).into(iv_test);
             }

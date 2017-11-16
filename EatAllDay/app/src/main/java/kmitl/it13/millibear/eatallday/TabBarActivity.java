@@ -8,8 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +24,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import kmitl.it13.millibear.eatallday.api.FriendApi;
+import kmitl.it13.millibear.eatallday.model.Friend;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.fragment.CommunicationRoomFragment;
 import kmitl.it13.millibear.eatallday.fragment.KitchenRoomFragment;
@@ -31,6 +40,11 @@ public class TabBarActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     private User mUser;
+    private FriendApi mFriendApi;
+    private DatabaseReference mChildFriend;
+    private ArrayList<Friend> mFriendList;
+    private NotificationBadge mBadgeFriend, mBadgeBell;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +56,80 @@ public class TabBarActivity extends AppCompatActivity {
         mUser = intent.getParcelableExtra("user");
 
         initialInstance();
-        setting();
+        setUp();
     }
 
     private void initialInstance(){
 
+        mFriendApi = FriendApi.getFriendApi();
+
+        mChildFriend = mFriendApi.getChildFriend();
+
+        mFriendList = new ArrayList<>();
+
+        mBadgeFriend = findViewById(R.id.badge_friend);
+        mBadgeBell = findViewById(R.id.badge_bell);
     }
 
-    private void setting(){
+    private void setUp(){
 
         setupViewPager(viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
+
+        mChildFriend.orderByChild("receiver").equalTo(mUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    Friend friend = ds.getValue(Friend.class);
+                    mFriendList.add(friend);
+                    assert friend != null;
+                    if(!friend.isResponse()) {
+                        count =+ 1;
+                        Toast.makeText(TabBarActivity.this, "Count++ : " + count, Toast.LENGTH_SHORT).show();
+                        mBadgeFriend.setNumber(count);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        mChildFriend.orderByChild("receiver").equalTo(mUser.getUserId()).addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Friend friend = dataSnapshot.getValue(Friend.class);
+//                mFriendList.add(friend);
+//                assert friend != null;
+//                if (!friend.isResponse()) {
+//                    count += 1;
+//                    mBadgeFriend.setNumber(count);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     private void setupViewPager(ViewPager viewPager){

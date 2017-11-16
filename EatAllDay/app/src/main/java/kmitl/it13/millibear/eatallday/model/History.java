@@ -1,24 +1,19 @@
 package kmitl.it13.millibear.eatallday.model;
 
-import java.util.Date;
 import java.util.Map;
-
-/**
- * Created by tiwip on 11/5/2017.
- */
 
 public class History {
 
-    private String hisId;
+    private Long hisId;
     private String userId;
     private String foodName;
     private String restaurantName;
     private String historyName;
-    private String numberOfPeople;
+    private Long numberOfPeople;
     private String foodImage;
     private String restaurantImage;
-    private String cost;
-    private String piece;
+    private Long cost;
+    private Long piece;
     private Map<String, String> host;
     private String time;
     private String type;
@@ -26,19 +21,11 @@ public class History {
     public History() {
     }
 
-    public String getPiece() {
-        return piece;
-    }
-
-    public void setPiece(String piece) {
-        this.piece = piece;
-    }
-
-    public String getHisId() {
+    public Long getHisId() {
         return hisId;
     }
 
-    public void setHisId(String hisId) {
+    public void setHisId(Long hisId) {
         this.hisId = hisId;
     }
 
@@ -74,11 +61,11 @@ public class History {
         this.historyName = historyName;
     }
 
-    public String getNumberOfPeople() {
+    public Long getNumberOfPeople() {
         return numberOfPeople;
     }
 
-    public void setNumberOfPeople(String numberOfPeople) {
+    public void setNumberOfPeople(Long numberOfPeople) {
         this.numberOfPeople = numberOfPeople;
     }
 
@@ -98,12 +85,20 @@ public class History {
         this.restaurantImage = restaurantImage;
     }
 
-    public String getCost() {
+    public Long getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
+    }
+
+    public Long getPiece() {
+        return piece;
+    }
+
+    public void setPiece(Long piece) {
+        this.piece = piece;
     }
 
     public Map<String, String> getHost() {

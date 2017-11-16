@@ -5,37 +5,24 @@
     android:layout_height="50dp"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/iv_logout"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_logout" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/eat_all_day"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/iv_logout"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_logout" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="@string/eat_all_day" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
@@ -47,9 +34,16 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_bell" />
 
-    </LinearLayout>
+        <com.nex3z.notificationbadge.NotificationBadge
+            android:id="@+id/badge_bell"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_toRightOf="@+id/iv_bell"
+            app:nbBackground="@drawable/badge_bg_with_shadow" />
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
@@ -58,9 +52,17 @@
             android:id="@+id/iv_user"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_user" />
 
-    </LinearLayout>
+        <com.nex3z.notificationbadge.NotificationBadge
+            android:id="@+id/badge_friend"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_toRightOf="@+id/iv_user"
+            app:nbBackground="@drawable/badge_bg_with_shadow" />
+
+    </RelativeLayout>
 
 </LinearLayout>
