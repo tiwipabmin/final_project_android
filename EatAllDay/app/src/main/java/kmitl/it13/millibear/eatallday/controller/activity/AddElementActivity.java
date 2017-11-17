@@ -67,6 +67,9 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
     @BindView(R.id.tv_type)
     TextView tv_type;
 
+    @BindView(R.id.tv_currency)
+    TextView tv_currency;
+
     private String mUserId, mType, mImage;
     private FoodApi foodApi;
     private long id;
@@ -102,6 +105,7 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
         if(mType.equals("restaurant")){
             ic_equal.setVisibility(View.GONE);
             et_cost.setVisibility(View.GONE);
+            tv_currency.setVisibility(View.GONE);
             tv_type.setText(R.string.label_restaurant);
         }
     }

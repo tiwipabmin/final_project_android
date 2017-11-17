@@ -18,13 +18,18 @@
     <string name="facebook_app_id">871168826390720</string>
     <string name="fb_login_protocol_scheme">fb871168826390720</string>
     <string name="btn_add_element">Add food or restaurant</string>
+    <string name="btn_random">Random</string>
     <string name="btn_random_now">Random now!</string>
-    <string name="hint_cost">cost</string>
+    <string name="hint_cost">Cost</string>
     <string name="title_dialog_type_element">Type</string>
-    <string name="label_food">Food</string>
-    <string name="label_restaurant">Restaurant</string>
+    <string name="label_food">FOOD</string>
+    <string name="label_restaurant">RESTAURANT</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_add">Add now!</string>
+    <string name="label_random_room">Random Room</string>
+    <string name="choose">Choose</string>
+    <string name="default_cost">20 Baht / 1 Piece</string>
+    <string name="currency">Baht / 1 Piece</string>
 
     <string-array name="items_type_element">
         <item><font fgcolor='#336600'>Food</font></item>

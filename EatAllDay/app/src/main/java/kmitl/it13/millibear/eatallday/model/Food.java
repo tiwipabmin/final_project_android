@@ -1,10 +1,9 @@
 package kmitl.it13.millibear.eatallday.model;
 
-/**
- * Created by tiwip on 11/13/2017.
- */
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Food {
+public class Food implements Parcelable{
 
     private Long id;
     private String name;
@@ -24,6 +23,35 @@ public class Food {
 
     public Food() {
     }
+
+    protected Food(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        name = in.readString();
+        if (in.readByte() == 0) {
+            cost = null;
+        } else {
+            cost = in.readLong();
+        }
+        description = in.readString();
+        userId = in.readString();
+        image = in.readString();
+    }
+
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
+        @Override
+        public Food createFromParcel(Parcel in) {
+            return new Food(in);
+        }
+
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
 
     public Long getId() {
         return id;
@@ -71,5 +99,30 @@ public class Food {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(id);
+        }
+        dest.writeString(name);
+        if (cost == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(cost);
+        }
+        dest.writeString(description);
+        dest.writeString(userId);
+        dest.writeString(image);
     }
 }

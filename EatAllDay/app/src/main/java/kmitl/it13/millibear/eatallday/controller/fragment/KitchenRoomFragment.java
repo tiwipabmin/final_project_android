@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -23,6 +25,7 @@ import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.controller.activity.AddElementActivity;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
+import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
 
@@ -70,7 +73,7 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
                 mMenu = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     mMenu.add(ds.getValue(Food.class));
-//                    Toast.makeText(KitchenRoomFragment.this.getActivity(), ds.getValue(Food.class) + "", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KitchenRoomFragment.this.getActivity(), ds.getValue(Food.class) + "", Toast.LENGTH_SHORT).show();
                 }
 //                Glide.with(KitchenRoomFragment.this.getActivity()).load(food.getImage()).into(iv_test);
             }
@@ -105,6 +108,13 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
         DialogFragment typeElementDialog = new TypeElementDialogFragment();
         ((TypeElementDialogFragment)typeElementDialog).setListener(this);
         typeElementDialog.show(getActivity().getSupportFragmentManager(), "typeElement");
+    }
+
+    @OnClick(R.id.btn_random)
+    public void onBtnRandomTouched(){
+        Intent intent = new Intent(getActivity(), RandomRoomActivity.class);
+        intent.putExtra("menu", mMenu);
+        startActivity(intent);
     }
 
     @Override
