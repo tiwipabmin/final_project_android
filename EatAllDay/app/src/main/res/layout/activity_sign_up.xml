@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.SignUpActivity">
+    tools:context="kmitl.it13.millibear.eatallday.controller.activity.SignUpActivity">
 
     <TextView
         android:layout_width="match_parent"

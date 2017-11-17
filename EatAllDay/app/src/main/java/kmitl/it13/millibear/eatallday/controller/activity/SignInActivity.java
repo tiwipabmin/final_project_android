@@ -1,12 +1,11 @@
 
-package kmitl.it13.millibear.eatallday;
+package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -34,12 +32,14 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
+import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.controller.activity.SignUpActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.api.AuthenticationApi;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
-import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
-import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
 
 public class SignInActivity extends AppCompatActivity
         implements ValueEventListener {
@@ -53,13 +53,11 @@ public class SignInActivity extends AppCompatActivity
     @BindView(R.id.login_button)
     LoginButton loginButton;
 
-    String mEmail, mPassword;
     User mUser;
     DatabaseReference mChildUser;
     ProgressFragment progress;
     CallbackManager callbackManager;
     FirebaseAuth firebaseAuth;
-    ProfileTracker profileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,28 +125,14 @@ public class SignInActivity extends AppCompatActivity
         });
     }
 
-    @OnTextChanged(value = R.id.et_email,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterEmailInput(Editable editable) {
-
-        mEmail = editable.toString();
-    }
-
-    @OnTextChanged(value = R.id.et_password,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterPasswordInput(Editable editable) {
-
-        mPassword = editable.toString();
-    }
-
     @OnClick(R.id.btn_sign_in)
     void onSignInTouched() {
 
-        if (!TextUtils.isEmpty(mEmail) && !TextUtils.isEmpty(mPassword)) {
+        if (!TextUtils.isEmpty(et_email.getText().toString()) && !TextUtils.isEmpty(et_password.getText().toString())) {
 
             progress.show(getSupportFragmentManager(), "progress");
 
-            firebaseAuth.signInWithEmailAndPassword(mEmail, mPassword)
+            firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_password.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

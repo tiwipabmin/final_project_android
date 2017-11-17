@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.AddElementActivity">
+    tools:context="kmitl.it13.millibear.eatallday.controller.activity.AddElementActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

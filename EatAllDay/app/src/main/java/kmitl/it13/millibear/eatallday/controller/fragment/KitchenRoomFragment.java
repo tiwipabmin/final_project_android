@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday.fragment;
+package kmitl.it13.millibear.eatallday.controller.fragment;
 
 
 import android.content.Intent;
@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -23,7 +20,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import kmitl.it13.millibear.eatallday.AddElementActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.AddElementActivity;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.model.Food;

@@ -1,10 +1,12 @@
-package kmitl.it13.millibear.eatallday;
+package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import kmitl.it13.millibear.eatallday.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

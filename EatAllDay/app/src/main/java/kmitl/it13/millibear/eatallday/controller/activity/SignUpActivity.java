@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday;
+package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,20 +18,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
+import kmitl.it13.millibear.eatallday.api.AuthenticationApi;
+import kmitl.it13.millibear.eatallday.controller.activity.SignInActivity;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
-import kmitl.it13.millibear.eatallday.fragment.AlertDialogFragment;
-import kmitl.it13.millibear.eatallday.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    String mEmail, mFacebook, mName, mPassword;
     DatabaseReference mChildUser;
     UserApi userApi;
     DialogFragment progress;
@@ -75,25 +82,25 @@ public class SignUpActivity extends AppCompatActivity {
     void onVerifyButtonTouched() {
         boolean allValid = true;
 
-        if (!isValidEmail(mEmail)) {
+        if (!isValidEmail(et_email.getText().toString())) {
 
             et_email.setError("you can't use this email please fill in new email.");
             allValid = false;
         }
 
-        if(!isTextInput(mFacebook)){
+        if(!isTextInput(et_facebook.getText().toString())){
 
             et_facebook.setError("your name can't use special alphabet or numeric.");
             allValid = false;
         }
 
-        if(!isTextInput(mName)){
+        if(!isTextInput(et_name.getText().toString())){
 
             et_name.setError("your name can't use special alphabet or numeric.");
             allValid = false;
         }
 
-        if(!isPasswordInput(mPassword)){
+        if(!isPasswordInput(et_password.getText().toString())){
 
             et_password.setError("your password can't use special alphabet and there are 8 character up.");
             allValid = false;
@@ -101,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         if(allValid){
             progress.show(getSupportFragmentManager(), "progress");
-            createNewAccount(mName, mEmail, mPassword, mFacebook);
+            createNewAccount(et_name.getText().toString(), et_email.getText().toString(), et_password.getText().toString(), et_facebook.getText().toString());
         }
     }
 
@@ -109,34 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
     void onSignInButtonTouched() {
 
         SignUpActivity.this.finish();
-    }
-
-    @OnTextChanged(value = R.id.et_email,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterEmailInput(Editable editable) {
-
-        mEmail = editable.toString();
-    }
-
-    @OnTextChanged(value = R.id.et_facebook,
-    callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterFacebookInput(Editable editable){
-
-        mFacebook = editable.toString();
-    }
-
-    @OnTextChanged(value = R.id.et_name,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterNameInput(Editable editable){
-
-        mName = editable.toString();
-    }
-
-    @OnTextChanged(value = R.id.et_password,
-    callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterPasswordInput(Editable editable){
-
-        mPassword = editable.toString();
     }
 
     boolean isValidEmail(String email) {

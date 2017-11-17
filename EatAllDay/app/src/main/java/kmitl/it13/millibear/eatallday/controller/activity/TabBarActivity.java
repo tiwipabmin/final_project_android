@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday;
+package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,12 +23,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FriendApi;
+import kmitl.it13.millibear.eatallday.controller.fragment.KitchenRoomFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.SocialRoomFragment;
 import kmitl.it13.millibear.eatallday.model.Friend;
 import kmitl.it13.millibear.eatallday.model.User;
-import kmitl.it13.millibear.eatallday.fragment.CommunicationRoomFragment;
-import kmitl.it13.millibear.eatallday.fragment.KitchenRoomFragment;
-import kmitl.it13.millibear.eatallday.fragment.LobbyRoomFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.LobbyRoomFragment;
 
 public class TabBarActivity extends AppCompatActivity {
 
@@ -136,7 +136,7 @@ public class TabBarActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new LobbyRoomFragment().newInstance(mUser), "LOBBY");
         adapter.addFragment(new KitchenRoomFragment().newInstance(mUser), "KITCHEN");
-        adapter.addFragment(new CommunicationRoomFragment(), "SOCIAL");
+        adapter.addFragment(new SocialRoomFragment(), "SOCIAL");
         viewPager.setAdapter(adapter);
     }
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.fragment.KitchenRoomFragment">
+    tools:context="kmitl.it13.millibear.eatallday.controller.fragment.KitchenRoomFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

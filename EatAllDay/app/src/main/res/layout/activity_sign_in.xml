@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#8C8C8C"
     android:gravity="center"
-    tools:context="kmitl.it13.millibear.eatallday.SignInActivity">
+    tools:context="kmitl.it13.millibear.eatallday.controller.activity.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

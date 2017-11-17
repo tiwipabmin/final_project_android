@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday;
+package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.api.FoodApi.FoodApiListener;
 import kmitl.it13.millibear.eatallday.model.Food;
@@ -54,13 +55,19 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
     @BindView(R.id.et_cost)
     EditText et_cost;
 
+    @BindView(R.id.et_name)
+    EditText et_name;
+
+    @BindView(R.id.et_description)
+    EditText et_description;
+
     @BindView(R.id.ic_equal)
     ImageView ic_equal;
 
     @BindView(R.id.tv_type)
     TextView tv_type;
 
-    private String mDescription = "None", mName, mCost, mUserId, mType, mImage;
+    private String mUserId, mType, mImage;
     private FoodApi foodApi;
     private long id;
 
@@ -111,38 +118,17 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
 
     @OnClick(R.id.btn_add)
     public void onBtnAddTouched(){
-        if(mType.equals("food") && !mCost.isEmpty() && !mName.isEmpty() && mImage != null){
+        if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
 
             Toast.makeText(AddElementActivity.this, "Add New Food", Toast.LENGTH_SHORT).show();
 
-            Food newFood = new Food(id, mName, Long.valueOf(mCost), mDescription, mUserId, mImage);
+            Food newFood = new Food(id, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage);
             foodApi.newFood(AddElementActivity.this, id, newFood);
             finish();
         } else if(mType.equals("restaurant")){
             Toast.makeText(AddElementActivity.this, "Restaurant", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    @OnTextChanged(value = R.id.et_name,
-    callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterNameInput(Editable editable) {
-
-        mName = editable.toString();
-    }
-
-    @OnTextChanged(value = R.id.et_cost,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterCostInput(Editable editable) {
-
-        mCost = editable.toString();
-    }
-
-    @OnTextChanged(value = R.id.et_description,
-            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterDescriptionInput(Editable editable) {
-
-        mDescription = editable.toString();
     }
 
     public void checkPermission() {

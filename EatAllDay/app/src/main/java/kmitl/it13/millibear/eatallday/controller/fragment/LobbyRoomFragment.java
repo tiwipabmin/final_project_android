@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday.fragment;
+package kmitl.it13.millibear.eatallday.controller.fragment;
 
 
 import android.content.Context;
@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.SignInActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.SignInActivity;
 import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;

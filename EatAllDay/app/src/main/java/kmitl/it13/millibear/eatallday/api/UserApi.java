@@ -13,11 +13,6 @@ import kmitl.it13.millibear.eatallday.model.User;
 
 public class UserApi {
 
-    public interface UserApiListener {
-
-        public void userIdResponse(long lastUserId);
-    }
-
     private static UserApi userApi;
     private DatabaseReference childUser;
 

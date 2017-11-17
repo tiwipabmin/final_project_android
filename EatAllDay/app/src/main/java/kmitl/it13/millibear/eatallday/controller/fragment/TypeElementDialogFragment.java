@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday.fragment;
+package kmitl.it13.millibear.eatallday.controller.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
