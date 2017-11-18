@@ -1,9 +1,9 @@
 package kmitl.it13.millibear.eatallday.controller.fragment;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +13,6 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kmitl.it13.millibear.eatallday.R;
-
-/**
- * Created by tiwip on 11/19/2017.
- */
 
 public class CaptureDialogFragment extends DialogFragment {
 

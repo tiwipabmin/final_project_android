@@ -31,6 +31,12 @@
     <string name="default_cost">20 Baht / 1 Piece</string>
     <string name="currency">Baht / 1 Piece</string>
     <string name="btn_change">Change</string>
+    <string name="title_this_meal">This meal</string>
+    <string name="btn_accept">Accept</string>
+    <string name="topics">This meal topics</string>
+    <string name="hint_topics">Enter meal topics</string>
+    <string name="btn_ok">OK</string>
+
 
     <string-array name="items_type_element">
         <item><font fgcolor='#336600'>Food</font></item>

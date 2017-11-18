@@ -1,6 +1,7 @@
 package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.controller.fragment.DetailFoodDialogFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.RandomResultDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class RandomRoomActivity extends AppCompatActivity {
@@ -159,8 +161,9 @@ public class RandomRoomActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                    DialogFragment dialogFragment = new DetailFoodDialogFragment().newInstance(chooseMenu.get(key));
-                    dialogFragment.show(getSupportFragmentManager(), "detail");
+                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(chooseMenu.get(key));
+                    dialogFragment.setCancelable(false);
+                    dialogFragment.show(getSupportFragmentManager(), "random_result");
                     progress.dismiss();
                 }
             };

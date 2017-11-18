@@ -1,8 +1,12 @@
 package kmitl.it13.millibear.eatallday.adapter;
 
-import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.net.Uri;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,9 +16,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.List;
 
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.adapter.holder.FoodHistoryHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ProfileHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
@@ -132,6 +138,49 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         foodHistoryHolder.tv_username.setText(mUser.getName());
         foodHistoryHolder.tv_piece.setText(String.valueOf(mStorage.get(position).getPiece()));
         foodHistoryHolder.tv_topic.setText(mStorage.get(position).getHistoryName());
+
+//        Bitmap bmp = Bitmap.createBitmap(mContext.getResources()
+//                .getDisplayMetrics()
+//                .widthPixels,
+//                mContext
+//                        .getResources()
+//                        .getDisplayMetrics()
+//                        .heightPixels
+//                ,Bitmap
+//                        .Config
+//                        .ARGB_8888);
+//        Canvas canvas = new Canvas(bmp);
+//        foodHistoryHolder.itemView.setDrawingCacheEnabled(true);
+//        foodHistoryHolder.itemView.measure(
+//                View.MeasureSpec.makeMeasureSpec(canvas.getWidth(), View.MeasureSpec.EXACTLY),
+//                View.MeasureSpec.makeMeasureSpec(canvas.getHeight(), View.MeasureSpec.EXACTLY));
+//        foodHistoryHolder.itemView.layout(0,0,foodHistoryHolder.itemView.getMeasuredWidth(),foodHistoryHolder.itemView.getMeasuredHeight());
+//        canvas.drawBitmap(foodHistoryHolder.itemView.getDrawingCache(),0,0,new Paint());
+
+//        View screenView = foodHistoryHolder.itemView.getRootView();
+//        screenView.setDrawingCacheEnabled(true);
+//        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+//        screenView.setDrawingCacheEnabled(false);
+//
+//        Toast.makeText(mContext, "Bitmap : "+ bitmap, Toast.LENGTH_SHORT).show();
+
+//        SaveImage saveImage = new SaveImage(mContext);
+//        final String path = saveImage.addImageToGallery(bmp);
+
+        foodHistoryHolder.iv_sharing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                shareOnFacebook(path);
+            }
+        });
+    }
+
+    private void shareOnFacebook(String path){
+        File imageFile = new File(path);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/jpg");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
+        mContext.startActivity(Intent.createChooser(intent, "Share to..."));
     }
 
 }
