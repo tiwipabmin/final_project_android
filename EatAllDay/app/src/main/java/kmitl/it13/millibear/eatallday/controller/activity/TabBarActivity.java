@@ -43,7 +43,7 @@ public class TabBarActivity extends AppCompatActivity {
     private FriendApi mFriendApi;
     private DatabaseReference mChildFriend;
     private ArrayList<Friend> mFriendList;
-    private NotificationBadge mBadgeFriend, mBadgeBell;
+    private NotificationBadge mBadgeFriend;
     private int count = 0;
 
     @Override
@@ -68,7 +68,6 @@ public class TabBarActivity extends AppCompatActivity {
         mFriendList = new ArrayList<>();
 
         mBadgeFriend = findViewById(R.id.badge_friend);
-        mBadgeBell = findViewById(R.id.badge_bell);
     }
 
     private void setUp(){
@@ -86,7 +85,6 @@ public class TabBarActivity extends AppCompatActivity {
                     assert friend != null;
                     if(!friend.isResponse()) {
                         count =+ 1;
-                        Toast.makeText(TabBarActivity.this, "Count++ : " + count, Toast.LENGTH_SHORT).show();
                         mBadgeFriend.setNumber(count);
                     }
                 }

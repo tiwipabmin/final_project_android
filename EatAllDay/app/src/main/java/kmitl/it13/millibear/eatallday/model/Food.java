@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 public class Food implements Parcelable{
 
-    private Long id;
+    private String id;
     private String name;
     private Long cost;
     private String description;
     private String userId;
     private String image;
 
-    public Food(Long id, String name, Long cost, String description, String userId, String image) {
+    public Food(String id, String name, Long cost, String description, String userId, String image) {
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -28,7 +28,7 @@ public class Food implements Parcelable{
         if (in.readByte() == 0) {
             id = null;
         } else {
-            id = in.readLong();
+            id = in.readString();
         }
         name = in.readString();
         if (in.readByte() == 0) {
@@ -53,11 +53,11 @@ public class Food implements Parcelable{
         }
     };
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -112,7 +112,7 @@ public class Food implements Parcelable{
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeLong(id);
+            dest.writeString(id);
         }
         dest.writeString(name);
         if (cost == null) {

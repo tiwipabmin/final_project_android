@@ -45,9 +45,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.activity.AddElementActivity" />
         <activity android:name=".controller.activity.RandomRoomActivity" />
-        <activity android:name=".controller.activity.FoodItemActivity"></activity>
+        <activity android:name=".controller.activity.FoodItemActivity" />
+        <activity android:name=".controller.activity.AddFoodActivity"></activity>
     </application>
 
 </manifest>

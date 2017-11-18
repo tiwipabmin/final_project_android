@@ -7,14 +7,10 @@ public class History {
     private Long hisId;
     private String userId;
     private String foodName;
-    private String restaurantName;
     private String historyName;
-    private Long numberOfPeople;
     private String foodImage;
-    private String restaurantImage;
     private Long cost;
     private Long piece;
-    private Map<String, String> host;
     private String time;
     private String type;
 
@@ -45,14 +41,6 @@ public class History {
         this.foodName = foodName;
     }
 
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
     public String getHistoryName() {
         return historyName;
     }
@@ -61,28 +49,12 @@ public class History {
         this.historyName = historyName;
     }
 
-    public Long getNumberOfPeople() {
-        return numberOfPeople;
-    }
-
-    public void setNumberOfPeople(Long numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-    }
-
     public String getFoodImage() {
         return foodImage;
     }
 
     public void setFoodImage(String foodImage) {
         this.foodImage = foodImage;
-    }
-
-    public String getRestaurantImage() {
-        return restaurantImage;
-    }
-
-    public void setRestaurantImage(String restaurantImage) {
-        this.restaurantImage = restaurantImage;
     }
 
     public Long getCost() {
@@ -99,14 +71,6 @@ public class History {
 
     public void setPiece(Long piece) {
         this.piece = piece;
-    }
-
-    public Map<String, String> getHost() {
-        return host;
-    }
-
-    public void setHost(Map<String, String> host) {
-        this.host = host;
     }
 
     public String getTime() {

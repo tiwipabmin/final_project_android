@@ -3,7 +3,6 @@ package kmitl.it13.millibear.eatallday.controller.fragment;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import kmitl.it13.millibear.eatallday.controller.activity.AddElementActivity;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
+import kmitl.it13.millibear.eatallday.controller.activity.AddFoodActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
@@ -32,26 +32,16 @@ import kmitl.it13.millibear.eatallday.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KitchenRoomFragment extends Fragment implements TypeElementDialogFragment.TypeElementDialogFragmentListener, FoodApi.FoodApiListener{
+public class KitchenRoomFragment extends Fragment {
 
     @BindView(R.id.btn_add)
     Button btn_add;
 
-    @BindView(R.id.iv_test)
-    ImageView iv_test;
-
-    private Intent addElementIntent;
     private User mUser;
     private ArrayList<Food> mMenu;
 
     public KitchenRoomFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        FoodApi.getFoodApi().setListener(this);
     }
 
     @Override
@@ -63,19 +53,15 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
         initialInstance();
     }
 
-    private void initialInstance(){
+    private void initialInstance() {
 
-        addElementIntent = new Intent(getActivity(), AddElementActivity.class);
-
-        FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(mUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+        FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(mUser.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mMenu = new ArrayList<>();
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     mMenu.add(ds.getValue(Food.class));
-                    Toast.makeText(KitchenRoomFragment.this.getActivity(), ds.getValue(Food.class) + "", Toast.LENGTH_SHORT).show();
                 }
-//                Glide.with(KitchenRoomFragment.this.getActivity()).load(food.getImage()).into(iv_test);
             }
 
             @Override
@@ -104,36 +90,18 @@ public class KitchenRoomFragment extends Fragment implements TypeElementDialogFr
     }
 
     @OnClick(R.id.btn_add)
-    public void onBtnAddTouched(){
-        DialogFragment typeElementDialog = new TypeElementDialogFragment();
-        ((TypeElementDialogFragment)typeElementDialog).setListener(this);
-        typeElementDialog.show(getActivity().getSupportFragmentManager(), "typeElement");
-    }
-
-    @OnClick(R.id.btn_random)
-    public void onBtnRandomTouched(){
-        Intent intent = new Intent(getActivity(), RandomRoomActivity.class);
+    public void onBtnAddTouched() {
+        Intent intent = new Intent(getActivity(), AddFoodActivity.class);
         intent.putExtra("menu", mMenu);
+        intent.putExtra("type", "food");
+        intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);
     }
 
-    @Override
-    public void onTypeFoodTouched() {
-
-        addElementIntent.putExtra("type", "food");
-        addElementIntent.putExtra("userId", mUser.getUserId());
-        startActivity(addElementIntent);
-    }
-
-    @Override
-    public void onTypeRestaurantTouched() {
-        addElementIntent.putExtra("type", "restaurant");
-        addElementIntent.putExtra("userId", mUser.getUserId());
-        startActivity(addElementIntent);
-    }
-
-    @Override
-    public void onCreateObjectFoodApi(long id) {
-
+    @OnClick(R.id.btn_random)
+    public void onBtnRandomTouched() {
+        Intent intent = new Intent(getActivity(), RandomRoomActivity.class);
+        intent.putExtra("menu", mMenu);
+        startActivity(intent);
     }
 }

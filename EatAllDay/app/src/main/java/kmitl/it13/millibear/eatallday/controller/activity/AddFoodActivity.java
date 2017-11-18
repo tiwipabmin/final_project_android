@@ -9,13 +9,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.File;
@@ -36,21 +33,16 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
-import kmitl.it13.millibear.eatallday.api.FoodApi.FoodApiListener;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class AddElementActivity extends AppCompatActivity implements FoodApi.FoodApiListener {
-
-    final int REQUEST_WRITE_EXTERNAL_PERMISSIONS = 1234;
-    final int REQUEST_READ_EXTERNAL_PERMISSIONS = 1235;
+public class AddFoodActivity extends AppCompatActivity {
 
     final private int SELECT_FILE = 1969;
 
-    @BindView(R.id.iv_element)
-    ImageView iv_element;
+    @BindView(R.id.iv_food)
+    ImageView iv_food;
 
     @BindView(R.id.et_cost)
     EditText et_cost;
@@ -61,38 +53,26 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
     @BindView(R.id.et_description)
     EditText et_description;
 
-    @BindView(R.id.ic_equal)
-    ImageView ic_equal;
-
     @BindView(R.id.tv_type)
     TextView tv_type;
 
     @BindView(R.id.tv_currency)
     TextView tv_currency;
 
-    private String mUserId, mType, mImage;
+    private String mUserId, mImage, mType;
     private FoodApi foodApi;
-    private long id;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        FoodApi.getFoodApi().setListener(this);
-        FoodApi.getFoodApi().setContext(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_element);
-        Intent addElementIntent = getIntent();
-        mType = addElementIntent.getStringExtra("type");
-        mUserId = addElementIntent.getStringExtra("userId");
+        setContentView(R.layout.activity_add_food);
 
-        ButterKnife.bind(AddElementActivity.this);
-        checkPermission();
+        Intent addFoodIntent = getIntent();
+        mUserId = addFoodIntent.getStringExtra("userId");
+        mType = addFoodIntent.getStringExtra("type");
+
+        ButterKnife.bind(this);
         initialInstance();
-        setUp();
     }
 
     private void initialInstance() {
@@ -100,17 +80,7 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
         foodApi = FoodApi.getFoodApi();
     }
 
-    private void setUp(){
-
-        if(mType.equals("restaurant")){
-            ic_equal.setVisibility(View.GONE);
-            et_cost.setVisibility(View.GONE);
-            tv_currency.setVisibility(View.GONE);
-            tv_type.setText(R.string.label_restaurant);
-        }
-    }
-
-    @OnClick(R.id.iv_element)
+    @OnClick(R.id.iv_food)
     public void onImageViewElementTouched() {
         goToGallery();
     }
@@ -124,28 +94,12 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
     public void onBtnAddTouched(){
         if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
 
-            Toast.makeText(AddElementActivity.this, "Add New Food", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Add New Food", Toast.LENGTH_SHORT).show();
 
-            Food newFood = new Food(id, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage);
-            foodApi.newFood(AddElementActivity.this, id, newFood);
+            String newKey = foodApi.getChildFood().push().getKey();
+            Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage);
+            foodApi.newFood(newKey, newFood);
             finish();
-        } else if(mType.equals("restaurant")){
-            Toast.makeText(AddElementActivity.this, "Restaurant", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    public void checkPermission() {
-        if (ContextCompat.checkSelfPermission(AddElementActivity.this,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddElementActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_WRITE_EXTERNAL_PERMISSIONS);
-            Toast.makeText(this, "Permission grated", Toast.LENGTH_SHORT).show();
-        } else if (ContextCompat.checkSelfPermission(AddElementActivity.this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddElementActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_READ_EXTERNAL_PERMISSIONS);
-            Toast.makeText(this, "Permission grated", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -226,7 +180,7 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
     private void galleryAddImage(Uri imageUri) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(imageUri);
-        AddElementActivity.this.getApplicationContext().sendBroadcast(mediaScanIntent);
+        this.getApplicationContext().sendBroadcast(mediaScanIntent);
     }
 
     @Override
@@ -238,22 +192,17 @@ public class AddElementActivity extends AppCompatActivity implements FoodApi.Foo
             if (requestCode == SELECT_FILE) {
 
                 Uri uriSelectedImage = data.getData();
-                String strPath = getRealPathFromURI(AddElementActivity.this, uriSelectedImage);
+                String strPath = getRealPathFromURI(this, uriSelectedImage);
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
                 mImage = addImageToGallery(imageBitmap);
 
-                iv_element.setImageBitmap(imageBitmap);
+                iv_food.setImageBitmap(imageBitmap);
 
             }
 
         }
-    }
-
-    @Override
-    public void onCreateObjectFoodApi(long id) {
-        this.id = id;
     }
 }

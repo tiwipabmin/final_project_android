@@ -38,7 +38,7 @@ public class ProgressFragment extends DialogFragment {
 
         animLoading = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
 
-        download = (ImageView) rootView.findViewById(R.id.loading);
+        download = rootView.findViewById(R.id.loading);
         download.setAnimation(animLoading);
 
         return rootView;

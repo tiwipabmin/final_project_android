@@ -17,7 +17,7 @@
     <string name="eat_all_day">EatAllDay</string>
     <string name="facebook_app_id">871168826390720</string>
     <string name="fb_login_protocol_scheme">fb871168826390720</string>
-    <string name="btn_add_element">Add food or restaurant</string>
+    <string name="btn_add_food">Add food</string>
     <string name="btn_random">Random</string>
     <string name="btn_random_now">Random now!</string>
     <string name="hint_cost">Cost</string>
@@ -30,6 +30,7 @@
     <string name="choose">Choose</string>
     <string name="default_cost">20 Baht / 1 Piece</string>
     <string name="currency">Baht / 1 Piece</string>
+    <string name="btn_change">Change</string>
 
     <string-array name="items_type_element">
         <item><font fgcolor='#336600'>Food</font></item>

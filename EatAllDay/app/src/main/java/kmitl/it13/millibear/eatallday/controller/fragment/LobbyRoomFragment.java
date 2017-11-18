@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.controller.activity.SignInActivity;
 import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
 import kmitl.it13.millibear.eatallday.model.User;

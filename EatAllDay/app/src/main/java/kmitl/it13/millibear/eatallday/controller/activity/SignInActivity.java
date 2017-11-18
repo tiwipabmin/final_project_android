@@ -2,8 +2,11 @@
 package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -44,6 +47,9 @@ import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
 public class SignInActivity extends AppCompatActivity
         implements ValueEventListener {
 
+    final int REQUEST_WRITE_EXTERNAL_PERMISSIONS = 1234;
+    final int REQUEST_READ_EXTERNAL_PERMISSIONS = 1235;
+
     @BindView(R.id.et_email)
     EditText et_email;
 
@@ -63,10 +69,25 @@ public class SignInActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        checkPermission();
         ButterKnife.bind(SignInActivity.this);
 
         initialInstance();
         setUp();
+    }
+
+    public void checkPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_EXTERNAL_PERMISSIONS);
+            Toast.makeText(this, "Permission grated", Toast.LENGTH_SHORT).show();
+        } else if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_READ_EXTERNAL_PERMISSIONS);
+            Toast.makeText(this, "Permission grated", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initialInstance() {
@@ -95,7 +116,6 @@ public class SignInActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.getValue() == null){
-                            Toast.makeText(SignInActivity.this, dataSnapshot.getValue()+"", Toast.LENGTH_SHORT).show();
                             userApi.newUser(SignInActivity.this, user);
                         }
                         Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
