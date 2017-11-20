@@ -51,8 +51,10 @@ public class DetailFoodDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_detail_food, null);
         ButterKnife.bind(this, view);
 
+        String cost = String.valueOf(mFood.getCost()) + " " + mFood.getCurrency() + " / " + mFood.getAmount() + " " + mFood.getUnit();
+
         tv_title.setText(mFood.getName());
-        tv_cost.setText(String.valueOf(mFood.getCost()).concat(" Bath / 1 Piece"));
+        tv_cost.setText(cost);
         tv_description.setText(mFood.getDescription());
         Glide.with(getActivity()).load(mFood.getImage()).into(iv_food);
 

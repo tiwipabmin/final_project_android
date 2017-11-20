@@ -58,6 +58,15 @@
             android:layout_toRightOf="@+id/iv_user"
             app:nbBackground="@drawable/badge_bg_with_shadow" />
 
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:background="@drawable/ic_add_64dp"/>
+
     </RelativeLayout>
 
 </LinearLayout>

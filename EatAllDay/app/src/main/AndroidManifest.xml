@@ -47,7 +47,7 @@
         </activity>
         <activity android:name=".controller.activity.RandomRoomActivity" />
         <activity android:name=".controller.activity.FoodItemActivity" />
-        <activity android:name=".controller.activity.AddFoodActivity"></activity>
+        <activity android:name=".controller.activity.AddFoodActivity" />
     </application>
 
 </manifest>

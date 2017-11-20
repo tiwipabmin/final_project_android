@@ -38,8 +38,6 @@ public class LobbyRoomFragment extends Fragment {
     @BindView(R.id.profile)
     RecyclerView profile;
 
-    private List<String> mViewType;
-    private List<History> mStorage;
     private PostAdapter mPostAdapter;
     private User mUser;
     private DatabaseReference childHistory;
@@ -61,12 +59,6 @@ public class LobbyRoomFragment extends Fragment {
 
         childHistory = HistoryApi.getHistoryApi().getChildHistory();
 
-        mStorage = new ArrayList<>();
-        History deception = new History();
-        mStorage.add(deception);
-
-        mViewType = new ArrayList<>();
-        mViewType.add("profile");
         mPostAdapter = new PostAdapter(context);
     }
 
@@ -74,24 +66,43 @@ public class LobbyRoomFragment extends Fragment {
 
         childHistory.orderByChild("userId")
                 .equalTo(mUser.getUserId())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                ArrayList<History> mStorage = new ArrayList<>();
+                History deception = new History();
+                mStorage.add(deception);
+
+                ArrayList<String> mViewType = new ArrayList<>();
+                mViewType.add("profile");
+
+                //จะเก็บข้อมูลชัประวัติไว้ชั่วคราว
+                ArrayList<History> memoryContent = new ArrayList<>();
+                ArrayList<String> memoryType = new ArrayList<>();
+
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     History history = ds.getValue(History.class);
 
                     assert history != null;
-                    history.setHisId(Long.valueOf(ds.getKey()));
+                    history.setHisId(String.valueOf(ds.getKey()));
 
-                    mStorage.add(history);
-                    mViewType.add(history.getType());
-
+                    memoryContent.add(history);
+                    memoryType.add(history.getType());
                 }
+
+                //เอาประวัติล่าสุดขึ้นมาไว้ลำดับแรก
+                for(int i = memoryContent.size() - 1; i >= 0 ; i--){
+                    mStorage.add(memoryContent.get(i));
+                    mViewType.add(memoryType.get(i));
+                }
+
                 mPostAdapter.setStorage(mStorage);
                 mPostAdapter.setViewType(mViewType);
                 mPostAdapter.setUser(mUser);
                 profile.setAdapter(mPostAdapter);
                 profile.setLayoutManager(new LinearLayoutManager(getActivity()));
+                profile.invalidateItemDecorations();
             }
 
             @Override

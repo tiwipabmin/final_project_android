@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="2dp"
-                    android:text="@string/hint_cost"
+                    android:text="@string/cost"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 

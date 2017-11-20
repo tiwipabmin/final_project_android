@@ -38,13 +38,11 @@ public class FoodHistoryHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.iv_sharing)
     public ImageView iv_sharing;
 
+    @BindView(R.id.food_history)
+    public LinearLayout layout;
+
     public FoodHistoryHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-    }
-
-    @OnClick(R.id.iv_sharing)
-    public void onIvSharingTouched(){
-
     }
 }

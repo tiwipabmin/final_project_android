@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,15 +51,31 @@ public class AddFoodActivity extends AppCompatActivity {
     @BindView(R.id.et_name)
     EditText et_name;
 
+    @BindView(R.id.et_currency)
+    EditText et_currency;
+
+    @BindView(R.id.et_amount)
+    EditText et_amount;
+
+    @BindView(R.id.et_unit)
+    EditText et_unit;
+
     @BindView(R.id.et_description)
     EditText et_description;
 
-    @BindView(R.id.tv_type)
-    TextView tv_type;
+    @BindView(R.id.iv_logout)
+    ImageView iv_logout;
 
-    @BindView(R.id.tv_currency)
-    TextView tv_currency;
+    @BindView(R.id.iv_user)
+    ImageView iv_user;
 
+    @BindView(R.id.iv_back)
+    ImageView iv_back;
+
+    @BindView(R.id.iv_add)
+    ImageView iv_add;
+
+    private NotificationBadge mBadgeFriend;
     private String mUserId, mImage, mType;
     private FoodApi foodApi;
 
@@ -73,11 +90,28 @@ public class AddFoodActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initialInstance();
+        setUp();
     }
 
     private void initialInstance() {
 
         foodApi = FoodApi.getFoodApi();
+
+        bindWidget();
+    }
+
+    private void bindWidget(){
+
+        mBadgeFriend = findViewById(R.id.badge_friend);
+    }
+
+    private void setUp(){
+
+        iv_logout.setVisibility(View.GONE);
+        iv_user.setVisibility(View.GONE);
+        iv_back.setVisibility(View.VISIBLE);
+        iv_add.setVisibility(View.VISIBLE);
+        mBadgeFriend.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.iv_food)
@@ -85,19 +119,20 @@ public class AddFoodActivity extends AppCompatActivity {
         goToGallery();
     }
 
-    @OnClick(R.id.btn_cancel)
-    public void onBtnCancelTouched(){
+    @OnClick(R.id.iv_back)
+    public void onIvBackTouched(){
         finish();
     }
 
-    @OnClick(R.id.btn_add)
-    public void onBtnAddTouched(){
+    @OnClick(R.id.iv_add)
+    public void onIvAddTouched(){
         if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
 
             Toast.makeText(this, "Add New Food", Toast.LENGTH_SHORT).show();
 
             String newKey = foodApi.getChildFood().push().getKey();
-            Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage);
+            Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage, et_currency.getText().toString(),
+                    Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
             foodApi.newFood(newKey, newFood);
             finish();
         }

@@ -11,25 +11,27 @@ public class Food implements Parcelable{
     private String description;
     private String userId;
     private String image;
+    private String currency;
+    private Long amount;
+    private String unit;
 
-    public Food(String id, String name, Long cost, String description, String userId, String image) {
+    public Food(String id, String name, Long cost, String description, String userId, String image, String currency, Long amount, String unit) {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.description = description;
         this.userId = userId;
         this.image = image;
+        this.currency = currency;
+        this.amount = amount;
+        this.unit = unit;
     }
 
     public Food() {
     }
 
     protected Food(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readString();
-        }
+        id = in.readString();
         name = in.readString();
         if (in.readByte() == 0) {
             cost = null;
@@ -39,6 +41,13 @@ public class Food implements Parcelable{
         description = in.readString();
         userId = in.readString();
         image = in.readString();
+        currency = in.readString();
+        if (in.readByte() == 0) {
+            amount = null;
+        } else {
+            amount = in.readLong();
+        }
+        unit = in.readString();
     }
 
     public static final Creator<Food> CREATOR = new Creator<Food>() {
@@ -85,12 +94,12 @@ public class Food implements Parcelable{
         this.description = description;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getImage() {
@@ -101,6 +110,30 @@ public class Food implements Parcelable{
         this.image = image;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -108,12 +141,7 @@ public class Food implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeString(id);
-        }
+        dest.writeString(id);
         dest.writeString(name);
         if (cost == null) {
             dest.writeByte((byte) 0);
@@ -124,5 +152,13 @@ public class Food implements Parcelable{
         dest.writeString(description);
         dest.writeString(userId);
         dest.writeString(image);
+        dest.writeString(currency);
+        if (amount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(amount);
+        }
+        dest.writeString(unit);
     }
 }

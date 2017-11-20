@@ -1,10 +1,8 @@
 package kmitl.it13.millibear.eatallday.model;
 
-import java.util.Map;
-
 public class History {
 
-    private Long hisId;
+    private String hisId;
     private String userId;
     private String foodName;
     private String historyName;
@@ -17,11 +15,23 @@ public class History {
     public History() {
     }
 
-    public Long getHisId() {
+    public History(String hisId, String userId, String foodName, String historyName, String foodImage, Long cost, Long piece, String time, String type) {
+        this.hisId = hisId;
+        this.userId = userId;
+        this.foodName = foodName;
+        this.historyName = historyName;
+        this.foodImage = foodImage;
+        this.cost = cost;
+        this.piece = piece;
+        this.time = time;
+        this.type = type;
+    }
+
+    public String getHisId() {
         return hisId;
     }
 
-    public void setHisId(Long hisId) {
+    public void setHisId(String hisId) {
         this.hisId = hisId;
     }
 

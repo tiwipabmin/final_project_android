@@ -95,39 +95,6 @@ public class TabBarActivity extends AppCompatActivity {
 
             }
         });
-
-//        mChildFriend.orderByChild("receiver").equalTo(mUser.getUserId()).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Friend friend = dataSnapshot.getValue(Friend.class);
-//                mFriendList.add(friend);
-//                assert friend != null;
-//                if (!friend.isResponse()) {
-//                    count += 1;
-//                    mBadgeFriend.setNumber(count);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     private void setupViewPager(ViewPager viewPager){

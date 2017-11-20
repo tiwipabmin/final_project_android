@@ -1,6 +1,7 @@
 
 package kmitl.it13.millibear.eatallday.controller.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -46,6 +47,8 @@ import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
 
 public class SignInActivity extends AppCompatActivity
         implements ValueEventListener {
+
+    private final int SIGN_UP_SUCCESS = 1921;
 
     final int REQUEST_WRITE_EXTERNAL_PERMISSIONS = 1234;
     final int REQUEST_READ_EXTERNAL_PERMISSIONS = 1235;
@@ -205,14 +208,28 @@ public class SignInActivity extends AppCompatActivity
     void onSignUpTouched() {
 
         Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, SIGN_UP_SUCCESS);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK){
+
+            if(requestCode == SIGN_UP_SUCCESS){
+
+                User user = data.getParcelableExtra("user");
+                Intent intent = new Intent(this, TabBarActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+                finish();
+            }
+        }
     }
+
+
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {

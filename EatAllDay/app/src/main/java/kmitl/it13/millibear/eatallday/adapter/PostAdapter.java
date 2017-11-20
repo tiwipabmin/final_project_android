@@ -6,12 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +27,7 @@ import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.adapter.holder.FoodHistoryHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ProfileHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.controller.fragment.CaptureDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.model.User;
 
@@ -36,7 +39,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private User mUser;
     private List<History> mStorage;
     private List<String> mViewType;
-    private boolean isLoadingAdded = false;
 
     public PostAdapter(Context mContext, User mUser, List<History> mStorage, List<String> mViewType) {
         this.mContext = mContext;
@@ -130,7 +132,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         profileHolder.tv_description.setText(mUser.getDescription());
     }
 
-    private void configureFoodHistoryViewHolder(FoodHistoryHolder foodHistoryHolder, int position){
+    private void configureFoodHistoryViewHolder(final FoodHistoryHolder foodHistoryHolder, int position){
         Glide.with(mContext).load(mUser.getImage()).into(foodHistoryHolder.iv_userImage);
         Glide.with(mContext).load(mStorage.get(position).getFoodImage()).into(foodHistoryHolder.iv_foodImage);
         foodHistoryHolder.tv_cost.setText(String.valueOf(mStorage.get(position).getCost()));
@@ -139,38 +141,20 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         foodHistoryHolder.tv_piece.setText(String.valueOf(mStorage.get(position).getPiece()));
         foodHistoryHolder.tv_topic.setText(mStorage.get(position).getHistoryName());
 
-//        Bitmap bmp = Bitmap.createBitmap(mContext.getResources()
-//                .getDisplayMetrics()
-//                .widthPixels,
-//                mContext
-//                        .getResources()
-//                        .getDisplayMetrics()
-//                        .heightPixels
-//                ,Bitmap
-//                        .Config
-//                        .ARGB_8888);
-//        Canvas canvas = new Canvas(bmp);
-//        foodHistoryHolder.itemView.setDrawingCacheEnabled(true);
-//        foodHistoryHolder.itemView.measure(
-//                View.MeasureSpec.makeMeasureSpec(canvas.getWidth(), View.MeasureSpec.EXACTLY),
-//                View.MeasureSpec.makeMeasureSpec(canvas.getHeight(), View.MeasureSpec.EXACTLY));
-//        foodHistoryHolder.itemView.layout(0,0,foodHistoryHolder.itemView.getMeasuredWidth(),foodHistoryHolder.itemView.getMeasuredHeight());
-//        canvas.drawBitmap(foodHistoryHolder.itemView.getDrawingCache(),0,0,new Paint());
-
-//        View screenView = foodHistoryHolder.itemView.getRootView();
-//        screenView.setDrawingCacheEnabled(true);
-//        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
-//        screenView.setDrawingCacheEnabled(false);
-//
-//        Toast.makeText(mContext, "Bitmap : "+ bitmap, Toast.LENGTH_SHORT).show();
-
-//        SaveImage saveImage = new SaveImage(mContext);
-//        final String path = saveImage.addImageToGallery(bmp);
-
         foodHistoryHolder.iv_sharing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                shareOnFacebook(path);
+                foodHistoryHolder.layout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        foodHistoryHolder.layout.setDrawingCacheEnabled(true);
+                        Bitmap bmp = Bitmap.createBitmap(foodHistoryHolder.layout.getDrawingCache());
+                        foodHistoryHolder.layout.setDrawingCacheEnabled(false);
+                        SaveImage saveImage = new SaveImage(mContext);
+                        String path = saveImage.addImageToGallery(bmp);
+                        shareOnFacebook(path);
+                    }
+                });
             }
         });
     }
@@ -183,4 +167,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mContext.startActivity(Intent.createChooser(intent, "Share to..."));
     }
 
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        super.onViewRecycled(holder);
+    }
 }

@@ -5,14 +5,18 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -23,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.adapter.FoodItemAdapter;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.activity.AddFoodActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
@@ -37,11 +42,14 @@ public class KitchenRoomFragment extends Fragment {
     @BindView(R.id.btn_add)
     Button btn_add;
 
+    @BindView(R.id.rv_menu)
+    RecyclerView rv_menu;
+
     private User mUser;
     private ArrayList<Food> mMenu;
+    private FoodItemAdapter adapter;
 
     public KitchenRoomFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -50,7 +58,6 @@ public class KitchenRoomFragment extends Fragment {
 
         Bundle args = getArguments();
         mUser = args.getParcelable("user");
-        initialInstance();
     }
 
     private void initialInstance() {
@@ -62,6 +69,9 @@ public class KitchenRoomFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     mMenu.add(ds.getValue(Food.class));
                 }
+                adapter = new FoodItemAdapter(getContext(), mMenu, 0);
+                rv_menu.setLayoutManager(new LinearLayoutManager(getContext()));
+                rv_menu.setAdapter(adapter);
             }
 
             @Override
@@ -71,11 +81,16 @@ public class KitchenRoomFragment extends Fragment {
         });
     }
 
+    private void deleteMenu(Food food){
+        FoodApi.getFoodApi().getChildFood().child(food.getId()).removeValue();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_kitchen_room, container, false);
         ButterKnife.bind(this, rootView);
+        initialInstance();
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -102,6 +117,12 @@ public class KitchenRoomFragment extends Fragment {
     public void onBtnRandomTouched() {
         Intent intent = new Intent(getActivity(), RandomRoomActivity.class);
         intent.putExtra("menu", mMenu);
+        intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 }

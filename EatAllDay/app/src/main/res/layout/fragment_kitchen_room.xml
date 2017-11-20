@@ -6,11 +6,13 @@
     tools:context="kmitl.it13.millibear.eatallday.controller.fragment.KitchenRoomFragment">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

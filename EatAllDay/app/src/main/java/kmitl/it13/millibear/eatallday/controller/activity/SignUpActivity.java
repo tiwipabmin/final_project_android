@@ -114,7 +114,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.tv_sign_in)
     void onSignInButtonTouched() {
-
         SignUpActivity.this.finish();
     }
 
@@ -194,9 +193,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void goToLobby(User newUser){
-        Intent intent = new Intent(SignUpActivity.this, TabBarActivity.class);
+        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
         intent.putExtra("user", newUser);
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

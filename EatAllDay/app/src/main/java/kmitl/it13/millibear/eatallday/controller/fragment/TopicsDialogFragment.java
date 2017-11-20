@@ -1,6 +1,7 @@
 package kmitl.it13.millibear.eatallday.controller.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -9,18 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.api.HistoryApi;
+import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
-
-/**
- * Created by tiwip on 11/19/2017.
- */
+import kmitl.it13.millibear.eatallday.model.History;
 
 public class TopicsDialogFragment extends DialogFragment {
 
@@ -28,6 +33,12 @@ public class TopicsDialogFragment extends DialogFragment {
     EditText et_topics;
 
     private Food mFood;
+    private Context mContext;
+    private String mUserId;
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,7 @@ public class TopicsDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         mFood = args.getParcelable("food");
+        mUserId = args.getString("userId");
     }
 
     @NonNull
@@ -54,14 +66,23 @@ public class TopicsDialogFragment extends DialogFragment {
     @OnClick(R.id.btn_ok)
     public void onBtnOkTouched(){
         if(!et_topics.getText().toString().isEmpty()){
+            String newKey = HistoryApi.getHistoryApi().getChildHistory().push().getKey();
+            SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy HH:mm a", Locale.US);
+            String date = fmt.format(new Date());
 
+            History newHistory = new History(newKey, mUserId, mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getAmount(), date, "food");
+            HistoryApi.getHistoryApi().newHistory(newKey, newHistory);
+            this.dismiss();
+            ((RandomRoomActivity)mContext).finish();
         }
     }
 
-    public static TopicsDialogFragment newInstance(Food food) {
+    public static TopicsDialogFragment newInstance(Context context, Food food, String userId) {
         Bundle args = new Bundle();
         args.putParcelable("food", food);
+        args.putString("userId", userId);
         TopicsDialogFragment fragment = new TopicsDialogFragment();
+        fragment.setContext(context);
         fragment.setArguments(args);
         return fragment;
     }

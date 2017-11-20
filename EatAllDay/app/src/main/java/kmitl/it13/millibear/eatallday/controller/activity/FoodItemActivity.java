@@ -59,7 +59,7 @@ public class FoodItemActivity extends AppCompatActivity implements FoodItemAdapt
 
         mMenu = intent.getParcelableArrayListExtra("menu");
 
-        foodItemAdapter = new FoodItemAdapter(FoodItemActivity.this, mMenu, FoodItemActivity.this);
+        foodItemAdapter = new FoodItemAdapter(FoodItemActivity.this, mMenu, FoodItemActivity.this, 1);
 
         item = intent.getStringExtra("item");
     }

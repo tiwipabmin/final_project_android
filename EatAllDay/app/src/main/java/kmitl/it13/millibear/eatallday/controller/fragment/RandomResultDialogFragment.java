@@ -1,6 +1,7 @@
 package kmitl.it13.millibear.eatallday.controller.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class RandomResultDialogFragment extends DialogFragment {
@@ -29,6 +29,12 @@ public class RandomResultDialogFragment extends DialogFragment {
     TextView tv_foodName;
 
     private Food mFood;
+    private Context mContext;
+    private String mUserId;
+
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class RandomResultDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
         mFood = args.getParcelable("food");
+        mUserId = args.getString("userId");
     }
 
     @NonNull
@@ -55,16 +62,18 @@ public class RandomResultDialogFragment extends DialogFragment {
 
     @OnClick(R.id.btn_accept)
     public void onBtnAcceptTouched(){
-        DialogFragment topicsDialog = new TopicsDialogFragment().newInstance(mFood);
+        DialogFragment topicsDialog = new TopicsDialogFragment().newInstance(mContext, mFood, mUserId);
+        topicsDialog.setCancelable(false);
         topicsDialog.show(getActivity().getSupportFragmentManager(), "topicsDialog");
         dismiss();
     }
 
-    public static RandomResultDialogFragment newInstance(Food food) {
-
+    public static RandomResultDialogFragment newInstance(Context context, Food food, String userId) {
         Bundle args = new Bundle();
         args.putParcelable("food", food);
+        args.putString("userId", userId);
         RandomResultDialogFragment fragment = new RandomResultDialogFragment();
+        fragment.setContext(context);
         fragment.setArguments(args);
         return fragment;
     }
