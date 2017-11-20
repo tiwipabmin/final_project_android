@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -14,34 +13,33 @@ import java.util.ArrayList;
 
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.holder.FeatureFoodOneHolder;
-import kmitl.it13.millibear.eatallday.adapter.holder.FoodHolder;
-import kmitl.it13.millibear.eatallday.controller.activity.FoodItemActivity;
+import kmitl.it13.millibear.eatallday.adapter.holder.FeatureFoodTwoHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.controller.fragment.DetailFoodDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class FoodItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private final int FEATURE1 = 0, FEATURE2 = 1;
 
     private Context mContext;
     private ArrayList<Food> mMenu;
-    private FoodItemListener mListener;
+    private MenuListener mListener;
     private int mFeature = 0;
 
-    public interface FoodItemListener {
+    public interface MenuListener {
 
         public void onBtnAddTouched(int position);
     }
 
-    public FoodItemAdapter(Context context, ArrayList<Food> mMenu, FoodItemListener listener, int feature) {
+    public MenuAdapter(Context context, ArrayList<Food> mMenu, MenuListener listener, int feature) {
         this.mContext = context;
         this.mMenu = mMenu;
         this.mListener = listener;
         this.mFeature = feature;
     }
 
-    public FoodItemAdapter(Context context, ArrayList<Food> mMenu, int mFeature) {
+    public MenuAdapter(Context context, ArrayList<Food> mMenu, int mFeature) {
         this.mContext = context;
         this.mMenu = mMenu;
         this.mFeature = mFeature;
@@ -55,16 +53,16 @@ public class FoodItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         switch (viewType){
             case FEATURE1:
-                View itemView1 = inflater.inflate(R.layout.item_menu, null);
+                View itemView1 = inflater.inflate(R.layout.item_feature_food_one, null);
                 viewHolder = new FeatureFoodOneHolder(itemView1);
                 break;
             case FEATURE2:
-                View itemView2 = inflater.inflate(R.layout.item_food, null);
-                viewHolder = new FoodHolder(itemView2);
+                View itemView2 = inflater.inflate(R.layout.item_feature_food_two, null);
+                viewHolder = new FeatureFoodTwoHolder(itemView2);
                 break;
             default:
-                View itemView = inflater.inflate(R.layout.item_menu, null);
-                viewHolder = new FoodHolder(itemView);
+                View itemView = inflater.inflate(R.layout.item_feature_food_one, null);
+                viewHolder = new FeatureFoodOneHolder(itemView);
                 break;
         }
         return viewHolder;
@@ -79,8 +77,8 @@ public class FoodItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 configureFeatureFoodOneViewHolder(featureFoodOneHolder, position);
                 break;
             case FEATURE2:
-                FoodHolder foodHolder = (FoodHolder) holder;
-                configureFoodViewHolder(foodHolder, position);
+                FeatureFoodTwoHolder featureFoodTwoHolder = (FeatureFoodTwoHolder) holder;
+                configureFeatureFoodTwoViewHolder(featureFoodTwoHolder, position);
                 break;
             default: break;
         }
@@ -114,17 +112,17 @@ public class FoodItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         });
     }
 
-    private void configureFoodViewHolder(FoodHolder foodHolder, final int position){
+    private void configureFeatureFoodTwoViewHolder(FeatureFoodTwoHolder featureFoodTwoHolder, final int position){
         Food food = mMenu.get(position);
 
-        Glide.with(mContext).load(food.getImage()).into(foodHolder.iv_food);
-        foodHolder.tv_name.setText(food.getName());
+        Glide.with(mContext).load(food.getImage()).into(featureFoodTwoHolder.iv_food);
+        featureFoodTwoHolder.tv_name.setText(food.getName());
 
         String cost = String.valueOf(food.getCost()) + " " + food.getCurrency() + " / " + food.getAmount() + " " + food.getUnit();
 
-        foodHolder.tv_cost.setText(cost);
+        featureFoodTwoHolder.tv_cost.setText(cost);
 
-        foodHolder.btn_add.setOnClickListener(new View.OnClickListener() {
+        featureFoodTwoHolder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onBtnAddTouched(position);

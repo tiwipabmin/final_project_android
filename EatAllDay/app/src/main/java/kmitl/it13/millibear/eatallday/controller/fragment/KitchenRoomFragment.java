@@ -13,10 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -27,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.adapter.FoodItemAdapter;
+import kmitl.it13.millibear.eatallday.adapter.MenuAdapter;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.activity.AddFoodActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
@@ -47,7 +43,7 @@ public class KitchenRoomFragment extends Fragment {
 
     private User mUser;
     private ArrayList<Food> mMenu;
-    private FoodItemAdapter adapter;
+    private MenuAdapter mMenuAdapter;
 
     public KitchenRoomFragment() {
     }
@@ -69,9 +65,9 @@ public class KitchenRoomFragment extends Fragment {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     mMenu.add(ds.getValue(Food.class));
                 }
-                adapter = new FoodItemAdapter(getContext(), mMenu, 0);
+                mMenuAdapter = new MenuAdapter(getContext(), mMenu, 0);
                 rv_menu.setLayoutManager(new LinearLayoutManager(getContext()));
-                rv_menu.setAdapter(adapter);
+                rv_menu.setAdapter(mMenuAdapter);
             }
 
             @Override
