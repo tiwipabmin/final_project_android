@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.activity.RandomRoomActivity" />
-        <activity android:name=".controller.activity.AddFoodActivity" />
+        <activity android:name=".controller.activity.AddMenuActivity" />
         <activity android:name=".controller.activity.ShowMenusActivity"></activity>
     </application>
 

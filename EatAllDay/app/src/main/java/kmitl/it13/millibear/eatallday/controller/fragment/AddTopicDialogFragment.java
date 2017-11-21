@@ -8,11 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +23,7 @@ import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.History;
 
-public class TopicsDialogFragment extends DialogFragment {
+public class AddTopicDialogFragment extends DialogFragment {
 
     @BindView(R.id.et_topics)
     EditText et_topics;
@@ -55,7 +51,7 @@ public class TopicsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_topics, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_add_topic, null);
         ButterKnife.bind(this, view);
 
         alertDialog.setView(view);
@@ -77,11 +73,11 @@ public class TopicsDialogFragment extends DialogFragment {
         }
     }
 
-    public static TopicsDialogFragment newInstance(Context context, Food food, String userId) {
+    public static AddTopicDialogFragment newInstance(Context context, Food food, String userId) {
         Bundle args = new Bundle();
         args.putParcelable("food", food);
         args.putString("userId", userId);
-        TopicsDialogFragment fragment = new TopicsDialogFragment();
+        AddTopicDialogFragment fragment = new AddTopicDialogFragment();
         fragment.setContext(context);
         fragment.setArguments(args);
         return fragment;

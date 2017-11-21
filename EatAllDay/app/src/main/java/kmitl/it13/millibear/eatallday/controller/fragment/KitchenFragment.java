@@ -24,7 +24,7 @@ import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.MenusAdapter;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
-import kmitl.it13.millibear.eatallday.controller.activity.AddFoodActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.AddMenuActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
@@ -32,7 +32,7 @@ import kmitl.it13.millibear.eatallday.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KitchenRoomFragment extends Fragment {
+public class KitchenFragment extends Fragment {
 
     @BindView(R.id.btn_add)
     Button btn_add;
@@ -44,7 +44,7 @@ public class KitchenRoomFragment extends Fragment {
     private ArrayList<Food> mMenus;
     private MenusAdapter mMenuAdapter;
 
-    public KitchenRoomFragment() {
+    public KitchenFragment() {
     }
 
     @Override
@@ -83,17 +83,17 @@ public class KitchenRoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_kitchen_room, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_kitchen, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance();
         // Inflate the layout for this fragment
         return rootView;
     }
 
-    public static KitchenRoomFragment newInstance(User user) {
+    public static KitchenFragment newInstance(User user) {
 
         Bundle args = new Bundle();
-        KitchenRoomFragment fragment = new KitchenRoomFragment();
+        KitchenFragment fragment = new KitchenFragment();
         args.putParcelable("user", user);
         fragment.setArguments(args);
         return fragment;
@@ -101,7 +101,7 @@ public class KitchenRoomFragment extends Fragment {
 
     @OnClick(R.id.btn_add)
     public void onBtnAddTouched() {
-        Intent intent = new Intent(getActivity(), AddFoodActivity.class);
+        Intent intent = new Intent(getActivity(), AddMenuActivity.class);
         intent.putExtra("menu", mMenus);
         intent.putExtra("type", "food");
         intent.putExtra("userId", mUser.getUserId());

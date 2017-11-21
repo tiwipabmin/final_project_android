@@ -7,7 +7,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class DetailFoodDialogFragment extends DialogFragment {
+public class MenuDetailDialogFragment extends DialogFragment {
 
     @BindView(R.id.tv_cost)
     TextView tv_cost;
@@ -48,7 +47,7 @@ public class DetailFoodDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_detail_food, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_detail_menu, null);
         ButterKnife.bind(this, view);
 
         String cost = String.valueOf(mFood.getCost()) + " " + mFood.getCurrency() + " / " + mFood.getAmount() + " " + mFood.getUnit();
@@ -68,9 +67,9 @@ public class DetailFoodDialogFragment extends DialogFragment {
         this.dismiss();
     }
 
-    public static DetailFoodDialogFragment newInstance(Food food) {
+    public static MenuDetailDialogFragment newInstance(Food food) {
         Bundle args = new Bundle();
-        DetailFoodDialogFragment fragment = new DetailFoodDialogFragment();
+        MenuDetailDialogFragment fragment = new MenuDetailDialogFragment();
         args.putParcelable("food", food);
         fragment.setArguments(args);
         return fragment;

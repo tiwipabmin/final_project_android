@@ -62,7 +62,7 @@ public class RandomResultDialogFragment extends DialogFragment {
 
     @OnClick(R.id.btn_accept)
     public void onBtnAcceptTouched(){
-        DialogFragment topicsDialog = new TopicsDialogFragment().newInstance(mContext, mFood, mUserId);
+        DialogFragment topicsDialog = new AddTopicDialogFragment().newInstance(mContext, mFood, mUserId);
         topicsDialog.setCancelable(false);
         topicsDialog.show(getActivity().getSupportFragmentManager(), "topicsDialog");
         dismiss();

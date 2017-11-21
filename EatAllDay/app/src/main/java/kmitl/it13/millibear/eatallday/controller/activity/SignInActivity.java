@@ -4,7 +4,6 @@ package kmitl.it13.millibear.eatallday.controller.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -21,7 +20,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -40,13 +38,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.activity.SignUpActivity;
-import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.api.AuthenticationApi;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
-import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment;
 
 public class SignInActivity extends AppCompatActivity
         implements ValueEventListener {
@@ -65,12 +61,12 @@ public class SignInActivity extends AppCompatActivity
     @BindView(R.id.login_button)
     LoginButton loginButton;
 
-    User mUser;
-    DatabaseReference mChildUser;
-    ProgressFragment progress;
-    CallbackManager callbackManager;
-    FirebaseAuth firebaseAuth;
-    AccessToken accessToken;
+    private User mUser;
+    private DatabaseReference mChildUser;
+    private ProgressDialogFragment progress;
+    private CallbackManager callbackManager;
+    private FirebaseAuth firebaseAuth;
+    private AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +103,7 @@ public class SignInActivity extends AppCompatActivity
 
         mChildUser = UserApi.getUserApi().getChildUser();
 
-        progress = new ProgressFragment();
+        progress = new ProgressDialogFragment();
 
         callbackManager = CallbackManager.Factory.create();
 

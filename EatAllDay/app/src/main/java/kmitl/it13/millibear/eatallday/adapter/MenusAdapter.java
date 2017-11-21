@@ -15,7 +15,7 @@ import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.holder.ItemRandomMenuViewHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ItemShowMenuViewHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.controller.fragment.DetailFoodDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.MenuDetailDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 /**
@@ -110,7 +110,7 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         itemShowMenuViewHolder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment detailFoodDialogFragment = new DetailFoodDialogFragment().newInstance(mMenu.get(position));
+                DialogFragment detailFoodDialogFragment = new MenuDetailDialogFragment().newInstance(mMenu.get(position));
                 detailFoodDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "detailFood");
             }
         });

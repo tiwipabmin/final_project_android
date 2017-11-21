@@ -30,7 +30,7 @@ import kmitl.it13.millibear.eatallday.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LobbyRoomFragment extends Fragment {
+public class LobbyFragment extends Fragment {
 
     @BindView(R.id.profile)
     RecyclerView profile;
@@ -39,7 +39,7 @@ public class LobbyRoomFragment extends Fragment {
     private User mUser;
     private DatabaseReference childHistory;
 
-    public LobbyRoomFragment() {
+    public LobbyFragment() {
         // Required empty public constructor
     }
 
@@ -112,17 +112,17 @@ public class LobbyRoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_lobby_room, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_lobby, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance(getContext());
         setUp();
         return rootView;
     }
 
-    public static LobbyRoomFragment newInstance(User user) {
+    public static LobbyFragment newInstance(User user) {
         Bundle args = new Bundle();
         args.putParcelable("user", user);
-        LobbyRoomFragment fragment = new LobbyRoomFragment();
+        LobbyFragment fragment = new LobbyFragment();
         fragment.setArguments(args);
         return fragment;
     }

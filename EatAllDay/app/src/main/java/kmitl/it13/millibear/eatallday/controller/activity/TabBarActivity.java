@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.database.DataSnapshot;
@@ -25,11 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FriendApi;
-import kmitl.it13.millibear.eatallday.controller.fragment.KitchenRoomFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.KitchenFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.SocialRoomFragment;
 import kmitl.it13.millibear.eatallday.model.Friend;
 import kmitl.it13.millibear.eatallday.model.User;
-import kmitl.it13.millibear.eatallday.controller.fragment.LobbyRoomFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.LobbyFragment;
 
 public class TabBarActivity extends AppCompatActivity {
 
@@ -99,8 +98,8 @@ public class TabBarActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new LobbyRoomFragment().newInstance(mUser), "LOBBY");
-        adapter.addFragment(new KitchenRoomFragment().newInstance(mUser), "KITCHEN");
+        adapter.addFragment(new LobbyFragment().newInstance(mUser), "LOBBY");
+        adapter.addFragment(new KitchenFragment().newInstance(mUser), "KITCHEN");
         adapter.addFragment(new SocialRoomFragment(), "SOCIAL");
         viewPager.setAdapter(adapter);
     }

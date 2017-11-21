@@ -3,25 +3,20 @@ package kmitl.it13.millibear.eatallday.controller.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.io.File;
@@ -38,7 +33,7 @@ import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class AddFoodActivity extends AppCompatActivity {
+public class AddMenuActivity extends AppCompatActivity {
 
     final private int SELECT_FILE = 1969;
 
@@ -82,7 +77,7 @@ public class AddFoodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_food);
+        setContentView(R.layout.activity_add_menu);
 
         Intent addFoodIntent = getIntent();
         mUserId = addFoodIntent.getStringExtra("userId");

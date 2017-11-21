@@ -14,16 +14,12 @@ import android.widget.ImageView;
 
 import kmitl.it13.millibear.eatallday.R;
 
-/**
- * Created by tiwip on 10/30/2017.
- */
-
-public class ProgressFragment extends DialogFragment {
+public class ProgressDialogFragment extends DialogFragment {
 
     private ImageView download;
     private Animation animLoading;
 
-    public ProgressFragment() {
+    public ProgressDialogFragment() {
         // Required empty public constructor
     }
 

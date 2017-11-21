@@ -42,7 +42,7 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_show_menus);
         ButterKnife.bind(this);
 
         Intent foodItemIntent = getIntent();

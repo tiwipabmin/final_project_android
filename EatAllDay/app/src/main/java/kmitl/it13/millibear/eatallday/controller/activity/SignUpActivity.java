@@ -5,9 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,23 +16,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.api.AuthenticationApi;
-import kmitl.it13.millibear.eatallday.controller.activity.SignInActivity;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
-import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -75,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         userApi = UserApi.getUserApi();
 
-        progress = new ProgressFragment();
+        progress = new ProgressDialogFragment();
     }
 
     @OnClick(R.id.btn_verify)

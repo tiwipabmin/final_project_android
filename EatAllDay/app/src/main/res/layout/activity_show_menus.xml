@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.controller.activity.FoodItemFragment">
+    tools:context="kmitl.it13.millibear.eatallday.controller.activity.ShowMenusActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"

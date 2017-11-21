@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.RandomResultDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
@@ -53,7 +53,7 @@ public class RandomRoomActivity extends AppCompatActivity {
     private ArrayList<Food> mMenu;
     private NotificationBadge mBadgeFriend;
     private Intent intent;
-    private ProgressFragment progress;
+    private ProgressDialogFragment progress;
     private Map<Integer, Food> chooseMenu;
     private int amount_random = 0;
     private String userId;
@@ -79,7 +79,7 @@ public class RandomRoomActivity extends AppCompatActivity {
 
         this.intent = new Intent(this, ShowMenusActivity.class);
 
-        progress = new ProgressFragment();
+        progress = new ProgressDialogFragment();
 
         chooseMenu = new HashMap<>();
     }
