@@ -16,10 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.adapter.MenuAdapter;
+import kmitl.it13.millibear.eatallday.adapter.MenusAdapter;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class FoodItemActivity extends AppCompatActivity implements MenuAdapter.MenuListener{
+public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter.MenusListener{
 
     @BindView(R.id.rv_foodItem)
     RecyclerView rv_foodItem;
@@ -36,14 +36,14 @@ public class FoodItemActivity extends AppCompatActivity implements MenuAdapter.M
     private NotificationBadge mBadgeFriend;
 
     private ArrayList<Food> mMenu;
-    private MenuAdapter mMenuAdapter;
+    private MenusAdapter mMenuAdapter;
     private String item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_item);
-        ButterKnife.bind(FoodItemActivity.this);
+        setContentView(R.layout.activity_menu);
+        ButterKnife.bind(this);
 
         Intent foodItemIntent = getIntent();
 
@@ -57,7 +57,7 @@ public class FoodItemActivity extends AppCompatActivity implements MenuAdapter.M
 
         mMenu = intent.getParcelableArrayListExtra("menu");
 
-        mMenuAdapter = new MenuAdapter(FoodItemActivity.this, mMenu, FoodItemActivity.this, 1);
+        mMenuAdapter = new MenusAdapter(this, mMenu, this, 1);
 
         item = intent.getStringExtra("item");
     }
@@ -70,7 +70,7 @@ public class FoodItemActivity extends AppCompatActivity implements MenuAdapter.M
     private void setUp(){
 
         rv_foodItem.setAdapter(mMenuAdapter);
-        rv_foodItem.setLayoutManager(new LinearLayoutManager(FoodItemActivity.this));
+        rv_foodItem.setLayoutManager(new LinearLayoutManager(this));
 
         iv_logout.setVisibility(View.GONE);
         iv_user.setVisibility(View.GONE);
@@ -85,10 +85,11 @@ public class FoodItemActivity extends AppCompatActivity implements MenuAdapter.M
 
     @Override
     public void onBtnAddTouched(int position) {
-        Intent intent = new Intent(FoodItemActivity.this, RandomRoomActivity.class);
+        Intent intent = new Intent(this, RandomRoomActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("item", item);
         setResult(RESULT_OK, intent);
         finish();
     }
 }
+

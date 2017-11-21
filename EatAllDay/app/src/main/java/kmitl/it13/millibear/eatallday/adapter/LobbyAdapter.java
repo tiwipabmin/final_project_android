@@ -3,19 +3,12 @@ package kmitl.it13.millibear.eatallday.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -24,14 +17,12 @@ import java.util.List;
 
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
-import kmitl.it13.millibear.eatallday.adapter.holder.FoodHistoryHolder;
-import kmitl.it13.millibear.eatallday.adapter.holder.ProfileHolder;
-import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
+import kmitl.it13.millibear.eatallday.adapter.holder.RandomMenuHistoryViewHolder;
+import kmitl.it13.millibear.eatallday.adapter.holder.ProfileViewHolder;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.model.User;
 
-public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int PROFILE = 0, FOOD = 1;
 
@@ -40,19 +31,19 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<History> mStorage;
     private List<String> mViewType;
 
-    public PostAdapter(Context mContext, User mUser, List<History> mStorage, List<String> mViewType) {
+    public LobbyAdapter(Context mContext, User mUser, List<History> mStorage, List<String> mViewType) {
         this.mContext = mContext;
         this.mUser = mUser;
         this.mStorage = mStorage;
         this.mViewType = mViewType;
     }
 
-    public PostAdapter(Context mContext, List<String> mViewType) {
+    public LobbyAdapter(Context mContext, List<String> mViewType) {
         this.mContext = mContext;
         this.mViewType = mViewType;
     }
 
-    public PostAdapter(Context mContext) {
+    public LobbyAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -78,15 +69,15 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType){
             case PROFILE:
                 View itemView1 = inflater.inflate(R.layout.item_profile, null);
-                viewHolder = new ProfileHolder(itemView1);
+                viewHolder = new ProfileViewHolder(itemView1);
                 break;
             case FOOD:
-                View itemView2 = inflater.inflate(R.layout.item_food_history, null);
-                viewHolder = new FoodHistoryHolder(itemView2);
+                View itemView2 = inflater.inflate(R.layout.item_random_menu_history, null);
+                viewHolder = new RandomMenuHistoryViewHolder(itemView2);
                 break;
             default:
-                View itemView = inflater.inflate(R.layout.item_food_history, null);
-                viewHolder = new FoodHistoryHolder(itemView);
+                View itemView = inflater.inflate(R.layout.item_random_menu_history, null);
+                viewHolder = new RandomMenuHistoryViewHolder(itemView);
                 break;
         }
         return viewHolder;
@@ -98,12 +89,12 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         switch (holder.getItemViewType()){
             case PROFILE:
-                ProfileHolder profileHolder = (ProfileHolder) holder;
-                configureProfileViewHolder(profileHolder, position);
+                ProfileViewHolder profileViewHolder = (ProfileViewHolder) holder;
+                configureProfileViewHolder(profileViewHolder, position);
                 break;
             case FOOD:
-                FoodHistoryHolder foodHistoryHolder = (FoodHistoryHolder) holder;
-                configureFoodHistoryViewHolder(foodHistoryHolder, position);
+                RandomMenuHistoryViewHolder randomMenuHistoryViewHolder = (RandomMenuHistoryViewHolder) holder;
+                configureFoodHistoryViewHolder(randomMenuHistoryViewHolder, position);
                 break;
             default: break;
         }
@@ -125,31 +116,31 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return -1;
     }
 
-    private void configureProfileViewHolder(ProfileHolder profileHolder, int position){
-        Glide.with(mContext).load(mUser.getImage()).into(profileHolder.iv_image);
-        profileHolder.tv_name.setText(mUser.getName());
-        profileHolder.tv_facebook.setText(mUser.getFacebook());
-        profileHolder.tv_description.setText(mUser.getDescription());
+    private void configureProfileViewHolder(ProfileViewHolder profileViewHolder, int position){
+        Glide.with(mContext).load(mUser.getImage()).into(profileViewHolder.iv_image);
+        profileViewHolder.tv_name.setText(mUser.getName());
+        profileViewHolder.tv_facebook.setText(mUser.getFacebook());
+        profileViewHolder.tv_description.setText(mUser.getDescription());
     }
 
-    private void configureFoodHistoryViewHolder(final FoodHistoryHolder foodHistoryHolder, int position){
-        Glide.with(mContext).load(mUser.getImage()).into(foodHistoryHolder.iv_userImage);
-        Glide.with(mContext).load(mStorage.get(position).getFoodImage()).into(foodHistoryHolder.iv_foodImage);
-        foodHistoryHolder.tv_cost.setText(String.valueOf(mStorage.get(position).getCost()));
-        foodHistoryHolder.tv_foodName.setText(mStorage.get(position).getFoodName());
-        foodHistoryHolder.tv_username.setText(mUser.getName());
-        foodHistoryHolder.tv_piece.setText(String.valueOf(mStorage.get(position).getPiece()));
-        foodHistoryHolder.tv_topic.setText(mStorage.get(position).getHistoryName());
+    private void configureFoodHistoryViewHolder(final RandomMenuHistoryViewHolder randomMenuHistoryViewHolder, int position){
+        Glide.with(mContext).load(mUser.getImage()).into(randomMenuHistoryViewHolder.iv_userImage);
+        Glide.with(mContext).load(mStorage.get(position).getFoodImage()).into(randomMenuHistoryViewHolder.iv_foodImage);
+        randomMenuHistoryViewHolder.tv_cost.setText(String.valueOf(mStorage.get(position).getCost()));
+        randomMenuHistoryViewHolder.tv_foodName.setText(mStorage.get(position).getFoodName());
+        randomMenuHistoryViewHolder.tv_username.setText(mUser.getName());
+        randomMenuHistoryViewHolder.tv_piece.setText(String.valueOf(mStorage.get(position).getPiece()));
+        randomMenuHistoryViewHolder.tv_topic.setText(mStorage.get(position).getHistoryName());
 
-        foodHistoryHolder.iv_sharing.setOnClickListener(new View.OnClickListener() {
+        randomMenuHistoryViewHolder.iv_sharing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                foodHistoryHolder.layout.post(new Runnable() {
+                randomMenuHistoryViewHolder.layout.post(new Runnable() {
                     @Override
                     public void run() {
-                        foodHistoryHolder.layout.setDrawingCacheEnabled(true);
-                        Bitmap bmp = Bitmap.createBitmap(foodHistoryHolder.layout.getDrawingCache());
-                        foodHistoryHolder.layout.setDrawingCacheEnabled(false);
+                        randomMenuHistoryViewHolder.layout.setDrawingCacheEnabled(true);
+                        Bitmap bmp = Bitmap.createBitmap(randomMenuHistoryViewHolder.layout.getDrawingCache());
+                        randomMenuHistoryViewHolder.layout.setDrawingCacheEnabled(false);
                         SaveImage saveImage = new SaveImage(mContext);
                         String path = saveImage.addImageToGallery(bmp);
                         shareOnFacebook(path);

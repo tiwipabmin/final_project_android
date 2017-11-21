@@ -12,7 +12,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.R;
 
-public class FoodHistoryHolder extends RecyclerView.ViewHolder {
+public class RandomMenuHistoryViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv_foodImage)
     public ImageView iv_foodImage;
@@ -41,7 +41,7 @@ public class FoodHistoryHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.food_history)
     public LinearLayout layout;
 
-    public FoodHistoryHolder(View itemView) {
+    public RandomMenuHistoryViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

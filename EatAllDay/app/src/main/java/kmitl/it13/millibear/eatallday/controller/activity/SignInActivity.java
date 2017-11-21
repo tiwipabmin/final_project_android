@@ -4,6 +4,7 @@ package kmitl.it13.millibear.eatallday.controller.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -15,10 +16,12 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -67,6 +70,7 @@ public class SignInActivity extends AppCompatActivity
     ProgressFragment progress;
     CallbackManager callbackManager;
     FirebaseAuth firebaseAuth;
+    AccessToken accessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +78,14 @@ public class SignInActivity extends AppCompatActivity
         setContentView(R.layout.activity_sign_in);
         checkPermission();
         ButterKnife.bind(SignInActivity.this);
-
         initialInstance();
+
+        accessToken = AccessToken.getCurrentAccessToken();
+
+        if (accessToken != null) {
+            connectionWithFacebook();
+        }
+
         setUp();
     }
 
@@ -106,32 +116,12 @@ public class SignInActivity extends AppCompatActivity
 
     private void setUp() {
 
-        loginButton.setReadPermissions("email", "public_profile", "user_friends");
-        // Callback registration
-        LoginManager.getInstance().logOut();
+        loginButton.setReadPermissions("email", "public_profile", "user_photos");
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
-                final UserApi userApi = UserApi.getUserApi();
-                final User user = new User(profile.getId(), profile.getName(), profile.getFirstName(), profile.getFirstName() + " " + profile.getLastName());
-                userApi.getChildUser().child(user.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.getValue() == null){
-                            userApi.newUser(SignInActivity.this, user);
-                        }
-                        Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
-                        intent.putExtra("user", user);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
+                connectionWithFacebook();
             }
 
             @Override
@@ -143,6 +133,56 @@ public class SignInActivity extends AppCompatActivity
             public void onError(FacebookException exception) {
                 LoginManager.getInstance().logOut();
                 Toast.makeText(SignInActivity.this, String.valueOf(exception), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void connectionWithFacebook() {
+
+        progress.show(getSupportFragmentManager(), "progress");
+        boolean isError = false;
+
+        Profile profile;
+        try {
+            profile = Profile.getCurrentProfile();
+            hasAccount(profile);
+
+        } catch (NullPointerException ex) {
+
+            Toast.makeText(SignInActivity.this, "กรุณาเชื่อมต่อ facebook อีกครั้ง", Toast.LENGTH_SHORT).show();
+            isError = true;
+        } catch (Exception ex) {
+
+            Toast.makeText(SignInActivity.this, "กรุณาเชื่อมต่อ facebook อีกครั้ง", Toast.LENGTH_SHORT).show();
+            isError = true;
+        }
+
+        if(isError){
+            LoginManager.getInstance().logOut();
+            progress.dismiss();
+        }
+    }
+
+    private void hasAccount(Profile profile) {
+
+        final UserApi userApi = UserApi.getUserApi();
+        final User user = new User(profile.getId(), profile.getName(), profile.getFirstName(), profile.getFirstName() + " " + profile.getLastName(), profile.getProfilePictureUri(500, 500).toString());
+        userApi.getChildUser().child(user.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    userApi.newUser(SignInActivity.this, user);
+                }
+                Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+                progress.dismiss();
+                finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -216,9 +256,9 @@ public class SignInActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK) {
 
-            if(requestCode == SIGN_UP_SUCCESS){
+            if (requestCode == SIGN_UP_SUCCESS) {
 
                 User user = data.getParcelableExtra("user");
                 Intent intent = new Intent(this, TabBarActivity.class);
@@ -228,8 +268,6 @@ public class SignInActivity extends AppCompatActivity
             }
         }
     }
-
-
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {

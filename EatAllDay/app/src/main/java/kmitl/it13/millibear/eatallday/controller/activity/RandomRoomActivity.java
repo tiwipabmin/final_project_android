@@ -1,7 +1,6 @@
 package kmitl.it13.millibear.eatallday.controller.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.fragment.DetailFoodDialogFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.ProgressFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.RandomResultDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
@@ -79,7 +77,7 @@ public class RandomRoomActivity extends AppCompatActivity {
 
         mMenu = intent.getParcelableArrayListExtra("menu");
 
-        this.intent = new Intent(RandomRoomActivity.this, FoodItemActivity.class);
+        this.intent = new Intent(this, ShowMenusActivity.class);
 
         progress = new ProgressFragment();
 

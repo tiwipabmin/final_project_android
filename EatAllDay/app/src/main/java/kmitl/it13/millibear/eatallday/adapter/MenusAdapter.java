@@ -12,34 +12,38 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.adapter.holder.FeatureFoodOneHolder;
-import kmitl.it13.millibear.eatallday.adapter.holder.FeatureFoodTwoHolder;
+import kmitl.it13.millibear.eatallday.adapter.holder.ItemRandomMenuViewHolder;
+import kmitl.it13.millibear.eatallday.adapter.holder.ItemShowMenuViewHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.controller.fragment.DetailFoodDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+/**
+ * Created by tiwip on 11/21/2017.
+ */
+
+public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private final int FEATURE1 = 0, FEATURE2 = 1;
 
     private Context mContext;
     private ArrayList<Food> mMenu;
-    private MenuListener mListener;
+    private MenusAdapter.MenusListener mListener;
     private int mFeature = 0;
 
-    public interface MenuListener {
+    public interface MenusListener {
 
         public void onBtnAddTouched(int position);
     }
 
-    public MenuAdapter(Context context, ArrayList<Food> mMenu, MenuListener listener, int feature) {
+    public MenusAdapter(Context context, ArrayList<Food> mMenu, MenusAdapter.MenusListener listener, int feature) {
         this.mContext = context;
         this.mMenu = mMenu;
         this.mListener = listener;
         this.mFeature = feature;
     }
 
-    public MenuAdapter(Context context, ArrayList<Food> mMenu, int mFeature) {
+    public MenusAdapter(Context context, ArrayList<Food> mMenu, int mFeature) {
         this.mContext = context;
         this.mMenu = mMenu;
         this.mFeature = mFeature;
@@ -53,16 +57,16 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         switch (viewType){
             case FEATURE1:
-                View itemView1 = inflater.inflate(R.layout.item_feature_food_one, null);
-                viewHolder = new FeatureFoodOneHolder(itemView1);
+                View itemView1 = inflater.inflate(R.layout.item_show_menu, null);
+                viewHolder = new ItemShowMenuViewHolder(itemView1);
                 break;
             case FEATURE2:
-                View itemView2 = inflater.inflate(R.layout.item_feature_food_two, null);
-                viewHolder = new FeatureFoodTwoHolder(itemView2);
+                View itemView2 = inflater.inflate(R.layout.item_random_menu, null);
+                viewHolder = new ItemRandomMenuViewHolder(itemView2);
                 break;
             default:
-                View itemView = inflater.inflate(R.layout.item_feature_food_one, null);
-                viewHolder = new FeatureFoodOneHolder(itemView);
+                View itemView = inflater.inflate(R.layout.item_show_menu, null);
+                viewHolder = new ItemShowMenuViewHolder(itemView);
                 break;
         }
         return viewHolder;
@@ -73,12 +77,12 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         switch (holder.getItemViewType()){
             case FEATURE1:
-                FeatureFoodOneHolder featureFoodOneHolder = (FeatureFoodOneHolder) holder;
-                configureFeatureFoodOneViewHolder(featureFoodOneHolder, position);
+                ItemShowMenuViewHolder itemShowMenuViewHolder = (ItemShowMenuViewHolder) holder;
+                configureItemShowMenuViewHolder(itemShowMenuViewHolder, position);
                 break;
             case FEATURE2:
-                FeatureFoodTwoHolder featureFoodTwoHolder = (FeatureFoodTwoHolder) holder;
-                configureFeatureFoodTwoViewHolder(featureFoodTwoHolder, position);
+                ItemRandomMenuViewHolder itemRandomMenuViewHolder = (ItemRandomMenuViewHolder) holder;
+                configureItemRandomViewHolder(itemRandomMenuViewHolder, position);
                 break;
             default: break;
         }
@@ -99,11 +103,11 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return mMenu.size();
     }
 
-    private void configureFeatureFoodOneViewHolder(FeatureFoodOneHolder featureFoodOneHolder, final int position) {
-        Glide.with(mContext).load(mMenu.get(position).getImage()).into(featureFoodOneHolder.iv_food);
-        featureFoodOneHolder.tv_name.setText(mMenu.get(position).getName());
+    private void configureItemShowMenuViewHolder(ItemShowMenuViewHolder itemShowMenuViewHolder, final int position) {
+        Glide.with(mContext).load(mMenu.get(position).getImage()).into(itemShowMenuViewHolder.iv_food);
+        itemShowMenuViewHolder.tv_name.setText(mMenu.get(position).getName());
 
-        featureFoodOneHolder.item.setOnClickListener(new View.OnClickListener() {
+        itemShowMenuViewHolder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment detailFoodDialogFragment = new DetailFoodDialogFragment().newInstance(mMenu.get(position));
@@ -112,17 +116,17 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         });
     }
 
-    private void configureFeatureFoodTwoViewHolder(FeatureFoodTwoHolder featureFoodTwoHolder, final int position){
+    private void configureItemRandomViewHolder(ItemRandomMenuViewHolder itemRandomMenuViewHolder, final int position){
         Food food = mMenu.get(position);
 
-        Glide.with(mContext).load(food.getImage()).into(featureFoodTwoHolder.iv_food);
-        featureFoodTwoHolder.tv_name.setText(food.getName());
+        Glide.with(mContext).load(food.getImage()).into(itemRandomMenuViewHolder.iv_food);
+        itemRandomMenuViewHolder.tv_name.setText(food.getName());
 
         String cost = String.valueOf(food.getCost()) + " " + food.getCurrency() + " / " + food.getAmount() + " " + food.getUnit();
 
-        featureFoodTwoHolder.tv_cost.setText(cost);
+        itemRandomMenuViewHolder.tv_cost.setText(cost);
 
-        featureFoodTwoHolder.btn_add.setOnClickListener(new View.OnClickListener() {
+        itemRandomMenuViewHolder.btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onBtnAddTouched(position);

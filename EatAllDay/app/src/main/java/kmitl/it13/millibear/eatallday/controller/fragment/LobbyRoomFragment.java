@@ -18,14 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.activity.SignInActivity;
-import kmitl.it13.millibear.eatallday.adapter.PostAdapter;
-import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
+import kmitl.it13.millibear.eatallday.adapter.LobbyAdapter;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
 import kmitl.it13.millibear.eatallday.model.User;
@@ -38,7 +35,7 @@ public class LobbyRoomFragment extends Fragment {
     @BindView(R.id.profile)
     RecyclerView profile;
 
-    private PostAdapter mPostAdapter;
+    private LobbyAdapter mLobbyAdapter;
     private User mUser;
     private DatabaseReference childHistory;
 
@@ -59,7 +56,7 @@ public class LobbyRoomFragment extends Fragment {
 
         childHistory = HistoryApi.getHistoryApi().getChildHistory();
 
-        mPostAdapter = new PostAdapter(context);
+        mLobbyAdapter = new LobbyAdapter(context);
     }
 
     private void setUp(){
@@ -97,10 +94,10 @@ public class LobbyRoomFragment extends Fragment {
                     mViewType.add(memoryType.get(i));
                 }
 
-                mPostAdapter.setStorage(mStorage);
-                mPostAdapter.setViewType(mViewType);
-                mPostAdapter.setUser(mUser);
-                profile.setAdapter(mPostAdapter);
+                mLobbyAdapter.setStorage(mStorage);
+                mLobbyAdapter.setViewType(mViewType);
+                mLobbyAdapter.setUser(mUser);
+                profile.setAdapter(mLobbyAdapter);
                 profile.setLayoutManager(new LinearLayoutManager(getActivity()));
                 profile.invalidateItemDecorations();
             }

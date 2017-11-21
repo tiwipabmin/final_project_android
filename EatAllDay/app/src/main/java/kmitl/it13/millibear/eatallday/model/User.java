@@ -17,6 +17,14 @@ public class User implements Parcelable {
     private String money = "0";
     private String facebook;
 
+    public User(String userId, String name, String email, String facebook, String image) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.facebook = facebook;
+        this.image = image;
+    }
+
     public User(String userId, String name, String email, String facebook) {
         this.userId = userId;
         this.name = name;

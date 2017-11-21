@@ -11,10 +11,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.R;
 
 /**
- * Created by tiwip on 11/20/2017.
+ * Created by tiwip on 11/21/2017.
  */
 
-public class FeatureFoodTwoHolder extends RecyclerView.ViewHolder{
+public class ItemRandomMenuViewHolder extends RecyclerView.ViewHolder{
 
     @BindView(R.id.iv_food)
     public CircleImageView iv_food;
@@ -28,7 +28,7 @@ public class FeatureFoodTwoHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.btn_add)
     public Button btn_add;
 
-    public FeatureFoodTwoHolder(View itemView) {
+    public ItemRandomMenuViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

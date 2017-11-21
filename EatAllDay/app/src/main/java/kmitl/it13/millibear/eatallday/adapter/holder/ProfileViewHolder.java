@@ -14,7 +14,7 @@ import kmitl.it13.millibear.eatallday.R;
  * Created by tiwip on 11/3/2017.
  */
 
-public class ProfileHolder extends RecyclerView.ViewHolder{
+public class ProfileViewHolder extends RecyclerView.ViewHolder{
 
     @BindView(R.id.tv_facebook)
     public TextView tv_facebook;
@@ -28,7 +28,7 @@ public class ProfileHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.tv_description)
     public TextView tv_description;
 
-    public ProfileHolder(View itemView) {
+    public ProfileViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

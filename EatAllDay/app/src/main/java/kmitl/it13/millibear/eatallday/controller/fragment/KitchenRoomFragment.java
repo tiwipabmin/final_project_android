@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.adapter.MenuAdapter;
+import kmitl.it13.millibear.eatallday.adapter.MenusAdapter;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.activity.AddFoodActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
@@ -42,8 +41,8 @@ public class KitchenRoomFragment extends Fragment {
     RecyclerView rv_menu;
 
     private User mUser;
-    private ArrayList<Food> mMenu;
-    private MenuAdapter mMenuAdapter;
+    private ArrayList<Food> mMenus;
+    private MenusAdapter mMenuAdapter;
 
     public KitchenRoomFragment() {
     }
@@ -61,11 +60,11 @@ public class KitchenRoomFragment extends Fragment {
         FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(mUser.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mMenu = new ArrayList<>();
+                mMenus = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mMenu.add(ds.getValue(Food.class));
+                    mMenus.add(ds.getValue(Food.class));
                 }
-                mMenuAdapter = new MenuAdapter(getContext(), mMenu, 0);
+                mMenuAdapter = new MenusAdapter(getContext(), mMenus, 0);
                 rv_menu.setLayoutManager(new LinearLayoutManager(getContext()));
                 rv_menu.setAdapter(mMenuAdapter);
             }
@@ -103,7 +102,7 @@ public class KitchenRoomFragment extends Fragment {
     @OnClick(R.id.btn_add)
     public void onBtnAddTouched() {
         Intent intent = new Intent(getActivity(), AddFoodActivity.class);
-        intent.putExtra("menu", mMenu);
+        intent.putExtra("menu", mMenus);
         intent.putExtra("type", "food");
         intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);
@@ -112,13 +111,8 @@ public class KitchenRoomFragment extends Fragment {
     @OnClick(R.id.btn_random)
     public void onBtnRandomTouched() {
         Intent intent = new Intent(getActivity(), RandomRoomActivity.class);
-        intent.putExtra("menu", mMenu);
+        intent.putExtra("menu", mMenus);
         intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);
-    }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
     }
 }
