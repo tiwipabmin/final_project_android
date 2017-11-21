@@ -85,7 +85,7 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
 
     @Override
     public void onBtnAddTouched(int position) {
-        Intent intent = new Intent(this, RandomRoomActivity.class);
+        Intent intent = new Intent(this, RandomActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("item", item);
         setResult(RESULT_OK, intent);

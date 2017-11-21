@@ -15,12 +15,9 @@ import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.holder.ItemRandomMenuViewHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ItemShowMenuViewHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.controller.fragment.MenuDetailDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ConfigDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.KitchenFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
-
-/**
- * Created by tiwip on 11/21/2017.
- */
 
 public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -107,13 +104,14 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Glide.with(mContext).load(mMenu.get(position).getImage()).into(itemShowMenuViewHolder.iv_food);
         itemShowMenuViewHolder.tv_name.setText(mMenu.get(position).getName());
 
-        itemShowMenuViewHolder.item.setOnClickListener(new View.OnClickListener() {
+        itemShowMenuViewHolder.iv_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment detailFoodDialogFragment = new MenuDetailDialogFragment().newInstance(mMenu.get(position));
-                detailFoodDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "detailFood");
+                ConfigDialogFragment configDialogFragment = new ConfigDialogFragment().newInstance(mMenu.get(position));
+                configDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "configDialog");
             }
         });
+
     }
 
     private void configureItemRandomViewHolder(ItemRandomMenuViewHolder itemRandomMenuViewHolder, final int position){

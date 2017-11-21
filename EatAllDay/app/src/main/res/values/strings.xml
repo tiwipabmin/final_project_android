@@ -17,16 +17,16 @@
     <string name="eat_all_day">EatAllDay</string>
     <string name="facebook_app_id">871168826390720</string>
     <string name="fb_login_protocol_scheme">fb871168826390720</string>
-    <string name="btn_add_food">Add food</string>
-    <string name="btn_random">Random</string>
-    <string name="btn_random_now">Random now!</string>
+    <string name="btn_add_food">เพิ่มรายการอาหาร</string>
+    <string name="btn_random">ทำการสุ่มอาหาร</string>
+    <string name="btn_random_now">เริ่มสุ่มรายการอาหาร ณ บัดนี้!</string>
     <string name="hint_cost">120</string>
     <string name="cost">ราคา</string>
     <string name="title_dialog_type_element">Type</string>
     <string name="label_food">FOOD</string>
     <string name="label_restaurant">RESTAURANT</string>
     <string name="btn_cancel">Cancel</string>
-    <string name="btn_add">Add now!</string>
+    <string name="btn_add">เลือก</string>
     <string name="label_random_room">Random Room</string>
     <string name="choose">Choose</string>
     <string name="default_cost">20 Baht / 1 Piece</string>
@@ -37,11 +37,13 @@
     <string name="topics">This meal topics</string>
     <string name="hint_topics">Enter meal topics</string>
     <string name="btn_ok">OK</string>
+    <string name="view_menu">ดูข้อมูลรายการอาหาร</string>
+    <string name="edit_menu">แก้ไขข้อมูลรายการอาหาร</string>
+    <string name="delete_menu">ลบรายการอาหาร</string>
 
-
-    <string-array name="items_type_element">
+    <string-array name="item_config">
         <item><font fgcolor='#336600'>Food</font></item>
-        <item><font fgcolor='#336600'>Restaurant</font></item>
+        <item><font fgcolor='#336600'>Delete</font></item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

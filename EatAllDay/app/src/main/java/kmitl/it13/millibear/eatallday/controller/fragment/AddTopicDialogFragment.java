@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
-import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.RandomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.History;
 
@@ -69,7 +69,7 @@ public class AddTopicDialogFragment extends DialogFragment {
             History newHistory = new History(newKey, mUserId, mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getAmount(), date, "food");
             HistoryApi.getHistoryApi().newHistory(newKey, newHistory);
             this.dismiss();
-            ((RandomRoomActivity)mContext).finish();
+            ((RandomActivity)mContext).finish();
         }
     }
 

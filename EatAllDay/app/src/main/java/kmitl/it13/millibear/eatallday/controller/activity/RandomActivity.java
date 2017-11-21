@@ -25,7 +25,7 @@ import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment
 import kmitl.it13.millibear.eatallday.controller.fragment.RandomResultDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class RandomRoomActivity extends AppCompatActivity {
+public class RandomActivity extends AppCompatActivity {
 
     public static final int FOODITEM = 69;
 
@@ -61,8 +61,8 @@ public class RandomRoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_random_room);
-        ButterKnife.bind(RandomRoomActivity.this);
+        setContentView(R.layout.activity_random);
+        ButterKnife.bind(RandomActivity.this);
 
         Intent randomRoomIntent = getIntent();
         userId = randomRoomIntent.getStringExtra("userId");
@@ -161,7 +161,7 @@ public class RandomRoomActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(RandomRoomActivity.this, chooseMenu.get(key), userId);
+                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(RandomActivity.this, chooseMenu.get(key), userId);
                     dialogFragment.setCancelable(false);
                     dialogFragment.show(getSupportFragmentManager(), "random_result");
                     progress.dismiss();
@@ -189,19 +189,19 @@ public class RandomRoomActivity extends AppCompatActivity {
                     switch (item) {
                         case "iv_item1":
                             chooseMenu.put(0, mMenu.get(position));
-                            Glide.with(RandomRoomActivity.this).load(food.getImage()).into(iv_item1);
+                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item1);
                             break;
                         case "iv_item2":
                             chooseMenu.put(1, mMenu.get(position));
-                            Glide.with(RandomRoomActivity.this).load(food.getImage()).into(iv_item2);
+                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item2);
                             break;
                         case "iv_item3":
                             chooseMenu.put(2, mMenu.get(position));
-                            Glide.with(RandomRoomActivity.this).load(food.getImage()).into(iv_item3);
+                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item3);
                             break;
                         case "iv_item4":
                             chooseMenu.put(3, mMenu.get(position));
-                            Glide.with(RandomRoomActivity.this).load(food.getImage()).into(iv_item4);
+                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item4);
                             break;
                     }
                 }

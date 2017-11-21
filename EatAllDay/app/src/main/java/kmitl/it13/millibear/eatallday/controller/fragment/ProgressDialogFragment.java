@@ -1,9 +1,7 @@
 package kmitl.it13.millibear.eatallday.controller.fragment;
 
-import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,7 @@ public class ProgressDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_progress, container, false);
+        View rootView = inflater.inflate(R.layout.dialog_progress, container, false);
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         getDialog().setCancelable(false);

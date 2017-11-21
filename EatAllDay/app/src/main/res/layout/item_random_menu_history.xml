@@ -91,7 +91,7 @@
         android:layout_height="1dp"
         android:background="@color/colorAccent"/>
 
-    <include layout="@layout/fragment_sub_food_history1" />
+    <include layout="@layout/sub_menu_history" />
 
     <LinearLayout
         android:layout_width="match_parent"

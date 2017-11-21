@@ -25,7 +25,7 @@ import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.MenusAdapter;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.activity.AddMenuActivity;
-import kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.RandomActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
 
@@ -76,10 +76,6 @@ public class KitchenFragment extends Fragment {
         });
     }
 
-    private void deleteMenu(Food food){
-        FoodApi.getFoodApi().getChildFood().child(food.getId()).removeValue();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,7 +106,7 @@ public class KitchenFragment extends Fragment {
 
     @OnClick(R.id.btn_random)
     public void onBtnRandomTouched() {
-        Intent intent = new Intent(getActivity(), RandomRoomActivity.class);
+        Intent intent = new Intent(getActivity(), RandomActivity.class);
         intent.putExtra("menu", mMenus);
         intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.controller.activity.RandomRoomActivity">
+    tools:context="kmitl.it13.millibear.eatallday.controller.activity.RandomActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <include layout="@layout/sub_action_bar"/>
+        <include layout="@layout/menus_bar"/>
 
     </android.support.v7.widget.Toolbar>
 

@@ -29,6 +29,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.model.Food;
@@ -36,9 +37,6 @@ import kmitl.it13.millibear.eatallday.model.Food;
 public class AddMenuActivity extends AppCompatActivity {
 
     final private int SELECT_FILE = 1969;
-
-    @BindView(R.id.iv_food)
-    ImageView iv_food;
 
     @BindView(R.id.et_cost)
     EditText et_cost;
@@ -70,6 +68,9 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_add)
     ImageView iv_add;
 
+    @BindView(R.id.iv_menu)
+    CircleImageView iv_menu;
+
     private NotificationBadge mBadgeFriend;
     private String mUserId, mImage, mType;
     private FoodApi foodApi;
@@ -85,6 +86,7 @@ public class AddMenuActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         initialInstance();
+//        setWidgetEvent();
         setUp();
     }
 
@@ -98,6 +100,7 @@ public class AddMenuActivity extends AppCompatActivity {
     private void bindWidget(){
 
         mBadgeFriend = findViewById(R.id.badge_friend);
+
     }
 
     private void setUp(){
@@ -109,10 +112,11 @@ public class AddMenuActivity extends AppCompatActivity {
         mBadgeFriend.setVisibility(View.GONE);
     }
 
-    @OnClick(R.id.iv_food)
-    public void onImageViewElementTouched() {
+    @OnClick(R.id.iv_menu)
+    public void onIvMenuTouched(){
         goToGallery();
     }
+
 
     @OnClick(R.id.iv_back)
     public void onIvBackTouched(){
@@ -123,13 +127,16 @@ public class AddMenuActivity extends AppCompatActivity {
     public void onIvAddTouched(){
         if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
 
-            Toast.makeText(this, "Add New Food", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
 
             String newKey = foodApi.getChildFood().push().getKey();
             Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage, et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
             foodApi.newFood(newKey, newFood);
             finish();
+        } else {
+
+            Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -229,7 +236,7 @@ public class AddMenuActivity extends AppCompatActivity {
 
                 mImage = addImageToGallery(imageBitmap);
 
-                iv_food.setImageBitmap(imageBitmap);
+                iv_menu.setImageBitmap(imageBitmap);
 
             }
 

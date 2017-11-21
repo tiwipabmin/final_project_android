@@ -45,9 +45,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.activity.RandomRoomActivity" />
+        <activity android:name=".controller.activity.RandomActivity" />
         <activity android:name=".controller.activity.AddMenuActivity" />
-        <activity android:name=".controller.activity.ShowMenusActivity"></activity>
+        <activity android:name=".controller.activity.ShowMenusActivity" />
+        <activity android:name=".controller.activity.EditMenuActivity"></activity>
     </application>
 
 </manifest>

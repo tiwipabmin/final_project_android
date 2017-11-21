@@ -25,7 +25,7 @@ import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.FriendApi;
 import kmitl.it13.millibear.eatallday.controller.fragment.KitchenFragment;
-import kmitl.it13.millibear.eatallday.controller.fragment.SocialRoomFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.CommunityFragment;
 import kmitl.it13.millibear.eatallday.model.Friend;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.controller.fragment.LobbyFragment;
@@ -98,9 +98,9 @@ public class TabBarActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new LobbyFragment().newInstance(mUser), "LOBBY");
-        adapter.addFragment(new KitchenFragment().newInstance(mUser), "KITCHEN");
-        adapter.addFragment(new SocialRoomFragment(), "SOCIAL");
+        adapter.addFragment(new LobbyFragment().newInstance(mUser), "หน้ากระดาน");
+        adapter.addFragment(new KitchenFragment().newInstance(mUser), "ห้องครัว");
+        adapter.addFragment(new CommunityFragment(), "ชุมชน");
         viewPager.setAdapter(adapter);
     }
 
