@@ -30,13 +30,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class AddMenuActivity extends AppCompatActivity {
-
-    final private int SELECT_FILE = 1969;
 
     @BindView(R.id.et_cost)
     EditText et_cost;
@@ -74,6 +74,7 @@ public class AddMenuActivity extends AppCompatActivity {
     private NotificationBadge mBadgeFriend;
     private String mUserId, mImage, mType;
     private FoodApi foodApi;
+    private Gallery gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,8 @@ public class AddMenuActivity extends AppCompatActivity {
     private void initialInstance() {
 
         foodApi = FoodApi.getFoodApi();
+
+        gallery = new Gallery();
 
         bindWidget();
     }
@@ -114,7 +117,7 @@ public class AddMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.iv_menu)
     public void onIvMenuTouched(){
-        goToGallery();
+        gallery.goToGallery(this, TabBarActivity.SELECT_FILE);
     }
 
 
@@ -140,101 +143,22 @@ public class AddMenuActivity extends AppCompatActivity {
         }
     }
 
-    public void goToGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent.createChooser(intent, "Select File"), SELECT_FILE);
-    }
-
-    public String getRealPathFromURI(Context context, Uri contentUri) {
-        Cursor cursor = null;
-        try {
-            String[] projection = {MediaStore.Images.Media.DATA};
-            cursor = context.getContentResolver().query(contentUri, projection, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
-
-    public String addImageToGallery(Bitmap bitmap) {
-
-        File imageFile = createImageFile("EatAllDay");
-
-        try {
-//            String imagePath = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, imageName, "Capture");
-
-            FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-
-            galleryAddImage(Uri.fromFile(imageFile));
-
-//            Toast.makeText(context, "Successed : " + imageFile, Toast.LENGTH_SHORT).show();
-
-            return imageFile.getAbsolutePath();
-        } catch (Exception e) {
-            Log.i("error", String.valueOf(e));
-//            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        }
-
-        return "error";
-    }
-
-    private File createImageFile(String albumName) {
-
-        // make folder
-        File mFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(), albumName);
-        if (!mFolder.exists()) {
-            if (!mFolder.mkdirs()) {
-                Log.i("error", "Directory not created : " + !mFolder.mkdirs());
-            }
-        }
-
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        String imageName = "EatAllDay_" + timeStamp;
-
-        File imageFile = new File(mFolder, imageName + ".jpg");
-
-        if (!imageFile.exists()) {
-            try {
-                if (!imageFile.createNewFile()) {
-                    Log.i("error", "imageFile not create");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return imageFile;
-    }
-
-    private void galleryAddImage(Uri imageUri) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        mediaScanIntent.setData(imageUri);
-        this.getApplicationContext().sendBroadcast(mediaScanIntent);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == SELECT_FILE) {
+            if (requestCode == TabBarActivity.SELECT_FILE) {
 
                 Uri uriSelectedImage = data.getData();
-                String strPath = getRealPathFromURI(this, uriSelectedImage);
+                String strPath = gallery.getRealPathFromURI(this, uriSelectedImage);
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-                mImage = addImageToGallery(imageBitmap);
+                SaveImage saveImage = new SaveImage(this);
+                mImage = saveImage.addImageToGallery(imageBitmap);
 
                 iv_menu.setImageBitmap(imageBitmap);
 

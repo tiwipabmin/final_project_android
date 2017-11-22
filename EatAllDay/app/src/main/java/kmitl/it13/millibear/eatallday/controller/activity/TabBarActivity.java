@@ -32,6 +32,9 @@ import kmitl.it13.millibear.eatallday.controller.fragment.LobbyFragment;
 
 public class TabBarActivity extends AppCompatActivity {
 
+    public static String USER_ID = "default";
+    public static final int SELECT_FILE = 1969;
+
     @BindView(R.id.tabs)
     TabLayout tabLayout;
 
@@ -53,6 +56,7 @@ public class TabBarActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mUser = intent.getParcelableExtra("user");
+        USER_ID = mUser.getUserId();
 
         initialInstance();
         setUp();

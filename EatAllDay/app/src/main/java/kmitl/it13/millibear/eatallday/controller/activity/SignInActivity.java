@@ -202,8 +202,6 @@ public class SignInActivity extends AppCompatActivity
                                 assert user != null;
                                 final String uId = user.getUid();
 
-                                Toast.makeText(SignInActivity.this, String.valueOf(uId), Toast.LENGTH_SHORT).show();
-
                                 mChildUser.orderByChild(uId)
                                         .addListenerForSingleValueEvent(SignInActivity.this);
 

@@ -52,7 +52,7 @@ public class ConfigDialogFragment extends DialogFragment {
     public void onItemEditMenuTouched(){
 
         Intent intent = new Intent(getActivity(), EditMenuActivity.class);
-        intent.putExtra("food", mMenu);
+        intent.putExtra("menu", mMenu);
         startActivity(intent);
         dismiss();
     }
