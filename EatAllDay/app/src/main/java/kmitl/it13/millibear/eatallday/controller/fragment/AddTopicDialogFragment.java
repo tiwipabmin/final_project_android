@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.History;
 
@@ -30,7 +32,6 @@ public class AddTopicDialogFragment extends DialogFragment {
 
     private Food mFood;
     private Context mContext;
-    private String mUserId;
 
     public void setContext(Context mContext) {
         this.mContext = mContext;
@@ -43,7 +44,6 @@ public class AddTopicDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         mFood = args.getParcelable("food");
-        mUserId = args.getString("userId");
     }
 
     @NonNull
@@ -63,20 +63,20 @@ public class AddTopicDialogFragment extends DialogFragment {
     public void onBtnOkTouched(){
         if(!et_topics.getText().toString().isEmpty()){
             String newKey = HistoryApi.getHistoryApi().getChildHistory().push().getKey();
-            SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy HH:mm a", Locale.US);
+            SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.US);
             String date = fmt.format(new Date());
 
-            History newHistory = new History(newKey, mUserId, mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getAmount(), date, "food");
+            History newHistory = new History(newKey, TabBarActivity.USER_ID, mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getCurrency(), mFood.getAmount(), mFood.getUnit(), date, "food");
             HistoryApi.getHistoryApi().newHistory(newKey, newHistory);
             this.dismiss();
             ((RandomActivity)mContext).finish();
+            Toast.makeText(getContext(), "บันทึกประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public static AddTopicDialogFragment newInstance(Context context, Food food, String userId) {
+    public static AddTopicDialogFragment newInstance(Context context, Food food) {
         Bundle args = new Bundle();
         args.putParcelable("food", food);
-        args.putString("userId", userId);
         AddTopicDialogFragment fragment = new AddTopicDialogFragment();
         fragment.setContext(context);
         fragment.setArguments(args);

@@ -30,7 +30,6 @@ public class RandomResultDialogFragment extends DialogFragment {
 
     private Food mFood;
     private Context mContext;
-    private String mUserId;
 
     public void setContext(Context mContext) {
         this.mContext = mContext;
@@ -42,7 +41,6 @@ public class RandomResultDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
         mFood = args.getParcelable("food");
-        mUserId = args.getString("userId");
     }
 
     @NonNull
@@ -62,16 +60,15 @@ public class RandomResultDialogFragment extends DialogFragment {
 
     @OnClick(R.id.btn_accept)
     public void onBtnAcceptTouched(){
-        DialogFragment topicsDialog = new AddTopicDialogFragment().newInstance(mContext, mFood, mUserId);
+        DialogFragment topicsDialog = new AddTopicDialogFragment().newInstance(mContext, mFood);
         topicsDialog.setCancelable(false);
         topicsDialog.show(getActivity().getSupportFragmentManager(), "topicsDialog");
         dismiss();
     }
 
-    public static RandomResultDialogFragment newInstance(Context context, Food food, String userId) {
+    public static RandomResultDialogFragment newInstance(Context context, Food food) {
         Bundle args = new Bundle();
         args.putParcelable("food", food);
-        args.putString("userId", userId);
         RandomResultDialogFragment fragment = new RandomResultDialogFragment();
         fragment.setContext(context);
         fragment.setArguments(args);

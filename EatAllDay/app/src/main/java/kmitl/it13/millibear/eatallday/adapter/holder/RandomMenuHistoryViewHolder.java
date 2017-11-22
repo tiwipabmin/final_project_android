@@ -35,11 +35,14 @@ public class RandomMenuHistoryViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_username)
     public TextView tv_username;
 
-    @BindView(R.id.iv_sharing)
-    public ImageView iv_sharing;
+    @BindView(R.id.iv_config)
+    public ImageView iv_config;
 
     @BindView(R.id.food_history)
     public LinearLayout layout;
+
+    @BindView(R.id.tv_date)
+    public TextView tv_date;
 
     public RandomMenuHistoryViewHolder(View itemView) {
         super(itemView);

@@ -41,4 +41,8 @@ public class FoodApi {
         childFood.child(newKey).setValue(newFood);
     }
 
+    public void updateMenu(String menuId, Food updateMenu) {
+        childFood.child(menuId).setValue(updateMenu);
+    }
+
 }

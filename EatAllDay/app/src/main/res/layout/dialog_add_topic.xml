@@ -10,7 +10,8 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:text="@string/topics"
-        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <EditText
@@ -22,13 +23,18 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/border_style"
         android:gravity="center"
+        android:inputType="text|textMultiLine"
+        android:maxLength="50"
+        android:maxLines="10"
+        android:padding="8dp"
         android:hint="@string/hint_topics"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btn_ok"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:textSize="18sp"

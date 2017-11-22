@@ -1,6 +1,9 @@
 package kmitl.it13.millibear.eatallday.model;
 
-public class History {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class History implements Parcelable {
 
     private String hisId;
     private String userId;
@@ -8,24 +11,62 @@ public class History {
     private String historyName;
     private String foodImage;
     private Long cost;
-    private Long piece;
-    private String time;
+    private String currency;
+    private Long amount;
+    private String unit;
+    private String date;
     private String type;
 
     public History() {
     }
 
-    public History(String hisId, String userId, String foodName, String historyName, String foodImage, Long cost, Long piece, String time, String type) {
+    public History(String hisId, String userId, String foodName, String historyName, String foodImage, Long cost, String currency, Long amount, String unit, String date, String type) {
         this.hisId = hisId;
         this.userId = userId;
         this.foodName = foodName;
         this.historyName = historyName;
         this.foodImage = foodImage;
         this.cost = cost;
-        this.piece = piece;
-        this.time = time;
+        this.currency = currency;
+        this.amount = amount;
+        this.unit = unit;
+        this.date = date;
         this.type = type;
     }
+
+    protected History(Parcel in) {
+        hisId = in.readString();
+        userId = in.readString();
+        foodName = in.readString();
+        historyName = in.readString();
+        foodImage = in.readString();
+        if (in.readByte() == 0) {
+            cost = null;
+        } else {
+            cost = in.readLong();
+        }
+        currency = in.readString();
+        if (in.readByte() == 0) {
+            amount = null;
+        } else {
+            amount = in.readLong();
+        }
+        unit = in.readString();
+        date = in.readString();
+        type = in.readString();
+    }
+
+    public static final Creator<History> CREATOR = new Creator<History>() {
+        @Override
+        public History createFromParcel(Parcel in) {
+            return new History(in);
+        }
+
+        @Override
+        public History[] newArray(int size) {
+            return new History[size];
+        }
+    };
 
     public String getHisId() {
         return hisId;
@@ -75,20 +116,20 @@ public class History {
         this.cost = cost;
     }
 
-    public Long getPiece() {
-        return piece;
+    public Long getAmount() {
+        return amount;
     }
 
-    public void setPiece(Long piece) {
-        this.piece = piece;
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 
-    public String getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getType() {
@@ -97,5 +138,51 @@ public class History {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(hisId);
+        dest.writeString(userId);
+        dest.writeString(foodName);
+        dest.writeString(historyName);
+        dest.writeString(foodImage);
+        if (cost == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(cost);
+        }
+        dest.writeString(currency);
+        if (amount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(amount);
+        }
+        dest.writeString(unit);
+        dest.writeString(date);
+        dest.writeString(type);
     }
 }

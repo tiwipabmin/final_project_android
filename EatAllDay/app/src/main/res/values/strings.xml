@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">EatAllDay</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
+    <string name="hint_email">อีเมล์</string>
+    <string name="hint_password">รหัสผ่าน</string>
     <string name="hint_name">ชื่อ</string>
-    <string name="verify">Verify</string>
+    <string name="verify">ยืนยัน</string>
     <string name="hint_facebook">Facebook</string>
-    <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">ลงชื่อเข้าใช้บริการ</string>
+    <string name="sign_up">สมัครชื่อใช้บริการ</string>
     <string name="default_facebook">Tiwipab Meephruek\'Mil</string>
     <string name="default_description">Hello, welcome to my world.</string>
     <string name="facebook">Facebook</string>
@@ -15,31 +15,33 @@
     <string name="default_topic">Menu to day</string>
     <string name="default_name_food">ส้มตำไทยไข่เค็ม</string>
     <string name="eat_all_day">EatAllDay</string>
-    <string name="facebook_app_id">871168826390720</string>
-    <string name="fb_login_protocol_scheme">fb871168826390720</string>
     <string name="btn_add_food">เพิ่มรายการอาหาร</string>
     <string name="btn_random">ทำการสุ่มอาหาร</string>
     <string name="btn_random_now">เริ่มสุ่มรายการอาหาร ณ บัดนี้!</string>
     <string name="hint_cost">120</string>
     <string name="cost">ราคา</string>
-    <string name="title_dialog_type_element">Type</string>
-    <string name="label_food">FOOD</string>
-    <string name="label_restaurant">RESTAURANT</string>
-    <string name="btn_cancel">Cancel</string>
+    <string name="btn_cancel">ยกเลิก</string>
     <string name="btn_add">เลือก</string>
-    <string name="label_random_room">Random Room</string>
     <string name="choose">Choose</string>
-    <string name="default_cost">20 Baht / 1 Piece</string>
+    <string name="default_cost">20 บาท / 1 ชิ้น</string>
     <string name="currency">บาท</string>
     <string name="btn_change">Change</string>
-    <string name="title_this_meal">This meal</string>
-    <string name="btn_accept">Accept</string>
-    <string name="topics">This meal topics</string>
-    <string name="hint_topics">Enter meal topics</string>
-    <string name="btn_ok">OK</string>
+    <string name="title_this_meal">อาหารมื้อนี้</string>
+    <string name="btn_accept">ยอมรับ</string>
+    <string name="topics">หัวข้อรายการอาหารมื้อนี้</string>
+    <string name="hint_topics">กรุณากรอกหัวข้อด้วยค่ะ.</string>
+    <string name="btn_ok">ตกลง</string>
     <string name="view_menu">ดูข้อมูลรายการอาหาร</string>
     <string name="edit_menu">แก้ไขข้อมูลรายการอาหาร</string>
     <string name="delete_menu">ลบรายการอาหาร</string>
+    <string name="share">แบ่งปัน</string>
+    <string name="delete_menu_history">ลบประวัติรายการอาหาร</string>
+    <string name="content_alert_edit_menu">คุณยังไม่ได้บันทึกการเปลี่ยนแปลงข้อมูลรายการอาหาร คุณแน่ใจนะที่จะออกจากหน้านี้</string>
+    <string name="date">วว/ดด/ปป ชม:น </string>
+
+    <!-- id facebook -->
+    <string name="facebook_app_id">871168826390720</string>
+    <string name="fb_login_protocol_scheme">fb871168826390720</string>
 
     <string-array name="item_config">
         <item><font fgcolor='#336600'>Food</font></item>

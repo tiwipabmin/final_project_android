@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,11 +19,14 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
+import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.AlertEditMenuDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class EditMenuActivity extends AppCompatActivity {
@@ -54,9 +58,10 @@ public class EditMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    private Food mMenu;
+    private Food mCurrentMenu;
     private String mImage;
     private Gallery gallery;
+    private boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,56 +70,119 @@ public class EditMenuActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent editMenuIntent = getIntent();
-        mMenu = editMenuIntent.getParcelableExtra("menu");
+        mCurrentMenu = editMenuIntent.getParcelableExtra("menu");
 
         initialInstance();
         setUp();
     }
 
-    private void initialInstance(){
+    private void initialInstance() {
 
         gallery = new Gallery();
     }
 
-    private void setUp(){
+    private void setUp() {
 
-        Glide.with(this).load(mMenu.getImage()).into(iv_menu);
-        et_name.setText(mMenu.getName());
-        et_cost.setText(String.valueOf(mMenu.getCost()));
-        et_currency.setText(mMenu.getCurrency());
-        et_amount.setText(String.valueOf(mMenu.getAmount()));
-        et_unit.setText(mMenu.getUnit());
-        et_description.setText(mMenu.getDescription());
+        Glide.with(this).load(mCurrentMenu.getImage()).into(iv_menu);
+        et_name.setText(mCurrentMenu.getName());
+        et_cost.setText(String.valueOf(mCurrentMenu.getCost()));
+        et_currency.setText(mCurrentMenu.getCurrency());
+        et_amount.setText(String.valueOf(mCurrentMenu.getAmount()));
+        et_unit.setText(mCurrentMenu.getUnit());
+        et_description.setText(mCurrentMenu.getDescription());
     }
 
     @OnClick(R.id.iv_back)
-    public void onIvBackTouched(){
+    public void onIvBackTouched() {
 
-        finish();
+        if(isEdit){
+            AlertEditMenuDialogFragment alertEditMenu = new AlertEditMenuDialogFragment();
+            alertEditMenu.show(this.getSupportFragmentManager(), "alertEditMenu");
+        } else {
+            finish();
+        }
     }
 
     @OnClick(R.id.iv_menu)
-    public void onIvMenuTouched(){
+    public void onIvMenuTouched() {
 
         gallery.goToGallery(this, TabBarActivity.SELECT_FILE);
     }
 
+    @OnTextChanged(value = R.id.et_name,
+            callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
+    public void onEtNameOnTextChanged(Editable editable){
+
+        if(!et_name.getText().toString().isEmpty()) {
+            isEdit = true;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_cost,
+            callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
+    public void onEtCostOnTextChanged(Editable editable){
+
+        if(!et_cost.getText().toString().isEmpty()) {
+            isEdit = true;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_currency,
+            callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
+    public void onEtCurrencyOnTextChanged(Editable editable){
+
+        if(!et_currency.getText().toString().isEmpty()) {
+            isEdit = true;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_amount,
+            callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
+    public void onEtAmountTextChanged(Editable editable){
+
+        if(!et_amount.getText().toString().isEmpty()) {
+            isEdit = true;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_unit,
+            callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
+    public void onEtUnitOnTextChanged(Editable editable){
+
+        if(!et_unit.getText().toString().isEmpty()) {
+            isEdit = true;
+        }
+    }
+
+    @OnTextChanged(value = R.id.et_description,
+            callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
+    public void onEtDescriptionOnTextChanged(Editable editable){
+
+        if(!et_description.getText().toString().isEmpty()) {
+            isEdit = true;
+        }
+    }
+
     @OnClick(R.id.iv_verify)
-    public void onIvVerifyTouched(){
+    public void onIvVerifyTouched() {
 
-        if(!et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()){
+        if (!et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
 
-            Toast.makeText(this, "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "แก้ไขประวิตเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
 
-            String menuId = mMenu.getId();
-            Food newFood = new Food(menuId, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), TabBarActivity.USER_ID, mImage, et_currency.getText().toString(),
+            if(mImage == null){
+                mImage = mCurrentMenu.getImage();
+            }
+            String menuId = mCurrentMenu.getId();
+            Food updateMenu = new Food(menuId, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), TabBarActivity.USER_ID, mImage, et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
-            FoodApi.getFoodApi().newFood(menuId, newFood);
+            FoodApi.getFoodApi().newFood(menuId, updateMenu);
             finish();
         } else {
 
             Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
@@ -134,7 +202,9 @@ public class EditMenuActivity extends AppCompatActivity {
                 SaveImage saveImage = new SaveImage(this);
                 mImage = saveImage.addImageToGallery(imageBitmap);
 
-                iv_menu.setImageBitmap(imageBitmap);
+                isEdit = true;
+
+                Glide.with(this).load(mImage).into(iv_menu);
 
             }
 

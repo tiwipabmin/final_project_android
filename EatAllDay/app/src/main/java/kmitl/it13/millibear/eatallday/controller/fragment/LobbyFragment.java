@@ -2,6 +2,7 @@ package kmitl.it13.millibear.eatallday.controller.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.LobbyAdapter;
+import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
 import kmitl.it13.millibear.eatallday.model.User;
@@ -38,6 +40,8 @@ public class LobbyFragment extends Fragment {
     private LobbyAdapter mLobbyAdapter;
     private User mUser;
     private DatabaseReference childHistory;
+    private ArrayList<Object> mStorage;
+    private ArrayList<String> mViewType;
 
     public LobbyFragment() {
         // Required empty public constructor
@@ -49,7 +53,6 @@ public class LobbyFragment extends Fragment {
 
         Bundle args = getArguments();
         mUser = args.getParcelable("user");
-        Toast.makeText(getActivity(), mUser.getUserId(), Toast.LENGTH_SHORT).show();
     }
 
     private void initialInstance(Context context){
@@ -57,36 +60,60 @@ public class LobbyFragment extends Fragment {
         childHistory = HistoryApi.getHistoryApi().getChildHistory();
 
         mLobbyAdapter = new LobbyAdapter(context);
+
+        mStorage = new ArrayList<>();
+
+        mViewType = new ArrayList<>();
     }
 
     private void setUp(){
 
+        queryMenuHistory();
+    }
+
+    private void queryMenuHistory(){
+
         childHistory.orderByChild("userId")
                 .equalTo(mUser.getUserId())
                 .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        //จะเก็บข้อมูลชัประวัติไว้ชั่วคราว
+                        ArrayList<History> memoryContent = new ArrayList<>();
+                        ArrayList<String> memoryType = new ArrayList<>();
+
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            History history = ds.getValue(History.class);
+
+                            assert history != null;
+                            history.setHisId(String.valueOf(ds.getKey()));
+
+                            memoryContent.add(history);
+                            memoryType.add(history.getType());
+                        }
+
+                        queryUser(memoryContent, memoryType);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(getActivity(), databaseError + "", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void queryUser(final ArrayList<History> memoryContent, final ArrayList<String> memoryType){
+
+        UserApi.getUserApi().getChildUser().child(mUser.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                ArrayList<History> mStorage = new ArrayList<>();
-                History deception = new History();
-                mStorage.add(deception);
+                mStorage.clear();
+                mViewType.clear();
 
-                ArrayList<String> mViewType = new ArrayList<>();
+                mStorage.add(dataSnapshot.getValue(User.class));
                 mViewType.add("profile");
-
-                //จะเก็บข้อมูลชัประวัติไว้ชั่วคราว
-                ArrayList<History> memoryContent = new ArrayList<>();
-                ArrayList<String> memoryType = new ArrayList<>();
-
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    History history = ds.getValue(History.class);
-
-                    assert history != null;
-                    history.setHisId(String.valueOf(ds.getKey()));
-
-                    memoryContent.add(history);
-                    memoryType.add(history.getType());
-                }
 
                 //เอาประวัติล่าสุดขึ้นมาไว้ลำดับแรก
                 for(int i = memoryContent.size() - 1; i >= 0 ; i--){
@@ -96,7 +123,6 @@ public class LobbyFragment extends Fragment {
 
                 mLobbyAdapter.setStorage(mStorage);
                 mLobbyAdapter.setViewType(mViewType);
-                mLobbyAdapter.setUser(mUser);
                 profile.setAdapter(mLobbyAdapter);
                 profile.setLayoutManager(new LinearLayoutManager(getActivity()));
                 profile.invalidateItemDecorations();
@@ -104,7 +130,7 @@ public class LobbyFragment extends Fragment {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), databaseError + "", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -127,4 +153,9 @@ public class LobbyFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

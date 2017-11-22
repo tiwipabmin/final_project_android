@@ -35,11 +35,10 @@ public class UserApi {
 
 
     public void newUser(Context context, User newUser){
+        childUser.child(newUser.getUserId()).setValue(newUser);
+    }
 
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/user/" + newUser.getUserId(), newUser);
-
-        Toast.makeText(context, newUser.getUserId(), Toast.LENGTH_SHORT).show();
-        FirebaseDatabase.getInstance().getReference().updateChildren(childUpdates);
+    public void updateUser(User updateUser){
+        childUser.child(updateUser.getUserId()).setValue(updateUser);
     }
 }

@@ -1,7 +1,7 @@
 package kmitl.it13.millibear.eatallday.adapter;
 
 import android.content.Context;
-import android.support.v4.app.DialogFragment;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +15,8 @@ import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.adapter.holder.ItemRandomMenuViewHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ItemShowMenuViewHolder;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.controller.fragment.ConfigDialogFragment;
-import kmitl.it13.millibear.eatallday.controller.fragment.KitchenFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ConfigMenuDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.MenuDetailDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -107,8 +107,16 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         itemShowMenuViewHolder.iv_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfigDialogFragment configDialogFragment = new ConfigDialogFragment().newInstance(mMenu.get(position));
-                configDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "configDialog");
+                ConfigMenuDialogFragment configMenuDialogFragment = new ConfigMenuDialogFragment().newInstance(mMenu.get(position));
+                configMenuDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "configDialog");
+            }
+        });
+
+        itemShowMenuViewHolder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuDetailDialogFragment menuDetailDialogFragment = new MenuDetailDialogFragment().newInstance(mMenu.get(position));
+                menuDetailDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "menuDetailDialog");
             }
         });
 

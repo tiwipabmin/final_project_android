@@ -161,7 +161,7 @@ public class RandomActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(RandomActivity.this, chooseMenu.get(key), userId);
+                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(RandomActivity.this, chooseMenu.get(key));
                     dialogFragment.setCancelable(false);
                     dialogFragment.show(getSupportFragmentManager(), "random_result");
                     progress.dismiss();
