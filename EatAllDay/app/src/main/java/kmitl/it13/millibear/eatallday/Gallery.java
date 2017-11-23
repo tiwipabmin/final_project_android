@@ -1,13 +1,16 @@
 package kmitl.it13.millibear.eatallday;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import java.io.File;
@@ -16,6 +19,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by tiwip on 11/22/2017.
@@ -31,6 +36,12 @@ public class Gallery {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         activity.startActivityForResult(intent.createChooser(intent, "Select File"), resultActivity);
+    }
+
+    public void goToGallery(FragmentActivity fragment, int resultActivity) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        fragment.startActivityForResult(intent.createChooser(intent, "Select File"), resultActivity);
     }
 
     public String getRealPathFromURI(Context context, Uri contentUri) {

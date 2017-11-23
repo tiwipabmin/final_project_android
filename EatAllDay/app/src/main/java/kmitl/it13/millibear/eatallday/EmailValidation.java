@@ -31,7 +31,7 @@ public class EmailValidation {
     }
 
     private void validateEmailIsValid(String email) throws EmailValidationException {
-        if(!email.matches("^[A-Za-z0-9]+[A-Za-z0-9_%+-]+@([A-Za-z]+)\\.([A-Za-z]{2,})$")) {
+        if(!email.matches("^[_a-z0-9-\\+]+(\\.[_a-z0-9-]+)*@[a-z]+(\\.[a-z]+)*(\\.[a-z]{2,})$")) {
             throw new EmailValidationException("Email is invalid");
         }
     }

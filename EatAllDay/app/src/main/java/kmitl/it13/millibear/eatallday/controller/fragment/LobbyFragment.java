@@ -1,8 +1,12 @@
 package kmitl.it13.millibear.eatallday.controller.fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,13 +22,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
+import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.adapter.LobbyAdapter;
 import kmitl.it13.millibear.eatallday.api.UserApi;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
 import kmitl.it13.millibear.eatallday.model.User;
@@ -153,9 +162,4 @@ public class LobbyFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-    }
 }

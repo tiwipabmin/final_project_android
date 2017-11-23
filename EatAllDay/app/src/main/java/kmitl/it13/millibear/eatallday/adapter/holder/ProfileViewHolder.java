@@ -11,10 +11,6 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.R;
 
-/**
- * Created by tiwip on 11/3/2017.
- */
-
 public class ProfileViewHolder extends RecyclerView.ViewHolder{
 
     @BindView(R.id.tv_facebook)

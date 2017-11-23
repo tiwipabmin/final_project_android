@@ -21,11 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import kmitl.it13.millibear.eatallday.EmailValidation;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment;
+import kmitl.it13.millibear.eatallday.model.ValidationResult;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -73,7 +75,11 @@ public class SignUpActivity extends AppCompatActivity {
     void onVerifyButtonTouched() {
         boolean allValid = true;
 
-        if (!isValidEmail(et_email.getText().toString())) {
+        EmailValidation emailValidation = new EmailValidation();
+
+        ValidationResult emailResult = emailValidation.validate(et_email.getText().toString());
+
+        if (!emailResult.getResult()) {
 
             et_email.setError("you can't use this email please fill in new email.");
             allValid = false;

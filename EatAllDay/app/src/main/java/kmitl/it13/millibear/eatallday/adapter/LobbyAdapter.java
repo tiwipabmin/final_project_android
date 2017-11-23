@@ -16,12 +16,15 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.adapter.holder.RandomMenuHistoryViewHolder;
 import kmitl.it13.millibear.eatallday.adapter.holder.ProfileViewHolder;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
+import kmitl.it13.millibear.eatallday.controller.fragment.EditProfileDisplayDialogFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.VerificationDeleteRandomMenuHistoryDialogFragment;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.model.User;
@@ -104,12 +107,20 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return -1;
     }
 
-    private void configureProfileViewHolder(final ProfileViewHolder profileViewHolder, int position){
+    private void configureProfileViewHolder(final ProfileViewHolder profileViewHolder, final int position){
         mUser = (User) mStorage.get(position);
         Glide.with(mContext).load(mUser.getImage()).into(profileViewHolder.iv_image);
         profileViewHolder.tv_name.setText(mUser.getName());
         profileViewHolder.tv_facebook.setText(mUser.getFacebook());
         profileViewHolder.tv_description.setText(mUser.getDescription());
+
+        profileViewHolder.iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditProfileDisplayDialogFragment editProfileDisplayDialogFragment = new EditProfileDisplayDialogFragment().newInstance((User)mStorage.get(position), profileViewHolder.iv_image);
+                editProfileDisplayDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "editProfileDisplayDialog");
+            }
+        });
 
         profileViewHolder.iv_edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override

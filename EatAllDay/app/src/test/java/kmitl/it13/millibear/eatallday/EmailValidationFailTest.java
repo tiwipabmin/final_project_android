@@ -48,7 +48,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailMissingDomain(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwipabmin@.com");
+        ValidationResult result = emailValidation.validate("test@.com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -57,7 +57,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailMissingEnd(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwipabmin@gmail.");
+        ValidationResult result = emailValidation.validate("test@test.");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -66,7 +66,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailNameBeginsWithASpecialAlphabet(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("#tiwipabmin@gmail.com");
+        ValidationResult result = emailValidation.validate("#test@test.com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -75,7 +75,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailHaveDoubleAmpersand(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwipabmin@@gmail.com");
+        ValidationResult result = emailValidation.validate("test@@test.com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -84,7 +84,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailHaveDoubleDot(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwipabmin@gmail..com");
+        ValidationResult result = emailValidation.validate("test@gmail..com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -93,7 +93,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailNameHaveSpecialAlphabet(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwip#a%bm^in@gmail.com");
+        ValidationResult result = emailValidation.validate("tes#a%bm^in@gmail.com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -102,7 +102,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailDomainHaveSpecialAlphabet(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwipabmin@gma$il.com");
+        ValidationResult result = emailValidation.validate("test@te$st.com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());
@@ -111,7 +111,7 @@ public class EmailValidationFailTest {
     @Test
     public void EmailDomainHaveNumeric(){
         EmailValidation emailValidation = new EmailValidation();
-        ValidationResult result = emailValidation.validate("tiwipabmin@g123mail.com");
+        ValidationResult result = emailValidation.validate("test@g123test.com");
 
         assertFalse(result.getResult());
         assertEquals("Email is invalid", result.getErrorMessage());

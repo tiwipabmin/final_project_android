@@ -18,7 +18,7 @@ import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.activity.EditMenuActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 
-public class ConfigMenuDialogFragment extends DialogFragment {
+public class EditMenuDialogFragment extends DialogFragment {
 
     private Food mMenu;
 
@@ -58,11 +58,11 @@ public class ConfigMenuDialogFragment extends DialogFragment {
         return alertDialog.create();
     }
 
-    public static ConfigMenuDialogFragment newInstance(Food food) {
+    public static EditMenuDialogFragment newInstance(Food food) {
 
         Bundle args = new Bundle();
         args.putParcelable("food", food);
-        ConfigMenuDialogFragment fragment = new ConfigMenuDialogFragment();
+        EditMenuDialogFragment fragment = new EditMenuDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }
