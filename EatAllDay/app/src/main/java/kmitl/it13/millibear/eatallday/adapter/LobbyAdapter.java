@@ -1,7 +1,9 @@
 package kmitl.it13.millibear.eatallday.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.List;
 
 import kmitl.it13.millibear.eatallday.R;
@@ -19,7 +22,7 @@ import kmitl.it13.millibear.eatallday.adapter.holder.RandomMenuHistoryViewHolder
 import kmitl.it13.millibear.eatallday.adapter.holder.ProfileViewHolder;
 import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
-import kmitl.it13.millibear.eatallday.controller.fragment.ConfigMenuHistoryDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.VerificationDeleteRandomMenuHistoryDialogFragment;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.model.User;
 
@@ -156,17 +159,17 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void configureFoodHistoryViewHolder(final RandomMenuHistoryViewHolder randomMenuHistoryViewHolder, final int position){
-        final History menuHistory = (History) mStorage.get(position);
+        final History randomMenuHistory = (History) mStorage.get(position);
         Glide.with(mContext).load(mUser.getImage()).into(randomMenuHistoryViewHolder.iv_userImage);
-        Glide.with(mContext).load(menuHistory.getFoodImage()).into(randomMenuHistoryViewHolder.iv_foodImage);
-        randomMenuHistoryViewHolder.tv_cost.setText(String.valueOf(menuHistory.getCost()).concat(" " + menuHistory.getCurrency()));
-        randomMenuHistoryViewHolder.tv_foodName.setText(menuHistory.getFoodName());
+        Glide.with(mContext).load(randomMenuHistory.getFoodImage()).into(randomMenuHistoryViewHolder.iv_foodImage);
+        randomMenuHistoryViewHolder.tv_cost.setText(String.valueOf(randomMenuHistory.getCost()).concat(" " + randomMenuHistory.getCurrency()));
+        randomMenuHistoryViewHolder.tv_foodName.setText(randomMenuHistory.getFoodName());
         randomMenuHistoryViewHolder.tv_username.setText(mUser.getName());
-        randomMenuHistoryViewHolder.tv_piece.setText(String.valueOf(menuHistory.getAmount()).concat(" " + menuHistory.getUnit()));
-        randomMenuHistoryViewHolder.tv_topic.setText(menuHistory.getHistoryName());
-        randomMenuHistoryViewHolder.tv_date.setText(menuHistory.getDate());
+        randomMenuHistoryViewHolder.tv_piece.setText(String.valueOf(randomMenuHistory.getAmount()).concat(" " + randomMenuHistory.getUnit()));
+        randomMenuHistoryViewHolder.tv_topic.setText(randomMenuHistory.getHistoryName());
+        randomMenuHistoryViewHolder.tv_date.setText(randomMenuHistory.getDate());
 
-        randomMenuHistoryViewHolder.iv_config.setOnClickListener(new View.OnClickListener() {
+        randomMenuHistoryViewHolder.iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 randomMenuHistoryViewHolder.layout.post(new Runnable() {
@@ -177,12 +180,28 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         randomMenuHistoryViewHolder.layout.setDrawingCacheEnabled(false);
                         SaveImage saveImage = new SaveImage(mContext);
                         String path = saveImage.addImageToGallery(bmp);
-                        ConfigMenuHistoryDialogFragment configMenuHistoryDialogFragment = new ConfigMenuHistoryDialogFragment().newInstance(menuHistory, path);
-                        configMenuHistoryDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "configMenuHistoryDialog");
+                        share(path);
                     }
                 });
             }
         });
+
+        randomMenuHistoryViewHolder.iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VerificationDeleteRandomMenuHistoryDialogFragment verificationDeleteRandomMenuHistoryDialogFragment =
+                        new VerificationDeleteRandomMenuHistoryDialogFragment().newInstance(randomMenuHistory);
+                verificationDeleteRandomMenuHistoryDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "verificationDeleteRandomMenuHistoryDialog");
+            }
+        });
+    }
+
+    private void share(String path){
+        File imageFile = new File(path);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/jpg");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
+        ((TabBarActivity)mContext).startActivity(Intent.createChooser(intent, "Share to..."));
     }
 
     @Override
