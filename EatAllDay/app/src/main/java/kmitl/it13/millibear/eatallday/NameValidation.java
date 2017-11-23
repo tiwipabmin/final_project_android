@@ -3,10 +3,6 @@ package kmitl.it13.millibear.eatallday;
 import kmitl.it13.millibear.eatallday.model.ValidationResult;
 import kmitl.it13.millibear.eatallday.myexception.NameValidationException;
 
-/**
- * Created by tiwip on 11/24/2017.
- */
-
 public class NameValidation {
 
     public ValidationResult validate(String inputName) {
@@ -25,19 +21,19 @@ public class NameValidation {
 
     private void validateNameIsNull(String name) throws NameValidationException {
         if(name == null) {
-            throw new NameValidationException("Name is Null");
+            throw new NameValidationException("Name is null");
         }
     }
 
     private void validateNameIsEmptyString(String name) throws NameValidationException {
         if(name.isEmpty()) {
-            throw new NameValidationException("Name is Empty String");
+            throw new NameValidationException("Name is empty string");
         }
     }
 
     private void validateNameIsAlphabet(String name) throws NameValidationException {
         if(!name.matches("^[ A-Za-z]+$")) {
-            throw new NameValidationException("Name contain non Alphabet Characters");
+            throw new NameValidationException("Name contain non alphabet characters");
         }
     }
 }

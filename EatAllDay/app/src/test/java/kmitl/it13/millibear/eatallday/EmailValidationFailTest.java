@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertFalse;
 public class EmailValidationFailTest {
 
     @Test
-    public void EmailIsEmpty() {
+    public void emailIsEmpty() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("");
 
@@ -19,7 +19,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailIsNull() {
+    public void emailIsNull() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate(null);
 
@@ -28,7 +28,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailRandomString() {
+    public void emailRandomString() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("asfasf.sdf@sdaf");
 
@@ -37,7 +37,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailMissingName(){
+    public void emailMissingName(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("@gmail.com");
 
@@ -46,7 +46,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailMissingDomain(){
+    public void emailMissingDomain(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@.com");
 
@@ -55,7 +55,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailMissingEnd(){
+    public void emailMissingEnd(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@test.");
 
@@ -64,7 +64,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailNameBeginsWithASpecialAlphabet(){
+    public void emailNameBeginsWithASpecialCharacter(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("#test@test.com");
 
@@ -73,7 +73,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailHaveDoubleAmpersand(){
+    public void emailHaveDoubleAmpersand(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@@test.com");
 
@@ -82,7 +82,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailHaveDoubleDot(){
+    public void emailHaveDoubleDot(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@gmail..com");
 
@@ -91,7 +91,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailNameHaveSpecialAlphabet(){
+    public void emailNameHaveSpecialCharacter(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("tes#a%bm^in@gmail.com");
 
@@ -100,7 +100,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailDomainHaveSpecialAlphabet(){
+    public void emailDomainHaveSpecialCharacter(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@te$st.com");
 
@@ -109,7 +109,7 @@ public class EmailValidationFailTest {
     }
 
     @Test
-    public void EmailDomainHaveNumeric(){
+    public void emailDomainHaveNumeric(){
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@g123test.com");
 

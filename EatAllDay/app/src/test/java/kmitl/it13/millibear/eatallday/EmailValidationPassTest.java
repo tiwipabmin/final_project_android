@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertTrue;
 public class EmailValidationPassTest {
 
     @Test
-    public void EmailStandart() {
+    public void emailStandart() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@test.com");
 
@@ -19,7 +19,7 @@ public class EmailValidationPassTest {
     }
 
     @Test
-    public void EmailNameWithDot() {
+    public void emailNameWithDot() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("t.est@test.com");
 
@@ -28,7 +28,7 @@ public class EmailValidationPassTest {
     }
 
     @Test
-    public void EmailEndWithDot() {
+    public void emailEndWithDot() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@test.ac.th");
 
@@ -37,7 +37,7 @@ public class EmailValidationPassTest {
     }
 
     @Test
-    public void EmailEndStrange() {
+    public void emailEndStrange() {
         EmailValidation emailValidation = new EmailValidation();
         ValidationResult result = emailValidation.validate("test@test.xyz");
 

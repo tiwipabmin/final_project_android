@@ -22,6 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.EmailValidation;
+import kmitl.it13.millibear.eatallday.NameValidation;
+import kmitl.it13.millibear.eatallday.PasswordValidation;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.api.UserApi;
@@ -75,9 +77,19 @@ public class SignUpActivity extends AppCompatActivity {
     void onVerifyButtonTouched() {
         boolean allValid = true;
 
+        NameValidation nameValidation = new NameValidation();
         EmailValidation emailValidation = new EmailValidation();
+        PasswordValidation passwordValidation = new PasswordValidation();
 
+        ValidationResult nameResult = nameValidation.validate(et_name.getText().toString());
         ValidationResult emailResult = emailValidation.validate(et_email.getText().toString());
+        ValidationResult passwordResult = passwordValidation.validate(et_password.getText().toString());
+
+        if(!nameResult.getResult()){
+
+            et_name.setError("your name can't use special alphabet or numeric.");
+            allValid = false;
+        }
 
         if (!emailResult.getResult()) {
 
@@ -85,21 +97,15 @@ public class SignUpActivity extends AppCompatActivity {
             allValid = false;
         }
 
+        if(!passwordResult.getResult()){
+
+            et_password.setError("your password can't use special alphabet and there are 8 character up.");
+            allValid = false;
+        }
+
         if(!isTextInput(et_facebook.getText().toString())){
 
             et_facebook.setError("your name can't use special alphabet or numeric.");
-            allValid = false;
-        }
-
-        if(!isTextInput(et_name.getText().toString())){
-
-            et_name.setError("your name can't use special alphabet or numeric.");
-            allValid = false;
-        }
-
-        if(!isPasswordInput(et_password.getText().toString())){
-
-            et_password.setError("your password can't use special alphabet and there are 8 character up.");
             allValid = false;
         }
 
@@ -114,10 +120,6 @@ public class SignUpActivity extends AppCompatActivity {
         SignUpActivity.this.finish();
     }
 
-    boolean isValidEmail(String email) {
-        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
-    }
-
     boolean isTextInput(String text){
         if(TextUtils.isEmpty(text)){
             return false;
@@ -128,22 +130,6 @@ public class SignUpActivity extends AppCompatActivity {
             if (Character.isDigit(character)) {
                 return false;
             } else if ((ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65) || (ascii > 90 && ascii < 97) || (ascii > 122 && ascii < 127)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    boolean isPasswordInput(String password){
-        if(TextUtils.isEmpty(password)){
-            return false;
-        } else if(password.length() < 8){
-            return false;
-        }
-        char[] passwordArray = password.toCharArray();
-        for (char character : passwordArray) {
-            int ascii = (int) character;
-            if ((ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65) || (ascii > 90 && ascii < 97) || (ascii > 122 && ascii < 127)) {
                 return false;
             }
         }

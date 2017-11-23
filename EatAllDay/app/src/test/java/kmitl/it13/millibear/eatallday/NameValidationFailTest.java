@@ -10,47 +10,47 @@ import static junit.framework.Assert.assertFalse;
 public class NameValidationFailTest {
 
     @Test
-    public void NameIsNull() {
+    public void nameIsNull() {
         NameValidation nameValidation = new NameValidation();
         ValidationResult result = nameValidation.validate(null);
 
         assertFalse(result.getResult());
-        assertEquals("Name is Null", result.getErrorMessage());
+        assertEquals("Name is null", result.getErrorMessage());
     }
 
     @Test
-    public void NameIsEmptyString() {
+    public void nameIsEmptyString() {
         NameValidation nameValidation = new NameValidation();
         ValidationResult result = nameValidation.validate("");
 
         assertFalse(result.getResult());
-        assertEquals("Name is Empty String", result.getErrorMessage());
+        assertEquals("Name is empty string", result.getErrorMessage());
     }
 
     @Test
-    public void NameContainNumber() {
+    public void nameContainNumber() {
         NameValidation nameValidation = new NameValidation();
-        ValidationResult result = nameValidation.validate("Somchai123");
+        ValidationResult result = nameValidation.validate("1Som2chai3");
 
         assertFalse(result.getResult());
-        assertEquals("Name contain non Alphabet Characters", result.getErrorMessage());
+        assertEquals("Name contain non alphabet characters", result.getErrorMessage());
     }
 
     @Test
-    public void NameContainSpecialAlphabet() {
+    public void nameContainSpecialCharacter() {
         NameValidation nameValidation = new NameValidation();
         ValidationResult result = nameValidation.validate("SomYing###");
 
         assertFalse(result.getResult());
-        assertEquals("Name contain non Alphabet Characters", result.getErrorMessage());
+        assertEquals("Name contain non alphabet characters", result.getErrorMessage());
     }
 
     @Test
-    public void NameIsNonEnglish() {
+    public void nameIsNonEnglish() {
         NameValidation nameValidation = new NameValidation();
         ValidationResult result = nameValidation.validate("สมสวย รวยทรัพย์");
 
         assertFalse(result.getResult());
-        assertEquals("Name contain non Alphabet Characters", result.getErrorMessage());
+        assertEquals("Name contain non alphabet characters", result.getErrorMessage());
     }
 }

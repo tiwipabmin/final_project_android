@@ -14,7 +14,7 @@
         android:layout_height="350dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#FFFFFF"
+        android:background="@drawable/border_shadow_style"
         android:orientation="vertical">
 
         <TextView
