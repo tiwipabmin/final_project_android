@@ -42,9 +42,11 @@ public class EditMenuDialogFragment extends DialogFragment {
     @OnClick(R.id.item_delete_menu)
     public void onItemDeleteMenuTouched(){
 
-        deleteMenu(mMenu);
-        dismiss();
-        Toast.makeText(getContext(), "ลบรายการอาหารเรียบร้อยแล้วขอรับ.", Toast.LENGTH_SHORT).show();
+        DialogFragment progress = new ProgressDialogFragment();
+        progress.show(getActivity().getSupportFragmentManager(), "progress");
+
+        FoodApi.getFoodApi().deleteMenu(mMenu, progress);
+        this.dismiss();
     }
 
     @NonNull
@@ -65,9 +67,5 @@ public class EditMenuDialogFragment extends DialogFragment {
         EditMenuDialogFragment fragment = new EditMenuDialogFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void deleteMenu(Food food){
-        FoodApi.getFoodApi().getChildFood().child(food.getId()).removeValue();
     }
 }

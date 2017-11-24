@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.EmailValidation;
+import kmitl.it13.millibear.eatallday.FacebookValidation;
 import kmitl.it13.millibear.eatallday.NameValidation;
 import kmitl.it13.millibear.eatallday.PasswordValidation;
 import kmitl.it13.millibear.eatallday.R;
@@ -49,6 +50,9 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.et_password)
     EditText et_password;
 
+    @BindView(R.id.et_verify_password)
+    EditText et_verify_password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +60,6 @@ public class SignUpActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initialInstance();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        UserApi.getUserApi().setListener(this);
     }
 
     void initialInstance(){
@@ -80,32 +78,40 @@ public class SignUpActivity extends AppCompatActivity {
         NameValidation nameValidation = new NameValidation();
         EmailValidation emailValidation = new EmailValidation();
         PasswordValidation passwordValidation = new PasswordValidation();
+        FacebookValidation facebookValidation = new FacebookValidation();
 
         ValidationResult nameResult = nameValidation.validate(et_name.getText().toString());
         ValidationResult emailResult = emailValidation.validate(et_email.getText().toString());
         ValidationResult passwordResult = passwordValidation.validate(et_password.getText().toString());
+        ValidationResult facebookResult = facebookValidation.validate(et_facebook.getText().toString());
 
         if(!nameResult.getResult()){
 
-            et_name.setError("your name can't use special alphabet or numeric.");
+            et_name.setError("your name can't be special character or numeric.");
             allValid = false;
         }
 
         if (!emailResult.getResult()) {
 
-            et_email.setError("you can't use this email please fill in new email.");
+            et_email.setError("you can't be this email please fill in new email.");
             allValid = false;
         }
 
         if(!passwordResult.getResult()){
 
-            et_password.setError("your password can't use special alphabet and there are 8 character up.");
+            et_password.setError("your password can't be special character and there are 8 character up.");
             allValid = false;
         }
 
-        if(!isTextInput(et_facebook.getText().toString())){
+        if(!et_password.getText().toString().equals(et_verify_password.getText().toString())){
 
-            et_facebook.setError("your name can't use special alphabet or numeric.");
+            et_verify_password.setError("your password verify don't pass.");
+            allValid = false;
+        }
+
+        if(!facebookResult.getResult()){
+
+            et_facebook.setError("your facebook invalid.");
             allValid = false;
         }
 
@@ -118,22 +124,6 @@ public class SignUpActivity extends AppCompatActivity {
     @OnClick(R.id.tv_sign_in)
     void onSignInButtonTouched() {
         SignUpActivity.this.finish();
-    }
-
-    boolean isTextInput(String text){
-        if(TextUtils.isEmpty(text)){
-            return false;
-        }
-        char[] textArray = text.toCharArray();
-        for (char character : textArray) {
-            int ascii = (int) character;
-            if (Character.isDigit(character)) {
-                return false;
-            } else if ((ascii > 32 && ascii < 48) || (ascii > 57 && ascii < 65) || (ascii > 90 && ascii < 97) || (ascii > 122 && ascii < 127)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     void createNewAccount(final String name, final String email, String password, final String facebook) {
@@ -149,11 +139,10 @@ public class SignUpActivity extends AppCompatActivity {
                                     assert user != null;
                                     String uId = user.getUid();
 
-                                    Toast.makeText(SignUpActivity.this, uId, Toast.LENGTH_SHORT).show();
-
                                     User newUser = new User(uId, name, email, facebook);
 
                                     userApi.newUser(SignUpActivity.this, newUser);
+                                    Toast.makeText(SignUpActivity.this, "สมัครสมาชิกสำเร็จ", Toast.LENGTH_SHORT).show();
 
                                     goToLobby(newUser);
                                     progress.dismiss();
@@ -168,9 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                DialogFragment alertDialog = new AlertDialogFragment()
-                        .newInstance("Registration failed.");
-                alertDialog.show(getSupportFragmentManager(), "alertDialog");
+                progress.dismiss();
             }
         });
     }

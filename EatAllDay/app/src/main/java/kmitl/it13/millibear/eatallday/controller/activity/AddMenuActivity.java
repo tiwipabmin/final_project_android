@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class AddMenuActivity extends AppCompatActivity {
@@ -103,15 +105,17 @@ public class AddMenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.iv_add)
     public void onIvAddTouched(){
+
         if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
 
-            Toast.makeText(this, "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
+            DialogFragment progress = new ProgressDialogFragment();
+            progress.show(getSupportFragmentManager(), "progress");
 
             String newKey = foodApi.getChildFood().push().getKey();
             Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage, et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
-            foodApi.newFood(newKey, newFood);
-            finish();
+            foodApi.newFood(newKey, newFood, progress);
+            this.finish();
         } else {
 
             Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();

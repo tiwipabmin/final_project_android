@@ -205,18 +205,13 @@ public class SignInActivity extends AppCompatActivity
                                 mChildUser.orderByChild(uId)
                                         .addListenerForSingleValueEvent(SignInActivity.this);
 
-                            } else {
-
-                                Log.i("Access is denied!", String.valueOf(task.getException()));
-                                progress.dismiss();
                             }
-
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     DialogFragment alertDialog = new AlertDialogFragment()
-                            .newInstance("Connection server is denied");
+                            .newInstance("Email or password invalid.");
                     alertDialog.show(getSupportFragmentManager(), "alertDialog");
                     progress.dismiss();
                 }

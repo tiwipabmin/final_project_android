@@ -2,7 +2,6 @@ package kmitl.it13.millibear.eatallday.controller.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -63,15 +62,18 @@ public class AddTopicDialogFragment extends DialogFragment {
     @OnClick(R.id.btn_ok)
     public void onBtnOkTouched(){
         if(!et_topics.getText().toString().isEmpty()){
+
+            DialogFragment progress = new ProgressDialogFragment();
+            progress.show(getActivity().getSupportFragmentManager(), "progress");
+
             String newKey = HistoryApi.getHistoryApi().getChildHistory().push().getKey();
             SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.US);
             String date = fmt.format(new Date());
 
             History newHistory = new History(newKey, TabBarActivity.USER.getUserId(), mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getCurrency(), mFood.getAmount(), mFood.getUnit(), date, "food");
-            HistoryApi.getHistoryApi().newHistory(newKey, newHistory);
-            this.dismiss();
+            HistoryApi.getHistoryApi().newHistory(newKey, newHistory, progress);
             ((RandomActivity)mContext).finish();
-            Toast.makeText(getContext(), "บันทึกประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
+            this.dismiss();
         }
     }
 

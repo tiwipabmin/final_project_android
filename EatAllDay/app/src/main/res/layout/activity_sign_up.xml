@@ -14,7 +14,7 @@
         android:text="@string/sign_up"
         android:layout_marginTop="30dp"
         android:textAlignment="center"
-        android:textColor="#00cc00"
+        android:textColor="#008000"
         android:textSize="40sp"
         android:textStyle="bold" />
 
@@ -149,6 +149,44 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:background="@drawable/ic_verify_gray_64dp"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            float:fletPadding="1dp">
+
+            <EditText
+                android:id="@+id/et_verify_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/hint_verify_password"
+                android:inputType="textPassword" />
+
+        </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:background="@drawable/ic_facebook"
                 tools:ignore="ContentDescription" />
 
@@ -163,7 +201,7 @@
             <EditText
                 android:id="@+id/et_facebook"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:hint="@string/hint_facebook"
                 android:inputType="text" />
 
@@ -184,12 +222,18 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="15sp"/>
 
-    <TextView
-        android:id="@+id/tv_sign_in"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="@string/sign_in" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="@string/sign_in" />
+
+    </LinearLayout>
 
 </LinearLayout>

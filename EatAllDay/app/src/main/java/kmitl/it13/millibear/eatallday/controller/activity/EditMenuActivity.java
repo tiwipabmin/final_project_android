@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.fragment.AlertDialogFragment;
 import kmitl.it13.millibear.eatallday.controller.fragment.AlertEditMenuDialogFragment;
+import kmitl.it13.millibear.eatallday.controller.fragment.ProgressDialogFragment;
 import kmitl.it13.millibear.eatallday.model.Food;
 
 public class EditMenuActivity extends AppCompatActivity {
@@ -168,7 +170,8 @@ public class EditMenuActivity extends AppCompatActivity {
 
         if (!et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
 
-            Toast.makeText(this, "แก้ไขประวิตเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
+            DialogFragment progress = new ProgressDialogFragment();
+            progress.show(getSupportFragmentManager(), "progress");
 
             if(mImage == null){
                 mImage = mCurrentMenu.getImage();
@@ -182,8 +185,8 @@ public class EditMenuActivity extends AppCompatActivity {
                     Long.valueOf(et_amount.getText().toString()),
                     et_unit.getText().toString());
 
-            FoodApi.getFoodApi().newFood(menuId, updateMenu);
-            finish();
+            FoodApi.getFoodApi().updateMenu(menuId, updateMenu, progress);
+            this.finish();
         } else {
 
             Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();

@@ -2,6 +2,7 @@
     <string name="app_name">EatAllDay</string>
     <string name="hint_email">อีเมล์</string>
     <string name="hint_password">รหัสผ่าน</string>
+    <string name="hint_verify_password">ยืนยันรหัสผ่าน</string>
     <string name="hint_name">ชื่อ</string>
     <string name="verify">ยืนยัน</string>
     <string name="hint_facebook">Facebook</string>

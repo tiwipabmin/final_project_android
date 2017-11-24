@@ -38,7 +38,11 @@ public class VerificationDeleteRandomMenuHistoryDialogFragment extends DialogFra
                 .setPositiveButton("ใช่, ฉันต้องการลบ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteRandomMenuHistory(mHistory);
+                        DialogFragment progress = new ProgressDialogFragment();
+                        progress.show(getActivity().getSupportFragmentManager(), "progress");
+
+                        HistoryApi.getHistoryApi().deleteRandomMenuHistory(mHistory, progress);
+                        dismiss();
                     }
                 });
         return alertDialog.create();
@@ -51,9 +55,5 @@ public class VerificationDeleteRandomMenuHistoryDialogFragment extends DialogFra
         VerificationDeleteRandomMenuHistoryDialogFragment fragment = new VerificationDeleteRandomMenuHistoryDialogFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    private void deleteRandomMenuHistory(History history){
-        HistoryApi.getHistoryApi().getChildHistory().child(history.getHisId()).removeValue();
     }
 }
