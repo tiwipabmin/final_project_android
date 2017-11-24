@@ -45,23 +45,20 @@ public class FoodApi {
         return childFood;
     }
 
-    public void newFood(String newKey, Food newFood, final DialogFragment progress) {
+    public void newFood(Context context, String newKey, Food newFood) {
         childFood.child(newKey).setValue(newFood);
-        Toast.makeText(progress.getContext(), "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
-        progress.dismiss();
+        Toast.makeText(context, "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 
-    public void deleteMenu(Food food, final DialogFragment progress) {
+    public void deleteMenu(Context context, Food food) {
         childFood.child(food.getId()).removeValue();
-        Toast.makeText(progress.getContext(), "ลบรายการอาหารเรียบร้อยแล้วขอรับ.", Toast.LENGTH_SHORT).show();
-        progress.dismiss();
+        Toast.makeText(context, "ลบรายการอาหารเรียบร้อยแล้วขอรับ.", Toast.LENGTH_SHORT).show();
 
     }
 
-    public void updateMenu(String menuId, Food updateMenu, final DialogFragment progress) {
+    public void updateMenu(Context context, String menuId, Food updateMenu) {
         childFood.child(menuId).setValue(updateMenu);
-        Toast.makeText(progress.getContext(), "แก้ไขประวิตเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
-        progress.dismiss();
+        Toast.makeText(context, "แก้ไขประวิตเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
 
     }
 

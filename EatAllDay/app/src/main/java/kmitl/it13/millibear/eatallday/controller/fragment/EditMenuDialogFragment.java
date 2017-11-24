@@ -45,7 +45,7 @@ public class EditMenuDialogFragment extends DialogFragment {
         DialogFragment progress = new ProgressDialogFragment();
         progress.show(getActivity().getSupportFragmentManager(), "progress");
 
-        FoodApi.getFoodApi().deleteMenu(mMenu, progress);
+        FoodApi.getFoodApi().deleteMenu(getActivity(), mMenu);
         this.dismiss();
     }
 

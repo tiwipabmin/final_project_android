@@ -38,10 +38,8 @@ public class VerificationDeleteRandomMenuHistoryDialogFragment extends DialogFra
                 .setPositiveButton("ใช่, ฉันต้องการลบ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        DialogFragment progress = new ProgressDialogFragment();
-                        progress.show(getActivity().getSupportFragmentManager(), "progress");
 
-                        HistoryApi.getHistoryApi().deleteRandomMenuHistory(mHistory, progress);
+                        HistoryApi.getHistoryApi().deleteRandomMenuHistory(getActivity(), mHistory);
                         dismiss();
                     }
                 });

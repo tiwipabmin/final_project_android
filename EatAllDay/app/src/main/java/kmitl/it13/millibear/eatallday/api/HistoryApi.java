@@ -1,17 +1,14 @@
 package kmitl.it13.millibear.eatallday.api;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.support.annotation.NonNull;
+import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import kmitl.it13.millibear.eatallday.model.History;
 
@@ -36,16 +33,14 @@ public class HistoryApi {
         return childHistory;
     }
 
-    public void newHistory(String newKey, History newHistory, final DialogFragment progress) {
+    public void newHistory(Context context, String newKey, History newHistory) {
         childHistory.child(newKey).setValue(newHistory);
-        Toast.makeText(progress.getContext(), "บันทึกประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
-        progress.dismiss();
+        Toast.makeText(context, "บันทึกประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 
-    public void deleteRandomMenuHistory(History history, final DialogFragment progress) {
+    public void deleteRandomMenuHistory(final Context context, final History history) {
         childHistory.child(history.getHisId()).removeValue();
-        Toast.makeText(progress.getContext(), "ลบประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
-        progress.dismiss();
+        Toast.makeText(context, "ลบประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 
 }

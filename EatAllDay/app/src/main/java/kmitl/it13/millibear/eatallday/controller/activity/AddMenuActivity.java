@@ -108,13 +108,10 @@ public class AddMenuActivity extends AppCompatActivity {
 
         if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
 
-            DialogFragment progress = new ProgressDialogFragment();
-            progress.show(getSupportFragmentManager(), "progress");
-
             String newKey = foodApi.getChildFood().push().getKey();
             Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage, et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
-            foodApi.newFood(newKey, newFood, progress);
+            foodApi.newFood(this, newKey, newFood);
             this.finish();
         } else {
 

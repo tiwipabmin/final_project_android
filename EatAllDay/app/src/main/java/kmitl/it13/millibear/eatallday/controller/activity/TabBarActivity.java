@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 
@@ -43,6 +44,7 @@ public class TabBarActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         USER = intent.getParcelableExtra("user");
+        Toast.makeText(this, USER.getUserId(), Toast.LENGTH_SHORT).show();
 
         setUp();
     }

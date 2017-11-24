@@ -185,7 +185,7 @@ public class EditMenuActivity extends AppCompatActivity {
                     Long.valueOf(et_amount.getText().toString()),
                     et_unit.getText().toString());
 
-            FoodApi.getFoodApi().updateMenu(menuId, updateMenu, progress);
+            FoodApi.getFoodApi().updateMenu(this, menuId, updateMenu);
             this.finish();
         } else {
 
