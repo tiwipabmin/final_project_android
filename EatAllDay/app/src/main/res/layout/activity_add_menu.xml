@@ -35,7 +35,7 @@
             android:scaleType="centerCrop"
             app:civ_border_color="#8C8C8C"
             app:civ_border_width="2dp"
-            android:src="@drawable/splash_screen_v1" />
+            android:src="@drawable/ic_add_image_gray_512dp" />
 
     </LinearLayout>
 
@@ -107,7 +107,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:hint="1"
+            android:hint="@string/amount"
             android:inputType="number"
             android:textAlignment="center" />
 
@@ -116,7 +116,7 @@
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:hint="จาน"
+            android:hint="@string/unit"
             android:inputType="text"
             android:textAlignment="center" />
 

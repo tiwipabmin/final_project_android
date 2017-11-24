@@ -6,7 +6,7 @@
     <string name="verify">ยืนยัน</string>
     <string name="hint_facebook">Facebook</string>
     <string name="sign_in">ลงชื่อเข้าใช้บริการ</string>
-    <string name="sign_up">สมัครชื่อใช้บริการ</string>
+    <string name="sign_up">สมัครสมาชิก</string>
     <string name="default_facebook">Tiwipab Meephruek\'Mil</string>
     <string name="default_description">Hello, welcome to my world.</string>
     <string name="facebook">Facebook</string>
@@ -40,6 +40,8 @@
     <string name="date">วว/ดด/ปป ชม:น </string>
     <string name="edit_profile_display">เปลี่ยนรูปภาพประจำตัว</string>
     <string name="delete_profile_display">ลบรูปภาพประจำตัว</string>
+    <string name="amount">1</string>
+    <string name="unit">จาน</string>
 
     <!-- id facebook -->
     <string name="facebook_app_id">871168826390720</string>
