@@ -1,14 +1,11 @@
 package kmitl.it13.millibear.eatallday.api;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.User;
 
 public class UserApi {
@@ -40,5 +37,17 @@ public class UserApi {
 
     public void updateUser(User updateUser){
         childUser.child(updateUser.getUserId()).setValue(updateUser);
+    }
+
+    public void deleteProfileImage() {
+        childUser.child(TabBarActivity.USER.getUserId())
+                .child("image")
+                .setValue("https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png");
+    }
+
+    public void editProfileImage(String profileImage) {
+        childUser.child(TabBarActivity.USER.getUserId())
+                .child("image")
+                .setValue(profileImage);
     }
 }

@@ -67,7 +67,7 @@ public class AddTopicDialogFragment extends DialogFragment {
             SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.US);
             String date = fmt.format(new Date());
 
-            History newHistory = new History(newKey, TabBarActivity.USER_ID, mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getCurrency(), mFood.getAmount(), mFood.getUnit(), date, "food");
+            History newHistory = new History(newKey, TabBarActivity.USER.getUserId(), mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getCurrency(), mFood.getAmount(), mFood.getUnit(), date, "food");
             HistoryApi.getHistoryApi().newHistory(newKey, newHistory);
             this.dismiss();
             ((RandomActivity)mContext).finish();

@@ -106,7 +106,7 @@ public class EditMenuActivity extends AppCompatActivity {
     @OnClick(R.id.iv_menu)
     public void onIvMenuTouched() {
 
-        gallery.goToGallery(this, TabBarActivity.SELECT_FILE);
+        gallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
     }
 
     @OnTextChanged(value = R.id.et_name,
@@ -174,8 +174,14 @@ public class EditMenuActivity extends AppCompatActivity {
                 mImage = mCurrentMenu.getImage();
             }
             String menuId = mCurrentMenu.getId();
-            Food updateMenu = new Food(menuId, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), TabBarActivity.USER_ID, mImage, et_currency.getText().toString(),
-                    Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
+            Food updateMenu = new Food(menuId, et_name.getText().toString(),
+                    Long.valueOf(et_cost.getText().toString()),
+                    et_description.getText().toString(),
+                    TabBarActivity.USER.getUserId(),
+                    mImage, et_currency.getText().toString(),
+                    Long.valueOf(et_amount.getText().toString()),
+                    et_unit.getText().toString());
+
             FoodApi.getFoodApi().newFood(menuId, updateMenu);
             finish();
         } else {
@@ -191,7 +197,7 @@ public class EditMenuActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == TabBarActivity.SELECT_FILE) {
+            if (requestCode == TabBarActivity.SELECT_IMAGE) {
 
                 Uri uriSelectedImage = data.getData();
                 String strPath = gallery.getRealPathFromURI(this, uriSelectedImage);

@@ -3,10 +3,6 @@ package kmitl.it13.millibear.eatallday.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by tiwip on 10/29/2017.
- */
-
 public class User implements Parcelable {
 
     private String userId;

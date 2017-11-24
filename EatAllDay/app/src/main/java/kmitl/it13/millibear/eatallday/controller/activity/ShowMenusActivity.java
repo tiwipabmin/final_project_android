@@ -24,16 +24,8 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
     @BindView(R.id.rv_foodItem)
     RecyclerView rv_foodItem;
 
-    @BindView(R.id.iv_logout)
-    ImageView iv_logout;
-
-    @BindView(R.id.iv_user)
-    ImageView iv_user;
-
     @BindView(R.id.iv_back)
     ImageView iv_back;
-
-    private NotificationBadge mBadgeFriend;
 
     private ArrayList<Food> mMenu;
     private MenusAdapter mMenuAdapter;
@@ -53,8 +45,6 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
 
     private void initialInstance(Intent intent){
 
-        bindWidget();
-
         mMenu = intent.getParcelableArrayListExtra("menu");
 
         mMenuAdapter = new MenusAdapter(this, mMenu, this, 1);
@@ -62,20 +52,10 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
         item = intent.getStringExtra("item");
     }
 
-    private void bindWidget(){
-
-        mBadgeFriend = findViewById(R.id.badge_friend);
-    }
-
     private void setUp(){
 
         rv_foodItem.setAdapter(mMenuAdapter);
         rv_foodItem.setLayoutManager(new LinearLayoutManager(this));
-
-        iv_logout.setVisibility(View.GONE);
-        iv_user.setVisibility(View.GONE);
-        iv_back.setVisibility(View.VISIBLE);
-        mBadgeFriend.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.iv_back)

@@ -163,7 +163,7 @@ public class SignInActivity extends AppCompatActivity
     private void hasAccount(Profile profile) {
 
         final UserApi userApi = UserApi.getUserApi();
-        final User user = new User(profile.getId(), profile.getName(), profile.getFirstName(), profile.getFirstName() + " " + profile.getLastName(), profile.getProfilePictureUri(500, 500).toString());
+        final User user = new User(profile.getId(), profile.getName(), profile.getFirstName(), profile.getName(), profile.getProfilePictureUri(500, 500).toString());
         userApi.getChildUser().child(user.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

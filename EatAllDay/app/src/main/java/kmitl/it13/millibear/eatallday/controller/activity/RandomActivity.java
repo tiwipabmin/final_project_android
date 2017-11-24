@@ -29,12 +29,6 @@ public class RandomActivity extends AppCompatActivity {
 
     public static final int FOODITEM = 69;
 
-    @BindView(R.id.iv_logout)
-    ImageView iv_logout;
-
-    @BindView(R.id.iv_user)
-    ImageView iv_user;
-
     @BindView(R.id.iv_back)
     ImageView iv_back;
 
@@ -51,12 +45,11 @@ public class RandomActivity extends AppCompatActivity {
     ImageView iv_item4;
 
     private ArrayList<Food> mMenu;
-    private NotificationBadge mBadgeFriend;
     private Intent intent;
     private ProgressDialogFragment progress;
     private Map<Integer, Food> chooseMenu;
     private int amount_random = 0;
-    private String userId;
+    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +58,13 @@ public class RandomActivity extends AppCompatActivity {
         ButterKnife.bind(RandomActivity.this);
 
         Intent randomRoomIntent = getIntent();
-        userId = randomRoomIntent.getStringExtra("userId");
+        mUserId = TabBarActivity.USER.getUserId();
 
         initialInstance(randomRoomIntent);
         setUp();
     }
 
     private void initialInstance(Intent intent) {
-
-        bindWidget();
 
         mMenu = intent.getParcelableArrayListExtra("menu");
 
@@ -84,17 +75,7 @@ public class RandomActivity extends AppCompatActivity {
         chooseMenu = new HashMap<>();
     }
 
-    private void bindWidget() {
-
-        mBadgeFriend = findViewById(R.id.badge_friend);
-    }
-
     private void setUp() {
-
-        iv_logout.setVisibility(View.GONE);
-        iv_user.setVisibility(View.GONE);
-        iv_back.setVisibility(View.VISIBLE);
-        mBadgeFriend.setVisibility(View.GONE);
 
         intent.putExtra("menu", mMenu);
     }

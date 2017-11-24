@@ -26,6 +26,7 @@ import kmitl.it13.millibear.eatallday.adapter.MenusAdapter;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.controller.activity.AddMenuActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.RandomActivity;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
 
@@ -52,7 +53,7 @@ public class KitchenFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mUser = args.getParcelable("user");
+        mUser = TabBarActivity.USER;
     }
 
     private void initialInstance() {
@@ -84,15 +85,6 @@ public class KitchenFragment extends Fragment {
         initialInstance();
         // Inflate the layout for this fragment
         return rootView;
-    }
-
-    public static KitchenFragment newInstance(User user) {
-
-        Bundle args = new Bundle();
-        KitchenFragment fragment = new KitchenFragment();
-        args.putParcelable("user", user);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @OnClick(R.id.btn_add)

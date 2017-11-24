@@ -61,7 +61,7 @@ public class LobbyFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mUser = args.getParcelable("user");
+        mUser = TabBarActivity.USER;
     }
 
     private void initialInstance(Context context){
@@ -152,14 +152,6 @@ public class LobbyFragment extends Fragment {
         initialInstance(getContext());
         setUp();
         return rootView;
-    }
-
-    public static LobbyFragment newInstance(User user) {
-        Bundle args = new Bundle();
-        args.putParcelable("user", user);
-        LobbyFragment fragment = new LobbyFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
 }

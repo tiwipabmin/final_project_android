@@ -10,11 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.facebook.login.LoginManager;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +18,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.api.FriendApi;
 import kmitl.it13.millibear.eatallday.controller.fragment.KitchenFragment;
-import kmitl.it13.millibear.eatallday.controller.fragment.CommunityFragment;
-import kmitl.it13.millibear.eatallday.model.Friend;
 import kmitl.it13.millibear.eatallday.model.User;
 import kmitl.it13.millibear.eatallday.controller.fragment.LobbyFragment;
 
 public class TabBarActivity extends AppCompatActivity {
 
-    public static String USER_ID = "default";
-    public static final int SELECT_FILE = 1969;
+    public static final int SELECT_IMAGE = 1969;
+    public static User USER;
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
@@ -41,11 +33,6 @@ public class TabBarActivity extends AppCompatActivity {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    private User mUser;
-    private FriendApi mFriendApi;
-    private DatabaseReference mChildFriend;
-    private ArrayList<Friend> mFriendList;
-    private NotificationBadge mBadgeFriend;
     private int count = 0;
 
     @Override
@@ -55,22 +42,9 @@ public class TabBarActivity extends AppCompatActivity {
         ButterKnife.bind(TabBarActivity.this);
 
         Intent intent = getIntent();
-        mUser = intent.getParcelableExtra("user");
-        USER_ID = mUser.getUserId();
+        USER = intent.getParcelableExtra("user");
 
-        initialInstance();
         setUp();
-    }
-
-    private void initialInstance(){
-
-        mFriendApi = FriendApi.getFriendApi();
-
-        mChildFriend = mFriendApi.getChildFriend();
-
-        mFriendList = new ArrayList<>();
-
-        mBadgeFriend = findViewById(R.id.badge_friend);
     }
 
     private void setUp(){
@@ -78,33 +52,12 @@ public class TabBarActivity extends AppCompatActivity {
         setupViewPager(viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
-
-        mChildFriend.orderByChild("receiver").equalTo(mUser.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Friend friend = ds.getValue(Friend.class);
-                    mFriendList.add(friend);
-                    assert friend != null;
-                    if(!friend.isResponse()) {
-                        count =+ 1;
-                        mBadgeFriend.setNumber(count);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new LobbyFragment().newInstance(mUser), "หน้ากระดาน");
-        adapter.addFragment(new KitchenFragment().newInstance(mUser), "ห้องครัว");
-        adapter.addFragment(new CommunityFragment(), "ชุมชน");
+        adapter.addFragment(new LobbyFragment(), "หน้ากระดาน");
+        adapter.addFragment(new KitchenFragment(), "ห้องครัว");
         viewPager.setAdapter(adapter);
     }
 

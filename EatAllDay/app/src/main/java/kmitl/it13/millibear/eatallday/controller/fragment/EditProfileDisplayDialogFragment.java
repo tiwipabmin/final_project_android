@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 
@@ -22,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
+import kmitl.it13.millibear.eatallday.api.UserApi;
 import kmitl.it13.millibear.eatallday.model.User;
 
 public class EditProfileDisplayDialogFragment extends DialogFragment {
@@ -31,6 +35,7 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
     private User mUser;
     private CircleImageView mProfileImage;
     private Gallery mGallery;
+    private String image;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,14 +54,14 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
     @OnClick(R.id.item_edit_profile_display)
     public void onItemEditProfileDisplayTouched() {
 
-//        Glide.with(getContext()).load("https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png").into(mProfileImage);
-        mGallery.goToGallery(getActivity(), SELECT_PROFILE_IMAGE);
+        mGallery.goToGallery(this, SELECT_PROFILE_IMAGE);
     }
 
     @OnClick(R.id.item_delete_profile_display)
     public void onItemDeleteProfileDisplayTouched() {
 
-        deleteProfileImage("https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png");
+        UserApi.getUserApi()
+                .deleteProfileImage();
         dismiss();
         Toast.makeText(getContext(), "ลบรูปภาพประจำตัวเรียบร้อยแล้วขอรับ.", Toast.LENGTH_SHORT).show();
     }
@@ -80,29 +85,29 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    private void deleteProfileImage(String profileImage) {
-//        UserApi.getUserApi().getChildUser().
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == SELECT_PROFILE_IMAGE) {
+        if(resultCode == FragmentActivity.RESULT_OK) {
 
-            Uri uriSelectedImage = data.getData();
-            String strPath = mGallery.getRealPathFromURI(getContext(), uriSelectedImage);
+            if (requestCode == SELECT_PROFILE_IMAGE) {
 
-            File fImage = new File(strPath);
-            Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
+                Uri uriSelectedImage = data.getData();
+                String strPath = mGallery.getRealPathFromURI(getContext(), uriSelectedImage);
 
-            SaveImage saveImage = new SaveImage(getContext());
-//            String image = saveImage.addImageToGallery(imageBitmap);
+                File fImage = new File(strPath);
+                Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-            Toast.makeText(getContext(), "mProfile", Toast.LENGTH_SHORT).show();
-            mProfileImage.setImageBitmap(imageBitmap);
+                SaveImage saveImage = new SaveImage(getContext());
+                image = saveImage.addImageToGallery(imageBitmap);
 
-            EditProfileDisplayDialogFragment.this.dismiss();
+                Glide.with(getContext()).load(image).into(mProfileImage);
+                UserApi.getUserApi().editProfileImage(image);
+
+                EditProfileDisplayDialogFragment.this.dismiss();
+                Toast.makeText(getContext(), "เปลี่ยนรูปภาพโปรไฟล์เรียบร้อยแล้วจ้าาา.", Toast.LENGTH_SHORT).show();
+            }
         }
 
     }

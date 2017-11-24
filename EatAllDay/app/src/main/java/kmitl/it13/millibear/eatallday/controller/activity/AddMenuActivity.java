@@ -56,12 +56,6 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.et_description)
     EditText et_description;
 
-    @BindView(R.id.iv_logout)
-    ImageView iv_logout;
-
-    @BindView(R.id.iv_user)
-    ImageView iv_user;
-
     @BindView(R.id.iv_back)
     ImageView iv_back;
 
@@ -71,7 +65,6 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    private NotificationBadge mBadgeFriend;
     private String mUserId, mImage, mType;
     private FoodApi foodApi;
     private Gallery gallery;
@@ -82,13 +75,11 @@ public class AddMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_menu);
 
         Intent addFoodIntent = getIntent();
-        mUserId = addFoodIntent.getStringExtra("userId");
+        mUserId = TabBarActivity.USER.getUserId();
         mType = addFoodIntent.getStringExtra("type");
 
         ButterKnife.bind(this);
         initialInstance();
-//        setWidgetEvent();
-        setUp();
     }
 
     private void initialInstance() {
@@ -97,27 +88,11 @@ public class AddMenuActivity extends AppCompatActivity {
 
         gallery = new Gallery();
 
-        bindWidget();
-    }
-
-    private void bindWidget(){
-
-        mBadgeFriend = findViewById(R.id.badge_friend);
-
-    }
-
-    private void setUp(){
-
-        iv_logout.setVisibility(View.GONE);
-        iv_user.setVisibility(View.GONE);
-        iv_back.setVisibility(View.VISIBLE);
-        iv_add.setVisibility(View.VISIBLE);
-        mBadgeFriend.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.iv_menu)
     public void onIvMenuTouched(){
-        gallery.goToGallery(this, TabBarActivity.SELECT_FILE);
+        gallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
     }
 
 
@@ -149,7 +124,7 @@ public class AddMenuActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (requestCode == TabBarActivity.SELECT_FILE) {
+            if (requestCode == TabBarActivity.SELECT_IMAGE) {
 
                 Uri uriSelectedImage = data.getData();
                 String strPath = gallery.getRealPathFromURI(this, uriSelectedImage);

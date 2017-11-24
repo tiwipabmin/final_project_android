@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <include layout="@layout/home_bar"/>
+        <include layout="@layout/show_menus_bar"/>
 
     </android.support.v7.widget.Toolbar>
 

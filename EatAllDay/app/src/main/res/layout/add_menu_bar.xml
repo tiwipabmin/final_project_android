@@ -11,12 +11,12 @@
         android:layout_weight="2">
 
         <ImageView
-            android:id="@+id/iv_logout"
+            android:id="@+id/iv_back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_logout" />
+            android:background="@drawable/ic_back"/>
 
     </RelativeLayout>
 
@@ -32,6 +32,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"/>
+        android:layout_weight="2">
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_add_64dp"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
