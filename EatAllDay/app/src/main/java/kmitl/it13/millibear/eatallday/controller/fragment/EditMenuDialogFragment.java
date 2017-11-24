@@ -42,9 +42,6 @@ public class EditMenuDialogFragment extends DialogFragment {
     @OnClick(R.id.item_delete_menu)
     public void onItemDeleteMenuTouched(){
 
-        DialogFragment progress = new ProgressDialogFragment();
-        progress.show(getActivity().getSupportFragmentManager(), "progress");
-
         FoodApi.getFoodApi().deleteMenu(getActivity(), mMenu);
         this.dismiss();
     }
