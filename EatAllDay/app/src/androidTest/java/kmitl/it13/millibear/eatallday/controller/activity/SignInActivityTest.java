@@ -42,6 +42,8 @@ public class SignInActivityTest {
 
         closeSoftKeyboard();
         onView(withId(R.id.tv_sign_up)).perform(click());
+        SystemClock.sleep(3000);
+
     }
 
     @Test
@@ -58,6 +60,9 @@ public class SignInActivityTest {
 
         onView(withId(R.id.login_button)).perform(click());
         SystemClock.sleep(3000);
+        onView(withId(R.id.iv_logout)).perform(click());
+        SystemClock.sleep(3000);
+
     }
 
     @Test

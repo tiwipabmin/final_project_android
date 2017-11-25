@@ -43,8 +43,8 @@ import kmitl.it13.millibear.eatallday.model.User;
  */
 public class LobbyFragment extends Fragment {
 
-    @BindView(R.id.profile)
-    RecyclerView profile;
+    @BindView(R.id.rv_profile)
+    RecyclerView rv_profile;
 
     private LobbyAdapter mLobbyAdapter;
     private User mUser;
@@ -132,9 +132,9 @@ public class LobbyFragment extends Fragment {
 
                 mLobbyAdapter.setStorage(mStorage);
                 mLobbyAdapter.setViewType(mViewType);
-                profile.setAdapter(mLobbyAdapter);
-                profile.setLayoutManager(new LinearLayoutManager(getActivity()));
-                profile.invalidateItemDecorations();
+                rv_profile.setAdapter(mLobbyAdapter);
+                rv_profile.setLayoutManager(new LinearLayoutManager(getActivity()));
+                rv_profile.invalidateItemDecorations();
             }
 
             @Override

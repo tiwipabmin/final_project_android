@@ -63,6 +63,8 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_name)).check(matches(hasErrorText("your name can't be special character or numeric.")));
+        SystemClock.sleep(3000);
+
     }
 
     @Test
@@ -87,6 +89,8 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_password)).check(matches(hasErrorText("your password can't be special character and there are 8 character up.")));
+        SystemClock.sleep(3000);
+
     }
 
     @Test
@@ -99,6 +103,8 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_verify_password)).check(matches(hasErrorText("your password verify don't pass.")));
+        SystemClock.sleep(3000);
+
     }
 
     @Test
@@ -111,13 +117,30 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText(""), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_facebook)).check(matches(hasErrorText("your facebook invalid.")));
+        SystemClock.sleep(3000);
+
     }
+
+//    @Test
+//    public void signUpSuccessful() {
+//
+//        onView(withId(R.id.et_name)).perform(replaceText("test"), closeSoftKeyboard());
+//        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
+//        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
+//        onView(withId(R.id.et_verify_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
+//        onView(withId(R.id.et_facebook)).perform(replaceText("testtesttest"), closeSoftKeyboard());
+//        onView(withId(R.id.btn_verify)).perform(click());
+//        SystemClock.sleep(3000);
+//
+//    }
 
     @Test
     public void goToSignIn() {
 
         closeSoftKeyboard();
         onView(withId(R.id.tv_sign_in)).perform(click());
+        SystemClock.sleep(3000);
+
     }
 
 }

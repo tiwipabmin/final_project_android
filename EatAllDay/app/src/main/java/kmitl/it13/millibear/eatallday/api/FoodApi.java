@@ -31,6 +31,7 @@ public class FoodApi {
 
     private FoodApi() {
 
+
         childFood = FirebaseDatabase.getInstance().getReference("food");
     }
 

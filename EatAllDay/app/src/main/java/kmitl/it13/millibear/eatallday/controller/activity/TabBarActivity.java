@@ -44,7 +44,6 @@ public class TabBarActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         USER = intent.getParcelableExtra("user");
-        Toast.makeText(this, USER.getUserId(), Toast.LENGTH_SHORT).show();
 
         setUp();
     }
