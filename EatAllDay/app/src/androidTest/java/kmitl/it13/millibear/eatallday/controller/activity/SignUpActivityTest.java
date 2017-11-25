@@ -63,7 +63,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_name)).check(matches(hasErrorText("your name can't be special character or numeric.")));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
 
     }
 
@@ -89,7 +89,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_password)).check(matches(hasErrorText("your password can't be special character and there are 8 character up.")));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
 
     }
 
@@ -103,7 +103,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_verify_password)).check(matches(hasErrorText("your password verify don't pass.")));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
 
     }
 
@@ -117,7 +117,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_facebook)).perform(replaceText(""), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
         onView(withId(R.id.et_facebook)).check(matches(hasErrorText("your facebook invalid.")));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
 
     }
 

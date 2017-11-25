@@ -2,7 +2,6 @@ package kmitl.it13.millibear.eatallday.controller.activity;
 
 
 import android.os.SystemClock;
-import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import kmitl.it13.millibear.eatallday.R;
-import kmitl.it13.millibear.eatallday.controller.fragment.LobbyFragmentTest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -28,47 +26,18 @@ import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EditMenuActivityTest {
+public class AddMenuActivityTest {
 
     @Rule
     public ActivityTestRule<SignInActivity> mActivityTestRule = new ActivityTestRule<>(SignInActivity.class);
 
     @Test
-    public void editMenu() {
+    public void addMenu() {
 
         signIn();
         onView(withText("ห้องครัว")).perform(click());
-        addMenu();
-        onView(withId(R.id.rv_menu)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
-        SystemClock.sleep(1000);
-        onView(withId(R.id.item_edit_menu)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withId(R.id.et_name)).perform(replaceText("edit test name") ,closeSoftKeyboard());
-        onView(withId(R.id.et_cost)).perform(replaceText("9") ,closeSoftKeyboard());
-        onView(withId(R.id.et_currency)).perform(replaceText("ดอลลา") ,closeSoftKeyboard());
-        onView(withId(R.id.et_amount)).perform(replaceText("2") ,closeSoftKeyboard());
-        onView(withId(R.id.et_unit)).perform(replaceText("ชิ้น") ,closeSoftKeyboard());
-        onView(withId(R.id.et_description)).perform(replaceText("edit test description") ,closeSoftKeyboard());
-        onView(withId(R.id.iv_verify)).perform(click());
-        SystemClock.sleep(1000);
-        onView(withText("แก้ไขประวัติเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-        SystemClock.sleep(1000);
-
-    }
-
-    private void signIn(){
-
-        closeSoftKeyboard();
-        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
-        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
-        onView(withId(R.id.btn_sign_in)).perform(click());
-        SystemClock.sleep(1000);
-    }
-
-    private void addMenu() {
-
         onView(withId(R.id.btn_add)).perform(click());
+        SystemClock.sleep(2000);
         onView(withId(R.id.et_name)).perform(replaceText("test name") ,closeSoftKeyboard());
         onView(withId(R.id.et_cost)).perform(replaceText("10") ,closeSoftKeyboard());
         onView(withId(R.id.et_currency)).perform(replaceText("บาท") ,closeSoftKeyboard());
@@ -77,6 +46,15 @@ public class EditMenuActivityTest {
         onView(withId(R.id.et_description)).perform(replaceText("test description") ,closeSoftKeyboard());
         onView(withId(R.id.iv_add)).perform(click());
         onView(withText("เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        SystemClock.sleep(1000);
+    }
+
+    private void signIn(){
+
+        closeSoftKeyboard();
+        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
+        onView(withId(R.id.btn_sign_in)).perform(click());
         SystemClock.sleep(1000);
     }
 

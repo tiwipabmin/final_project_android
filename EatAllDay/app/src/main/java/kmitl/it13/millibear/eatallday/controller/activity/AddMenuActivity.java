@@ -67,7 +67,7 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    private String mUserId, mImage, mType;
+    private String mUserId, mImage = "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg", mType;
     private FoodApi foodApi;
     private Gallery gallery;
 

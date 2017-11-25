@@ -10,7 +10,6 @@ public class User implements Parcelable {
     private String email;
     private String description = "Eat all day.";
     private String image = "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png";
-    private String money = "0";
     private String facebook;
 
     public User(String userId, String name, String email, String facebook, String image) {
@@ -36,7 +35,6 @@ public class User implements Parcelable {
         email = in.readString();
         description = in.readString();
         image = in.readString();
-        money = in.readString();
         facebook = in.readString();
     }
 
@@ -64,7 +62,6 @@ public class User implements Parcelable {
         dest.writeString(email);
         dest.writeString(description);
         dest.writeString(image);
-        dest.writeString(money);
         dest.writeString(facebook);
     }
 
@@ -106,14 +103,6 @@ public class User implements Parcelable {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getMoney() {
-        return money;
-    }
-
-    public void setMoney(String money) {
-        this.money = money;
     }
 
     public String getFacebook() {

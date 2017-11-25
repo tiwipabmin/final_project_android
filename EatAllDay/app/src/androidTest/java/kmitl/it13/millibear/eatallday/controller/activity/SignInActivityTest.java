@@ -42,7 +42,7 @@ public class SignInActivityTest {
 
         closeSoftKeyboard();
         onView(withId(R.id.tv_sign_up)).perform(click());
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
 
     }
 
@@ -52,16 +52,16 @@ public class SignInActivityTest {
         onView(withId(R.id.et_email)).perform(replaceText("tiwipabmin@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.et_password)).perform(replaceText("min261139"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
     }
 
     @Test
     public void signInWithFacebook() {
 
         onView(withId(R.id.login_button)).perform(click());
-        SystemClock.sleep(3000);
+        SystemClock.sleep(2000);
         onView(withId(R.id.iv_logout)).perform(click());
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
 
     }
 
@@ -72,7 +72,7 @@ public class SignInActivityTest {
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
         onView(withText("Please enter your email or password")).check(matches(isDisplayed()));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class SignInActivityTest {
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
         onView(withText("Email or password invalid.")).check(matches(isDisplayed()));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
     }
 
     private static Matcher<View> childAtPosition(

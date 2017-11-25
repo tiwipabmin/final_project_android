@@ -59,7 +59,7 @@ public class FoodApi {
 
     public void updateMenu(Context context, String menuId, Food updateMenu) {
         childFood.child(menuId).setValue(updateMenu);
-        Toast.makeText(context, "แก้ไขประวิตเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "แก้ไขประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
 
     }
 

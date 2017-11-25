@@ -1,4 +1,4 @@
-package kmitl.it13.millibear.eatallday.controller.activity;
+package kmitl.it13.millibear.eatallday.controller.fragment;
 
 
 import android.content.Intent;
@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.controller.activity.SignInActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
@@ -41,7 +42,7 @@ import static org.hamcrest.Matchers.not;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TabBarActivityTest {
+public class LobbyFragmentTest {
 
     @Rule
     public ActivityTestRule<SignInActivity> mActivityTestRule = new ActivityTestRule<>(SignInActivity.class);
@@ -56,7 +57,7 @@ public class TabBarActivityTest {
         onView(withId(R.id.et_name)).perform(replaceText("test name"), closeSoftKeyboard());
         onView(withId(R.id.iv_verify)).perform(click());
         onView(withText("แก้ไขประวัติเรียบร้อย.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
     }
 
     @Test
@@ -64,7 +65,7 @@ public class TabBarActivityTest {
 
         signIn();
         onView(withText("ห้องครัว")).perform(click());
-        SystemClock.sleep(3000);
+        SystemClock.sleep(1000);
     }
 
     @Test
@@ -111,15 +112,24 @@ public class TabBarActivityTest {
     private void randomMenu(){
 
         onView(withText("ห้องครัว")).perform(click());
+        addMenu();
         onView(withId(R.id.btn_random)).perform(click());
         onView(withId(R.id.iv_item1)).perform(click());
         onView(withId(R.id.rv_foodItem)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.btn_add)));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(2000);
         onView(withId(R.id.iv_item2)).perform(click());
         onView(withId(R.id.rv_foodItem)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.btn_add)));
-        SystemClock.sleep(3000);
+        SystemClock.sleep(2000);
+        onView(withId(R.id.iv_item3)).perform(click());
+        onView(withId(R.id.rv_foodItem)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.btn_add)));
+        SystemClock.sleep(2000);
+        onView(withId(R.id.iv_item4)).perform(click());
+        onView(withId(R.id.rv_foodItem)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.btn_add)));
+        SystemClock.sleep(2000);
         onView(withId(R.id.btn_random_now)).perform(click());
         SystemClock.sleep(4000);
         onView(withId(R.id.btn_accept)).perform(click());
@@ -138,6 +148,20 @@ public class TabBarActivityTest {
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
         SystemClock.sleep(3000);
+    }
+
+    private void addMenu() {
+
+        onView(withId(R.id.btn_add)).perform(click());
+        onView(withId(R.id.et_name)).perform(replaceText("test name") ,closeSoftKeyboard());
+        onView(withId(R.id.et_cost)).perform(replaceText("10") ,closeSoftKeyboard());
+        onView(withId(R.id.et_currency)).perform(replaceText("บาท") ,closeSoftKeyboard());
+        onView(withId(R.id.et_amount)).perform(replaceText("1") ,closeSoftKeyboard());
+        onView(withId(R.id.et_unit)).perform(replaceText("จาน") ,closeSoftKeyboard());
+        onView(withId(R.id.et_description)).perform(replaceText("test description") ,closeSoftKeyboard());
+        onView(withId(R.id.iv_add)).perform(click());
+        onView(withText("เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        SystemClock.sleep(2000);
     }
 
     public static class MyViewAction {
