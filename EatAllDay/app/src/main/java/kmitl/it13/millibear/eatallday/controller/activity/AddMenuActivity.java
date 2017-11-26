@@ -114,8 +114,15 @@ public class AddMenuActivity extends AppCompatActivity {
             DialogFragment progress = new ProgressDialogFragment();
             progress.show(getSupportFragmentManager(), "progress");
 
-            SaveImage saveImage = new SaveImage(this);
-            saveImage.saveImageToStorageFirebase(this, uriImage, progress, newMenu);
+            if(uriImage != null) {
+                SaveImage saveImage = new SaveImage(this);
+                saveImage.saveImageToStorageFirebase(this, uriImage, progress, newMenu);
+            } else {
+
+                FoodApi.getFoodApi().newFood(this, newKey, newMenu);
+                progress.dismiss();
+                this.finish();
+            }
         } else {
 
             Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();
