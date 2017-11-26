@@ -61,7 +61,6 @@ public class EditMenuActivity extends AppCompatActivity {
     CircleImageView iv_menu;
 
     private Food mCurrentMenu;
-    private String mImage;
     private Gallery gallery;
     private boolean isEdit = false;
     private Uri uriImage;
@@ -174,20 +173,26 @@ public class EditMenuActivity extends AppCompatActivity {
             DialogFragment progress = new ProgressDialogFragment();
             progress.show(getSupportFragmentManager(), "progress");
 
-            if(mImage == null){
-                mImage = mCurrentMenu.getImage();
-            }
             String menuId = mCurrentMenu.getId();
             Food updateMenu = new Food(menuId, et_name.getText().toString(),
                     Long.valueOf(et_cost.getText().toString()),
                     et_description.getText().toString(),
                     TabBarActivity.USER.getUserId(),
-                    mImage, et_currency.getText().toString(),
+                    mCurrentMenu.getImage(), et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()),
                     et_unit.getText().toString());
 
-            SaveImage saveImage = new SaveImage(this);
-            saveImage.saveImageToStorageFirebase(this, uriImage, progress, updateMenu);
+            if(uriImage != null){
+
+                SaveImage saveImage = new SaveImage(this);
+                saveImage.saveImageToStorageFirebase(this, uriImage, progress, updateMenu);
+            } else {
+
+                FoodApi.getFoodApi().updateMenu(this, menuId, updateMenu);
+                progress.dismiss();
+                this.finish();
+            }
+
 
         } else {
 
