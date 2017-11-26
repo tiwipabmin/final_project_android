@@ -1,6 +1,7 @@
 package kmitl.it13.millibear.eatallday.api;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,9 +46,10 @@ public class UserApi {
                 .setValue("https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png");
     }
 
-    public void editProfileImage(String profileImage) {
+    public void editProfileImage(Context context, String profileImage) {
         childUser.child(TabBarActivity.USER.getUserId())
                 .child("image")
                 .setValue(profileImage);
+        Toast.makeText(context, "เปลี่ยนรูปภาพโปรไฟล์เรียบร้อยแล้วจ้าาา.", Toast.LENGTH_SHORT).show();
     }
 }

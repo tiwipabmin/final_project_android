@@ -64,6 +64,7 @@ public class EditMenuActivity extends AppCompatActivity {
     private String mImage;
     private Gallery gallery;
     private boolean isEdit = false;
+    private Uri uriImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,8 +186,9 @@ public class EditMenuActivity extends AppCompatActivity {
                     Long.valueOf(et_amount.getText().toString()),
                     et_unit.getText().toString());
 
-            FoodApi.getFoodApi().updateMenu(this, menuId, updateMenu);
-            this.finish();
+            SaveImage saveImage = new SaveImage(this);
+            saveImage.saveImageToStorageFirebase(this, uriImage, progress, updateMenu);
+
         } else {
 
             Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();
@@ -202,18 +204,15 @@ public class EditMenuActivity extends AppCompatActivity {
 
             if (requestCode == TabBarActivity.SELECT_IMAGE) {
 
-                Uri uriSelectedImage = data.getData();
-                String strPath = gallery.getRealPathFromURI(this, uriSelectedImage);
+                uriImage = data.getData();
+                String strPath = gallery.getRealPathFromURI(this, uriImage);
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-                SaveImage saveImage = new SaveImage(this);
-                mImage = saveImage.addImageToGallery(imageBitmap);
+                iv_menu.setImageBitmap(imageBitmap);
 
                 isEdit = true;
-
-                Glide.with(this).load(mImage).into(iv_menu);
 
             }
 

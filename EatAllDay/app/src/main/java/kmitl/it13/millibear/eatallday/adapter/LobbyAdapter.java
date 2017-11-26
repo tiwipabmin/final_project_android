@@ -117,7 +117,7 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         profileViewHolder.iv_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditProfileDisplayDialogFragment editProfileDisplayDialogFragment = new EditProfileDisplayDialogFragment().newInstance((User)mStorage.get(position), profileViewHolder.iv_image);
+                EditProfileDisplayDialogFragment editProfileDisplayDialogFragment = new EditProfileDisplayDialogFragment().newInstance(profileViewHolder.iv_image);
                 editProfileDisplayDialogFragment.show(((TabBarActivity)mContext).getSupportFragmentManager(), "editProfileDisplayDialog");
             }
         });

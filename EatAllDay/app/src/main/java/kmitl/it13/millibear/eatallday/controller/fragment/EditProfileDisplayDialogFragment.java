@@ -26,13 +26,13 @@ import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.api.UserApi;
+import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.User;
 
 public class EditProfileDisplayDialogFragment extends DialogFragment {
 
     private final int SELECT_PROFILE_IMAGE = 1234;
 
-    private User mUser;
     private CircleImageView mProfileImage;
     private Gallery mGallery;
     private String image;
@@ -42,7 +42,6 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mUser = args.getParcelable("user");
         mGallery = new Gallery();
     }
 
@@ -76,8 +75,7 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
         return alertDialog.create();
     }
 
-    public static EditProfileDisplayDialogFragment newInstance(User user, CircleImageView profileImage) {
-
+    public static EditProfileDisplayDialogFragment newInstance(CircleImageView profileImage) {
         Bundle args = new Bundle();
         EditProfileDisplayDialogFragment fragment = new EditProfileDisplayDialogFragment();
         fragment.setProfileImage(profileImage);
@@ -99,14 +97,13 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-                SaveImage saveImage = new SaveImage(getContext());
-                image = saveImage.addImageToGallery(imageBitmap);
+                DialogFragment progress = new ProgressDialogFragment();
+                progress.show(getActivity().getSupportFragmentManager(), "progress");
 
-                Glide.with(getContext()).load(image).into(mProfileImage);
-                UserApi.getUserApi().editProfileImage(image);
+                SaveImage saveImage = new SaveImage(getContext());
+                saveImage.saveImageToStorageFirebase(getActivity(), uriSelectedImage, progress, TabBarActivity.USER, mProfileImage);
 
                 EditProfileDisplayDialogFragment.this.dismiss();
-                Toast.makeText(getContext(), "เปลี่ยนรูปภาพโปรไฟล์เรียบร้อยแล้วจ้าาา.", Toast.LENGTH_SHORT).show();
             }
         }
 

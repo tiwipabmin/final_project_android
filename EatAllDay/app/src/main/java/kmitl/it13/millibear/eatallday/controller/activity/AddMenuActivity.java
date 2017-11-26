@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,14 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.nex3z.notificationbadge.NotificationBadge;
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,9 +61,10 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    private String mUserId, mImage = "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg", mType;
+    private String mUserId, mType;
     private FoodApi foodApi;
     private Gallery gallery;
+    private Uri uriImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,26 +88,34 @@ public class AddMenuActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.iv_menu)
-    public void onIvMenuTouched(){
+    public void onIvMenuTouched() {
         gallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
     }
 
 
     @OnClick(R.id.iv_back)
-    public void onIvBackTouched(){
+    public void onIvBackTouched() {
         finish();
     }
 
     @OnClick(R.id.iv_add)
-    public void onIvAddTouched(){
+    public void onIvAddTouched() {
 
-        if(mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty() && mImage != null){
+        if (mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
 
             String newKey = foodApi.getChildFood().push().getKey();
-            Food newFood = new Food(newKey, et_name.getText().toString(), Long.valueOf(et_cost.getText().toString()), et_description.getText().toString(), mUserId, mImage, et_currency.getText().toString(),
+            Food newMenu = new Food(newKey, et_name.getText().toString(),
+                    Long.valueOf(et_cost.getText().toString()),
+                    et_description.getText().toString(), mUserId,
+                    "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg",
+                    et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
-            foodApi.newFood(this, newKey, newFood);
-            this.finish();
+
+            DialogFragment progress = new ProgressDialogFragment();
+            progress.show(getSupportFragmentManager(), "progress");
+
+            SaveImage saveImage = new SaveImage(this);
+            saveImage.saveImageToStorageFirebase(this, uriImage, progress, newMenu);
         } else {
 
             Toast.makeText(this, "กรุณาใส่ข้อมูลให้ครบด้วยค่ะ!", Toast.LENGTH_SHORT).show();
@@ -127,14 +130,14 @@ public class AddMenuActivity extends AppCompatActivity {
 
             if (requestCode == TabBarActivity.SELECT_IMAGE) {
 
-                Uri uriSelectedImage = data.getData();
-                String strPath = gallery.getRealPathFromURI(this, uriSelectedImage);
+                uriImage = data.getData();
+                String strPath = gallery.getRealPathFromURI(this, uriImage);
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-                SaveImage saveImage = new SaveImage(this);
-                mImage = saveImage.addImageToGallery(imageBitmap);
+//                SaveImage saveImage = new SaveImage(this);
+//                mImage = saveImage.addImageToGallery(imageBitmap);
 
                 iv_menu.setImageBitmap(imageBitmap);
 
