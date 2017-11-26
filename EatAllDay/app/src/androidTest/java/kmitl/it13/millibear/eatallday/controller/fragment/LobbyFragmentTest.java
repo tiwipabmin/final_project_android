@@ -161,7 +161,7 @@ public class LobbyFragmentTest {
         onView(withId(R.id.et_description)).perform(replaceText("test description") ,closeSoftKeyboard());
         onView(withId(R.id.iv_add)).perform(click());
         onView(withText("เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-        SystemClock.sleep(2000);
+        SystemClock.sleep(5000);
     }
 
     public static class MyViewAction {

@@ -266,17 +266,11 @@ public class SignInActivity extends AppCompatActivity
             mUser.setUserId(ds.getKey());
         }
 
-        if (mUser == null) {
+        if (mUser != null) {
 
-            DialogFragment alertDialog = new AlertDialogFragment()
-                    .newInstance("email or password is invalid.");
-            et_email.setText("");
-            et_password.setText("");
-            alertDialog.show(getSupportFragmentManager(), "alertDialog");
-
-        } else {
             progress.dismiss();
             goToLobby(mUser);
+
         }
 
         if (progress.isVisible()) {
