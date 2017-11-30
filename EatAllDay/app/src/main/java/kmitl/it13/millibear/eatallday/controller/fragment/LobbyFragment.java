@@ -52,7 +52,6 @@ public class LobbyFragment extends Fragment {
     private DatabaseReference childHistory;
     private ArrayList<Object> mStorage;
     private ArrayList<String> mViewType;
-    private View rootView;
 
     public LobbyFragment() {
         // Required empty public constructor
@@ -147,16 +146,10 @@ public class LobbyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_lobby, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_lobby, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance(getContext());
         setUp();
         return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.bind(this, rootView).unbind();
     }
 }
