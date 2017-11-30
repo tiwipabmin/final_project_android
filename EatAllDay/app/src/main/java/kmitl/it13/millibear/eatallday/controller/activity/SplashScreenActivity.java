@@ -48,12 +48,4 @@ public class SplashScreenActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         time = delay_time - (System.currentTimeMillis() - time);
     }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
-    }
 }

@@ -37,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     DatabaseReference mChildUser;
     UserApi userApi;
     DialogFragment progress;
+    private boolean isTouched = true;
 
     @BindView(R.id.et_email)
     EditText et_email;
@@ -52,11 +53,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     @BindView(R.id.et_verify_password)
     EditText et_verify_password;
-
-    @OnClick(R.id.contain_signUp)
-    public void onContainSignUpTouched(){
-        SplashScreenActivity.hideSoftKeyboard(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +116,8 @@ public class SignUpActivity extends AppCompatActivity {
             allValid = false;
         }
 
-        if(allValid){
+        if(allValid && isTouched){
+            isTouched = false;
             progress.show(getSupportFragmentManager(), "progress");
             createNewAccount(et_name.getText().toString(), et_email.getText().toString(), et_password.getText().toString(), et_facebook.getText().toString());
         }
@@ -156,12 +153,14 @@ public class SignUpActivity extends AppCompatActivity {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
+                                    isTouched = true;
                                 }
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                isTouched = true;
                 progress.dismiss();
             }
         });

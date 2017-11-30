@@ -61,17 +61,13 @@ public class SignInActivity extends AppCompatActivity
     @BindView(R.id.login_button)
     LoginButton loginButton;
 
-    @OnClick(R.id.contain_signIn)
-    public void onContainSignInTouched(){
-        SplashScreenActivity.hideSoftKeyboard(this);
-    }
-
     private User mUser;
     private DatabaseReference mChildUser;
     private ProgressDialogFragment progress;
     private CallbackManager callbackManager;
     private FirebaseAuth firebaseAuth;
     private AccessToken accessToken;
+    private boolean isTouched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +188,9 @@ public class SignInActivity extends AppCompatActivity
     @OnClick(R.id.btn_sign_in)
     void onSignInTouched() {
 
-        if (!TextUtils.isEmpty(et_email.getText().toString()) && !TextUtils.isEmpty(et_password.getText().toString())) {
+        if (!TextUtils.isEmpty(et_email.getText().toString()) && !TextUtils.isEmpty(et_password.getText().toString()) && isTouched) {
+
+            isTouched = false;
 
             progress.show(getSupportFragmentManager(), "progress");
 
@@ -218,6 +216,7 @@ public class SignInActivity extends AppCompatActivity
                     DialogFragment alertDialog = new AlertDialogFragment()
                             .newInstance("Email or password invalid.");
                     alertDialog.show(getSupportFragmentManager(), "alertDialog");
+                    isTouched = true;
                     progress.dismiss();
                 }
             });

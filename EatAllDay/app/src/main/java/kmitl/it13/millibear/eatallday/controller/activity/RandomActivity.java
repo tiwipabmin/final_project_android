@@ -48,6 +48,7 @@ public class RandomActivity extends AppCompatActivity {
     private ProgressDialogFragment progress;
     private Map<Integer, Food> chooseMenu;
     private int amount_random = 0;
+    private boolean isTouched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,8 @@ public class RandomActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_random_now)
     public void btnRandomNowTouched(){
-        if(amount_random > 1) {
+        if(amount_random > 1 && isTouched) {
+            isTouched = false;
             progress.show(getSupportFragmentManager(), "progress");
 
             Handler handler = new Handler();

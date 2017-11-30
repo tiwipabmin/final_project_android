@@ -61,11 +61,6 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    @OnClick(R.id.contain_addMenu)
-    public void onContainAddMenuTouched(){
-        SplashScreenActivity.hideSoftKeyboard(this);
-    }
-
     private String mType;
     private FoodApi foodApi;
     private Gallery gallery;
