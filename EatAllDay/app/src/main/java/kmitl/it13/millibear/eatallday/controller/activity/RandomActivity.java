@@ -149,7 +149,7 @@ public class RandomActivity extends AppCompatActivity {
             handler.postDelayed(runnable, 3000);
         } else {
 
-            Toast.makeText(this, "จำนวนในการสุ่มน้อยเกินไป", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "จำนวนในการสุ่มน้อยเกินไป.", Toast.LENGTH_SHORT).show();
         }
     }
 

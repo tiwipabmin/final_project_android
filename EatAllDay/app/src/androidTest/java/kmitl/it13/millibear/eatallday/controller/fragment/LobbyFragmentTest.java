@@ -99,6 +99,17 @@ public class LobbyFragmentTest {
         SystemClock.sleep(2000);
     }
 
+    @Test
+    public void goToRandomAndBackToLobby() {
+
+        signIn();
+        onView(withText("ห้องครัว")).perform(click());
+        onView(withId(R.id.btn_random)).perform(click());
+        onView(withId(R.id.iv_back)).perform(click());
+        onView(withText("หน้ากระดาน")).perform(click());
+        SystemClock.sleep(2000);
+    }
+
     private void randomMenu(){
 
         onView(withText("ห้องครัว")).perform(click());
@@ -107,6 +118,9 @@ public class LobbyFragmentTest {
         onView(withId(R.id.iv_item1)).perform(click());
         onView(withId(R.id.rv_foodItem)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, MyViewAction.clickChildViewWithId(R.id.btn_add)));
+        SystemClock.sleep(2000);
+        onView(withId(R.id.btn_random_now)).perform(click());
+        onView(withText("จำนวนในการสุ่มน้อยเกินไป.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         SystemClock.sleep(2000);
         onView(withId(R.id.iv_item2)).perform(click());
         onView(withId(R.id.rv_foodItem)).perform(
