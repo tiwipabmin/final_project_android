@@ -68,5 +68,11 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
+    }
 }
 

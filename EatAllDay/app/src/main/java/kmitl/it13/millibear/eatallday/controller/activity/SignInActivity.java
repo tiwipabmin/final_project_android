@@ -61,6 +61,11 @@ public class SignInActivity extends AppCompatActivity
     @BindView(R.id.login_button)
     LoginButton loginButton;
 
+    @OnClick(R.id.contain_signIn)
+    public void onContainSignInTouched(){
+        SplashScreenActivity.hideSoftKeyboard(this);
+    }
+
     private User mUser;
     private DatabaseReference mChildUser;
     private ProgressDialogFragment progress;
@@ -287,5 +292,6 @@ public class SignInActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

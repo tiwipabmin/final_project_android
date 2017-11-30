@@ -41,7 +41,6 @@ public class KitchenFragment extends Fragment {
     @BindView(R.id.rv_menu)
     RecyclerView rv_menu;
 
-    private User mUser;
     private ArrayList<Food> mMenus;
     private MenusAdapter mMenuAdapter;
 
@@ -52,13 +51,11 @@ public class KitchenFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        mUser = TabBarActivity.USER;
     }
 
     private void initialInstance() {
 
-        FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(mUser.getUserId()).addValueEventListener(new ValueEventListener() {
+        FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(TabBarActivity.USER.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mMenus = new ArrayList<>();
@@ -92,7 +89,6 @@ public class KitchenFragment extends Fragment {
         Intent intent = new Intent(getActivity(), AddMenuActivity.class);
         intent.putExtra("menu", mMenus);
         intent.putExtra("type", "food");
-        intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);
     }
 
@@ -100,7 +96,6 @@ public class KitchenFragment extends Fragment {
     public void onBtnRandomTouched() {
         Intent intent = new Intent(getActivity(), RandomActivity.class);
         intent.putExtra("menu", mMenus);
-        intent.putExtra("userId", mUser.getUserId());
         startActivity(intent);
     }
 }

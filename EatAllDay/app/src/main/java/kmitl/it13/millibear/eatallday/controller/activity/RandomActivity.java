@@ -48,7 +48,6 @@ public class RandomActivity extends AppCompatActivity {
     private ProgressDialogFragment progress;
     private Map<Integer, Food> chooseMenu;
     private int amount_random = 0;
-    private String mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class RandomActivity extends AppCompatActivity {
         ButterKnife.bind(RandomActivity.this);
 
         Intent randomRoomIntent = getIntent();
-        mUserId = TabBarActivity.USER.getUserId();
 
         initialInstance(randomRoomIntent);
         setUp();
@@ -187,5 +185,11 @@ public class RandomActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

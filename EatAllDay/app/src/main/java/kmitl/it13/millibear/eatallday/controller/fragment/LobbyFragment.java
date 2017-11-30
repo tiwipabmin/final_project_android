@@ -27,12 +27,14 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.Gallery;
 import kmitl.it13.millibear.eatallday.R;
 import kmitl.it13.millibear.eatallday.SaveImage;
 import kmitl.it13.millibear.eatallday.adapter.LobbyAdapter;
 import kmitl.it13.millibear.eatallday.api.UserApi;
+import kmitl.it13.millibear.eatallday.controller.activity.SplashScreenActivity;
 import kmitl.it13.millibear.eatallday.controller.activity.TabBarActivity;
 import kmitl.it13.millibear.eatallday.model.History;
 import kmitl.it13.millibear.eatallday.api.HistoryApi;
@@ -47,10 +49,10 @@ public class LobbyFragment extends Fragment {
     RecyclerView rv_profile;
 
     private LobbyAdapter mLobbyAdapter;
-    private User mUser;
     private DatabaseReference childHistory;
     private ArrayList<Object> mStorage;
     private ArrayList<String> mViewType;
+    private View rootView;
 
     public LobbyFragment() {
         // Required empty public constructor
@@ -60,8 +62,6 @@ public class LobbyFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        mUser = TabBarActivity.USER;
     }
 
     private void initialInstance(Context context){
@@ -83,7 +83,7 @@ public class LobbyFragment extends Fragment {
     private void queryMenuHistory(){
 
         childHistory.orderByChild("userId")
-                .equalTo(mUser.getUserId())
+                .equalTo(TabBarActivity.USER.getUserId())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -114,7 +114,7 @@ public class LobbyFragment extends Fragment {
 
     private void queryUser(final ArrayList<History> memoryContent, final ArrayList<String> memoryType){
 
-        UserApi.getUserApi().getChildUser().child(mUser.getUserId()).addValueEventListener(new ValueEventListener() {
+        UserApi.getUserApi().getChildUser().child(TabBarActivity.USER.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -147,11 +147,16 @@ public class LobbyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_lobby, container, false);
+        rootView = inflater.inflate(R.layout.fragment_lobby, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance(getContext());
         setUp();
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.bind(this, rootView).unbind();
+    }
 }

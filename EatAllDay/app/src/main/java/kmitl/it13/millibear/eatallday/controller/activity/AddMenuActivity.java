@@ -61,7 +61,12 @@ public class AddMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    private String mUserId, mType;
+    @OnClick(R.id.contain_addMenu)
+    public void onContainAddMenuTouched(){
+        SplashScreenActivity.hideSoftKeyboard(this);
+    }
+
+    private String mType;
     private FoodApi foodApi;
     private Gallery gallery;
     private Uri uriImage;
@@ -72,7 +77,6 @@ public class AddMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_menu);
 
         Intent addFoodIntent = getIntent();
-        mUserId = TabBarActivity.USER.getUserId();
         mType = addFoodIntent.getStringExtra("type");
 
         ButterKnife.bind(this);
@@ -106,7 +110,7 @@ public class AddMenuActivity extends AppCompatActivity {
             String newKey = foodApi.getChildFood().push().getKey();
             Food newMenu = new Food(newKey, et_name.getText().toString(),
                     Long.valueOf(et_cost.getText().toString()),
-                    et_description.getText().toString(), mUserId,
+                    et_description.getText().toString(), TabBarActivity.USER.getUserId(),
                     "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg",
                     et_currency.getText().toString(),
                     Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
@@ -151,5 +155,11 @@ public class AddMenuActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

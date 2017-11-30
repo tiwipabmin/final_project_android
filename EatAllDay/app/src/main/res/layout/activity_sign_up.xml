@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/contain_signUp"
     android:orientation="vertical"
     tools:context="kmitl.it13.millibear.eatallday.controller.activity.SignUpActivity">
 
@@ -14,7 +15,7 @@
         android:text="@string/sign_up"
         android:layout_marginTop="30dp"
         android:textAlignment="center"
-        android:textColor="#008000"
+        android:textColor="#000080"
         android:textSize="40sp"
         android:textStyle="bold" />
 

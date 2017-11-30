@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -29,7 +28,6 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kmitl.it13.millibear.eatallday.api.FoodApi;
 import kmitl.it13.millibear.eatallday.api.UserApi;
-import kmitl.it13.millibear.eatallday.controller.activity.AddMenuActivity;
 import kmitl.it13.millibear.eatallday.model.Food;
 import kmitl.it13.millibear.eatallday.model.User;
 
@@ -40,22 +38,6 @@ public class SaveImage {
 
     public SaveImage(Context context) {
         this.mContext = context;
-    }
-
-    public String getAlbumName() {
-        return mAlbumName;
-    }
-
-    public void setAlbumName(String mAlbumName) {
-        this.mAlbumName = mAlbumName;
-    }
-
-    public String getNameFile() {
-        return mNameFile;
-    }
-
-    public void setNameFile(String nameFile) {
-        this.mNameFile = nameFile;
     }
 
     public String addImageToGallery(Bitmap bitmap) {

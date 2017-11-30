@@ -21,6 +21,7 @@ import kmitl.it13.millibear.eatallday.model.Food;
 public class EditMenuDialogFragment extends DialogFragment {
 
     private Food mMenu;
+    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class EditMenuDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_menu, null);
+        view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_menu, null);
         ButterKnife.bind(this, view);
         alertDialog.setView(view);
         return alertDialog.create();
@@ -64,5 +65,11 @@ public class EditMenuDialogFragment extends DialogFragment {
         EditMenuDialogFragment fragment = new EditMenuDialogFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.bind(this, view).unbind();
     }
 }

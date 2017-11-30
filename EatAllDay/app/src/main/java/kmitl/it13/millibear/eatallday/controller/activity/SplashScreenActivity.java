@@ -1,10 +1,12 @@
 package kmitl.it13.millibear.eatallday.controller.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 
 import kmitl.it13.millibear.eatallday.R;
 
@@ -45,5 +47,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onPause();
         handler.removeCallbacks(runnable);
         time = delay_time - (System.currentTimeMillis() - time);
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 }

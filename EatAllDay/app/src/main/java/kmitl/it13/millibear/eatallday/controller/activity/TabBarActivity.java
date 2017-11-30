@@ -40,7 +40,7 @@ public class TabBarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_bar);
-        ButterKnife.bind(TabBarActivity.this);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         USER = intent.getParcelableExtra("user");
@@ -98,5 +98,11 @@ public class TabBarActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

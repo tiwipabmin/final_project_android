@@ -53,6 +53,11 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.et_verify_password)
     EditText et_verify_password;
 
+    @OnClick(R.id.contain_signUp)
+    public void onContainSignUpTouched(){
+        SplashScreenActivity.hideSoftKeyboard(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,5 +172,11 @@ public class SignUpActivity extends AppCompatActivity {
         intent.putExtra("user", newUser);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

@@ -51,6 +51,7 @@ public class AddMenuActivityTest {
 
     private void signIn(){
 
+        SystemClock.sleep(4000);
         closeSoftKeyboard();
         onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());

@@ -32,6 +32,7 @@ public class AddTopicDialogFragment extends DialogFragment {
 
     private Food mFood;
     private Context mContext;
+    private View view;
 
     public void setContext(Context mContext) {
         this.mContext = mContext;
@@ -51,7 +52,7 @@ public class AddTopicDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_add_topic, null);
+        view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_add_topic, null);
         ButterKnife.bind(this, view);
 
         alertDialog.setView(view);
@@ -81,5 +82,11 @@ public class AddTopicDialogFragment extends DialogFragment {
         fragment.setContext(context);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.bind(this, view).unbind();
     }
 }

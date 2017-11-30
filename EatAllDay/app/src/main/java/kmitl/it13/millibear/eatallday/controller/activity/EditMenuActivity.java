@@ -60,6 +60,11 @@ public class EditMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
+    @OnClick(R.id.contain_editMenu)
+    public void onContainEditMenuTouched(){
+        SplashScreenActivity.hideSoftKeyboard(this);
+    }
+
     private Food mCurrentMenu;
     private Gallery gallery;
     private boolean isEdit = false;
@@ -222,5 +227,11 @@ public class EditMenuActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }
