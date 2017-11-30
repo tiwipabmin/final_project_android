@@ -5,18 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contain_signUp"
+    android:background="#F5F5F1"
     android:orientation="vertical"
     tools:context="kmitl.it13.millibear.eatallday.controller.activity.SignUpActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#8c8c8c">
+
+        <include layout="@layout/sign_up_bar"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#808080"/>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="95dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/sign_up"
-        android:layout_marginTop="30dp"
         android:textAlignment="center"
-        android:textColor="#000080"
-        android:textSize="40sp"
+        android:textSize="35sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -31,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
+
             android:gravity="center">
 
             <ImageView
@@ -51,7 +66,9 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:gravity="center"
                 android:hint="@string/hint_name"
+                android:backgroundTint="#FFFFFF"
                 android:inputType="text" />
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
@@ -90,6 +107,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/hint_email"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
                 android:inputType="text" />
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
@@ -128,6 +147,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/hint_password"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
                 android:inputType="textPassword" />
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
@@ -166,6 +187,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/hint_verify_password"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
                 android:inputType="textPassword" />
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
@@ -204,6 +227,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/hint_facebook"
+                android:backgroundTint="#FFFFFF"
+                android:gravity="center"
                 android:inputType="text" />
 
         </com.wrapp.floatlabelededittext.FloatLabeledEditText>
@@ -216,10 +241,11 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/verify"
-        android:backgroundTint="#000080"
+        android:backgroundTint="#21A0BE"
         android:textColor="#FFFFFFFF"
+        android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="15sp"/>
 
@@ -232,7 +258,7 @@
             android:id="@+id/tv_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:text="@string/sign_in" />
 
     </LinearLayout>
