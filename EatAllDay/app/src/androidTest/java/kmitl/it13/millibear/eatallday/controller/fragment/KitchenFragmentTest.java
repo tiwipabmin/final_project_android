@@ -76,7 +76,7 @@ public class KitchenFragmentTest {
         onView(withText("ห้องครัว")).perform(click());
         addMenu();
         onView(withId(R.id.rv_menu)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
+                RecyclerViewActions.actionOnItemAtPosition(1, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
         SystemClock.sleep(2000);
         onView(withId(R.id.item_delete_menu)).perform(click());
         onView(withText("ลบรายการอาหารเรียบร้อยแล้วขอรับ.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));

@@ -187,7 +187,7 @@ public class RandomActivity extends AppCompatActivity {
                     }
                 } else {
 
-                    Toast.makeText(this, "ไม่สามารถเลือกได้ กรุณาเปลี่ยนรูปภาพก่อนเลือก.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "ไม่สามารถเลือกได้ กรุณาเปลี่ยนรูปภาพก่อน.", Toast.LENGTH_LONG).show();
                 }
             }
         }

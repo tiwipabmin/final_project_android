@@ -2,6 +2,7 @@ package kmitl.it13.millibear.eatallday.controller.activity;
 
 
 import android.os.SystemClock;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import kmitl.it13.millibear.eatallday.R;
+import kmitl.it13.millibear.eatallday.controller.fragment.LobbyFragmentTest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -47,6 +49,12 @@ public class AddMenuActivityTest {
         onView(withId(R.id.iv_add)).perform(click());
         onView(withText("เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
         SystemClock.sleep(5000);
+        onView(withId(R.id.rv_menu)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
+        SystemClock.sleep(2000);
+        onView(withId(R.id.item_delete_menu)).perform(click());
+        onView(withText("ลบรายการอาหารเรียบร้อยแล้วขอรับ.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        SystemClock.sleep(2000);
     }
 
     private void signIn(){
