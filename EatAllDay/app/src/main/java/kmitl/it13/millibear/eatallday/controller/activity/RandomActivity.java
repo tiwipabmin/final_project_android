@@ -49,6 +49,7 @@ public class RandomActivity extends AppCompatActivity {
     private Map<Integer, Food> chooseMenu;
     private int amount_random = 0;
     private boolean isTouched = true;
+    private String defaultImage = "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +165,7 @@ public class RandomActivity extends AppCompatActivity {
 
                 int position = data.getIntExtra("position", -1);
                 String item = data.getStringExtra("item");
-                if (position != -1) {
+                if (position != -1 && !mMenu.get(position).getImage().equals(defaultImage)) {
                     Food food = mMenu.get(position);
                     switch (item) {
                         case "iv_item1":
@@ -184,6 +185,9 @@ public class RandomActivity extends AppCompatActivity {
                             Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item4);
                             break;
                     }
+                } else {
+
+                    Toast.makeText(this, "ไม่สามารถเลือกได้ กรุณาเปลี่ยนรูปภาพก่อนเลือก.", Toast.LENGTH_LONG).show();
                 }
             }
         }
