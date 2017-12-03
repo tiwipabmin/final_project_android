@@ -212,7 +212,8 @@ public class SignInActivity extends AppCompatActivity
                                 assert user != null;
                                 final String uId = user.getUid();
 
-                                mChildUser.orderByChild(uId)
+                                mChildUser.orderByChild("userId")
+                                        .equalTo(uId)
                                         .addListenerForSingleValueEvent(SignInActivity.this);
 
                             }
