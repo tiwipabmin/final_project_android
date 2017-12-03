@@ -43,6 +43,13 @@
     <string name="delete_profile_display">ลบรูปภาพประจำตัว</string>
     <string name="amount">1</string>
     <string name="unit">จาน</string>
+    <string name="about_application_credit">
+        Icon made by <b>\nVectors Market \nDave Gandy \nFreepik \nRoundicons
+        \nDinosoftLabs \nSmashicons \nSergiu Bagrin \nLucy G
+        \nBogdan Rosu \nCatalin Fertu \nChris Veigt </b>\nfrom <b>\nwww.flaticon.com</b>
+    </string>
+    <string name="license">License</string>
+    <string name="about_application"> <b>EatAllDay</b> สำหรับ <b>Android</b></string>
 
     <!-- id facebook -->
     <string name="facebook_app_id">871168826390720</string>

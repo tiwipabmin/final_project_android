@@ -185,6 +185,13 @@ public class SignInActivity extends AppCompatActivity
         });
     }
 
+    @OnClick(R.id.iv_information)
+    void onIvInformationTouched(){
+
+        Intent intent = new Intent(this, AboutApplicationActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btn_sign_in)
     void onSignInTouched() {
 

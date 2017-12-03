@@ -59,7 +59,7 @@ public class SignInActivityTest {
     public void signInWithFacebook() {
 
         onView(withId(R.id.login_button)).perform(click());
-        SystemClock.sleep(2000);
+        SystemClock.sleep(3000);
         onView(withId(R.id.iv_logout)).perform(click());
         SystemClock.sleep(1000);
 
@@ -82,6 +82,15 @@ public class SignInActivityTest {
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
         onView(withText("Email or password invalid.")).check(matches(isDisplayed()));
+        SystemClock.sleep(1000);
+    }
+
+    @Test
+    public void goToAboutApplication(){
+
+        onView(withId(R.id.iv_information)).perform(click());
+        SystemClock.sleep(2000);
+        onView(withId(R.id.iv_back)).perform(click());
         SystemClock.sleep(1000);
     }
 

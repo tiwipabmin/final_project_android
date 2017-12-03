@@ -17,13 +17,29 @@
         android:background="@drawable/border_shadow_style"
         android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:text="@string/sign_in"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="@string/sign_in"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_information"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/ic_information_64dp"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="300dp"
