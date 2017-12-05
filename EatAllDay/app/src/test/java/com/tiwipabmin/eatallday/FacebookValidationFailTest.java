@@ -1,16 +1,11 @@
-package kmitl.tiwipabmin.eatallday.eatallday;
+package com.tiwipabmin.eatallday;
 
 import org.junit.Test;
 
-import com.tiwipabmin.eatallday.FacebookValidation;
 import com.tiwipabmin.eatallday.model.ValidationResult;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-
-/**
- * Created by tiwip on 11/24/2017.
- */
 
 public class FacebookValidationFailTest {
 

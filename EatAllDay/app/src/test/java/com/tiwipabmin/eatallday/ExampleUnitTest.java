@@ -1,4 +1,4 @@
-package kmitl.tiwipabmin.eatallday.eatallday;
+package com.tiwipabmin.eatallday;
 
 import org.junit.Test;
 

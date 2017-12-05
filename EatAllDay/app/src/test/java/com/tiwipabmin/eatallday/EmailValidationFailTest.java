@@ -1,8 +1,7 @@
-package kmitl.tiwipabmin.eatallday.eatallday;
+package com.tiwipabmin.eatallday;
 
 import org.junit.Test;
 
-import com.tiwipabmin.eatallday.EmailValidation;
 import com.tiwipabmin.eatallday.model.ValidationResult;
 
 import static junit.framework.Assert.assertEquals;
