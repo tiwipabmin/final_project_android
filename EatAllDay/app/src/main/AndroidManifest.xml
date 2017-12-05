@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kmitl.it13.millibear.eatallday">
+    package="com.tiwipabmin.eatallday">
+    <!--old package kmitl.it13.millibear.eatallday -->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".controller.activity.SplashScreenActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +25,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.activity.SignUpActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.activity.SignInActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.SignInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.activity.TabBarActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.TabBarActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -54,18 +55,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.activity.RandomActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.RandomActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.activity.AddMenuActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.AddMenuActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.activity.ShowMenusActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.ShowMenusActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".controller.activity.EditMenuActivity"
+            android:name="com.tiwipabmin.eatallday.controller.activity.EditMenuActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".controller.activity.AboutApplicationActivity"></activity>
+        <activity android:name="com.tiwipabmin.eatallday.controller.activity.AboutApplicationActivity"></activity>
     </application>
 
 </manifest>

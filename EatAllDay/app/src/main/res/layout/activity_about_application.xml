@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F5F1"
-    tools:context="kmitl.it13.millibear.eatallday.controller.activity.AboutApplicationActivity">
+    tools:context="kmitl.tiwipabmin.eatallday.com.tiwipabmin.eatallday.controller.activity.AboutApplicationActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"

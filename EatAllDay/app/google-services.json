@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:468818092985:android:2cf930156a5a1586",
+        "mobilesdk_app_id": "1:468818092985:android:38985a85c5e22214",
         "android_client_info": {
-          "package_name": "kmitl.it13.millibear.eatallday"
+          "package_name": "com.tiwipabmin.eatallday"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "468818092985-lko94qedtk8vi49sim2ctbenf48kd6fa.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "kmitl.it13.millibear.eatallday",
-            "certificate_hash": "bb6864261178796d2f515612895db2f4be35e479"
-          }
-        },
         {
           "client_id": "468818092985-cjddg8sekkgdt49dkvarl9priu6dnrbp.apps.googleusercontent.com",
           "client_type": 3
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "468818092985-cjddg8sekkgdt49dkvarl9priu6dnrbp.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

@@ -7,7 +7,7 @@
     android:id="@+id/contain_signUp"
     android:background="#F5F5F1"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.controller.activity.SignUpActivity">
+    tools:context="kmitl.tiwipabmin.eatallday.com.tiwipabmin.eatallday.controller.activity.SignUpActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"

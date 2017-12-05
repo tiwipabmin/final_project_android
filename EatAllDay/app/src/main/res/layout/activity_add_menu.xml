@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/contain_addMenu"
     android:orientation="vertical"
-    tools:context="kmitl.it13.millibear.eatallday.controller.activity.AddMenuActivity">
+    tools:context="kmitl.tiwipabmin.eatallday.com.tiwipabmin.eatallday.controller.activity.AddMenuActivity">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
