@@ -3,6 +3,7 @@ package com.tiwipabmin.eatallday;
 import org.junit.Test;
 
 import com.tiwipabmin.eatallday.model.ValidationResult;
+import com.tiwipabmin.eatallday.validation.NameValidation;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;

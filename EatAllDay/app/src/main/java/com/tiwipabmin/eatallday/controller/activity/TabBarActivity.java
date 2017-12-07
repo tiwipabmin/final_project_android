@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.facebook.login.LoginManager;
+import com.tiwipabmin.eatallday.EatAllDayPreferences;
 import com.tiwipabmin.eatallday.controller.fragment.LobbyFragment;
 
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class TabBarActivity extends AppCompatActivity {
     @OnClick(R.id.iv_logout)
     void onLogOutTouched(){
         LoginManager.getInstance().logOut();
+        EatAllDayPreferences.setUserName(this, "null");
 
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);

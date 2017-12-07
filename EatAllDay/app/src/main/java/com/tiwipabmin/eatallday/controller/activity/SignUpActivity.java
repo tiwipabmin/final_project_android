@@ -22,20 +22,17 @@ import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.tiwipabmin.eatallday.EmailValidation;
-import com.tiwipabmin.eatallday.FacebookValidation;
-import com.tiwipabmin.eatallday.NameValidation;
-import com.tiwipabmin.eatallday.PasswordValidation;
+
+import com.tiwipabmin.eatallday.validation.CheckNetworkConnection;
+import com.tiwipabmin.eatallday.validation.EmailValidation;
+import com.tiwipabmin.eatallday.validation.FacebookValidation;
+import com.tiwipabmin.eatallday.validation.NameValidation;
+import com.tiwipabmin.eatallday.validation.PasswordValidation;
 import com.tiwipabmin.eatallday.R;
 
 import com.tiwipabmin.eatallday.model.User;
 
 public class SignUpActivity extends AppCompatActivity {
-
-    DatabaseReference mChildUser;
-    UserApi userApi;
-    DialogFragment progress;
-    private boolean isTouched = true;
 
     @BindView(R.id.et_email)
     EditText et_email;
@@ -52,6 +49,11 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.et_verify_password)
     EditText et_verify_password;
 
+    private CheckNetworkConnection mCheckNetworkConnection;
+    private UserApi userApi;
+    private DialogFragment progress;
+    private boolean isTouched = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +65,12 @@ public class SignUpActivity extends AppCompatActivity {
 
     void initialInstance(){
 
-        mChildUser = UserApi.getUserApi().getChildUser();
-
         userApi = UserApi.getUserApi();
 
         progress = new ProgressDialogFragment();
+
+        mCheckNetworkConnection = CheckNetworkConnection
+                .getCheckNetworkConnection();
     }
 
     @OnClick(R.id.btn_verify)
@@ -114,10 +117,17 @@ public class SignUpActivity extends AppCompatActivity {
             allValid = false;
         }
 
-        if(allValid && isTouched){
+        if(allValid && isTouched && mCheckNetworkConnection
+                .isConnected()){
             isTouched = false;
             progress.show(getSupportFragmentManager(), "progress");
             createNewAccount(et_name.getText().toString(), et_email.getText().toString(), et_password.getText().toString(), et_facebook.getText().toString());
+        } else {
+
+            Toast.makeText(
+                    this,
+                    "ไม่มีการเชื่อมต่อกับอินเทอร์เน็ต.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

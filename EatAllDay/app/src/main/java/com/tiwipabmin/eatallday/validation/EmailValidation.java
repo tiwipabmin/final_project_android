@@ -1,4 +1,4 @@
-package com.tiwipabmin.eatallday;
+package com.tiwipabmin.eatallday.validation;
 
 import com.tiwipabmin.eatallday.model.ValidationResult;
 import com.tiwipabmin.eatallday.myexception.EmailValidationException;

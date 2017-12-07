@@ -43,6 +43,7 @@ import butterknife.OnClick;
 import com.tiwipabmin.eatallday.R;
 
 import com.tiwipabmin.eatallday.model.User;
+import com.tiwipabmin.eatallday.validation.CheckNetworkConnection;
 
 public class SignInActivity extends AppCompatActivity
         implements ValueEventListener {
@@ -63,11 +64,12 @@ public class SignInActivity extends AppCompatActivity
 
     private User mUser;
     private DatabaseReference mChildUser;
-    private ProgressDialogFragment progress;
-    private CallbackManager callbackManager;
-    private FirebaseAuth firebaseAuth;
-    private AccessToken accessToken;
-    private boolean isTouched = true;
+    private ProgressDialogFragment mProgress;
+    private CallbackManager mCallbackManager;
+    private FirebaseAuth mFirebaseAuth;
+    private AccessToken mAccessToken;
+    private boolean mIsTouched = true;
+    private CheckNetworkConnection mCheckNetworkConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +79,22 @@ public class SignInActivity extends AppCompatActivity
         ButterKnife.bind(SignInActivity.this);
         initialInstance();
 
-        accessToken = AccessToken.getCurrentAccessToken();
+        mAccessToken = AccessToken.getCurrentAccessToken();
 
-        if (accessToken != null) {
+        if (!mCheckNetworkConnection
+                .isConnected()){
+
+            Toast.makeText(
+                    this,
+                    "ไม่มีการเชื่อมต่อกับอินเทอร์เน็ต.",
+                    Toast.LENGTH_SHORT).show();
+
+            LoginManager.getInstance().logOut();
+        }
+
+        if (mAccessToken != null
+                && mCheckNetworkConnection
+                .isConnected()) {
             connectionWithFacebook();
         }
 
@@ -104,18 +119,21 @@ public class SignInActivity extends AppCompatActivity
 
         mChildUser = UserApi.getUserApi().getChildUser();
 
-        progress = new ProgressDialogFragment();
+        mProgress = new ProgressDialogFragment();
 
-        callbackManager = CallbackManager.Factory.create();
+        mCallbackManager = CallbackManager.Factory.create();
 
-        firebaseAuth = AuthenticationApi.getAuthenticationApi().getFirebaseAuth();
+        mFirebaseAuth = AuthenticationApi.getAuthenticationApi().getFirebaseAuth();
+
+        mCheckNetworkConnection = CheckNetworkConnection.getCheckNetworkConnection();
+
     }
 
     private void setUp() {
 
         loginButton.setReadPermissions("email", "public_profile", "user_photos");
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 connectionWithFacebook();
@@ -137,7 +155,7 @@ public class SignInActivity extends AppCompatActivity
 
     private void connectionWithFacebook() {
 
-        progress.show(getSupportFragmentManager(), "progress");
+        mProgress.show(getSupportFragmentManager(), "mProgress");
         boolean isError = false;
 
         Profile profile;
@@ -155,9 +173,9 @@ public class SignInActivity extends AppCompatActivity
             isError = true;
         }
 
-        if(isError){
+        if (isError) {
             LoginManager.getInstance().logOut();
-            progress.dismiss();
+            mProgress.dismiss();
         }
     }
 
@@ -174,7 +192,7 @@ public class SignInActivity extends AppCompatActivity
                 Intent intent = new Intent(SignInActivity.this, TabBarActivity.class);
                 intent.putExtra("user", user);
                 startActivity(intent);
-                progress.dismiss();
+                mProgress.dismiss();
                 finish();
             }
 
@@ -195,19 +213,23 @@ public class SignInActivity extends AppCompatActivity
     @OnClick(R.id.btn_sign_in)
     void onSignInTouched() {
 
-        if (!TextUtils.isEmpty(et_email.getText().toString()) && !TextUtils.isEmpty(et_password.getText().toString()) && isTouched) {
+        if (!TextUtils.isEmpty(et_email.getText().toString())
+                && !TextUtils.isEmpty(et_password.getText().toString())
+                && mIsTouched
+                && mCheckNetworkConnection
+                .isConnected()) {
 
-            isTouched = false;
+            mIsTouched = false;
 
-            progress.show(getSupportFragmentManager(), "progress");
+            mProgress.show(getSupportFragmentManager(), "mProgress");
 
-            firebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_password.getText().toString())
+            mFirebaseAuth.signInWithEmailAndPassword(et_email.getText().toString(), et_password.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                                final FirebaseUser user = mFirebaseAuth.getCurrentUser();
 
                                 assert user != null;
                                 final String uId = user.getUid();
@@ -224,16 +246,23 @@ public class SignInActivity extends AppCompatActivity
                     DialogFragment alertDialog = new AlertDialogFragment()
                             .newInstance("Email or password invalid.");
                     alertDialog.show(getSupportFragmentManager(), "alertDialog");
-                    isTouched = true;
-                    progress.dismiss();
+                    mIsTouched = true;
+                    mProgress.dismiss();
                 }
             });
 
-        } else {
+        } else if(mCheckNetworkConnection
+                .isConnected()){
 
             DialogFragment alertDialog = new AlertDialogFragment()
                     .newInstance("Please enter your email or password");
             alertDialog.show(getSupportFragmentManager(), "alertDialog");
+        } else {
+
+            Toast.makeText(
+                    this,
+                    "ไม่มีการเชื่อมต่อกับอินเทอร์เน็ต.",
+                    Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -255,7 +284,7 @@ public class SignInActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
 
@@ -280,13 +309,13 @@ public class SignInActivity extends AppCompatActivity
 
         if (mUser != null) {
 
-            progress.dismiss();
+            mProgress.dismiss();
             goToLobby(mUser);
 
         }
 
-        if (progress.isVisible()) {
-            progress.dismiss();
+        if (mProgress.isVisible()) {
+            mProgress.dismiss();
         }
 
     }
