@@ -5,17 +5,16 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 public class MenuApi {
 
     private static MenuApi menuApi;
-    private DatabaseReference childFood;
+    private DatabaseReference childMenu;
 
     private MenuApi() {
 
-
-        childFood = FirebaseDatabase.getInstance().getReference("food");
+        childMenu = FirebaseDatabase.getInstance().getReference("menu");
     }
 
     public static MenuApi getMenuApi() {
@@ -25,23 +24,23 @@ public class MenuApi {
         return menuApi;
     }
 
-    public DatabaseReference getChildFood() {
-        return childFood;
+    public DatabaseReference getChildMenu() {
+        return childMenu;
     }
 
-    public void newFood(Context context, String newKey, Food newFood) {
-        childFood.child(newKey).setValue(newFood);
+    public void newMenu(Context context, String newKey, Menu newMenu) {
+        childMenu.child(newKey).setValue(newMenu);
         Toast.makeText(context, "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 
-    public void deleteMenu(Context context, Food food) {
-        childFood.child(food.getId()).removeValue();
+    public void deleteMenu(Context context, Menu menu) {
+        childMenu.child(menu.getId()).removeValue();
         Toast.makeText(context, "ลบรายการอาหารเรียบร้อยแล้วขอรับ.", Toast.LENGTH_SHORT).show();
 
     }
 
-    public void updateMenu(Context context, String menuId, Food updateMenu) {
-        childFood.child(menuId).setValue(updateMenu);
+    public void updateMenu(Context context, String menuId, Menu updateMenu) {
+        childMenu.child(menuId).setValue(updateMenu);
         Toast.makeText(context, "แก้ไขประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
 
     }

@@ -3,7 +3,7 @@ package com.tiwipabmin.eatallday.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Food implements Parcelable{
+public class Menu implements Parcelable{
 
     private String id;
     private String name;
@@ -15,7 +15,7 @@ public class Food implements Parcelable{
     private Long amount;
     private String unit;
 
-    public Food(String id, String name, Long cost, String description, String userId, String image, String currency, Long amount, String unit) {
+    public Menu(String id, String name, Long cost, String description, String userId, String image, String currency, Long amount, String unit) {
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -27,10 +27,10 @@ public class Food implements Parcelable{
         this.unit = unit;
     }
 
-    public Food() {
+    public Menu() {
     }
 
-    protected Food(Parcel in) {
+    protected Menu(Parcel in) {
         id = in.readString();
         name = in.readString();
         if (in.readByte() == 0) {
@@ -50,15 +50,15 @@ public class Food implements Parcelable{
         unit = in.readString();
     }
 
-    public static final Creator<Food> CREATOR = new Creator<Food>() {
+    public static final Creator<Menu> CREATOR = new Creator<Menu>() {
         @Override
-        public Food createFromParcel(Parcel in) {
-            return new Food(in);
+        public Menu createFromParcel(Parcel in) {
+            return new Menu(in);
         }
 
         @Override
-        public Food[] newArray(int size) {
-            return new Food[size];
+        public Menu[] newArray(int size) {
+            return new Menu[size];
         }
     };
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
 
 import java.util.ArrayList;
@@ -43,10 +43,10 @@ public class RandomActivity extends AppCompatActivity {
     @BindView(R.id.iv_item4)
     ImageView iv_item4;
 
-    private ArrayList<Food> mMenu;
+    private ArrayList<Menu> mMenu;
     private Intent intent;
     private ProgressDialogFragment progress;
-    private Map<Integer, Food> chooseMenu;
+    private Map<Integer, Menu> chooseMenu;
     private int amount_random = 0;
     private boolean isTouched = true;
     private String defaultImage = "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg";
@@ -166,23 +166,23 @@ public class RandomActivity extends AppCompatActivity {
                 int position = data.getIntExtra("position", -1);
                 String item = data.getStringExtra("item");
                 if (position != -1 && !mMenu.get(position).getImage().equals(defaultImage)) {
-                    Food food = mMenu.get(position);
+                    Menu menu = mMenu.get(position);
                     switch (item) {
                         case "iv_item1":
                             chooseMenu.put(0, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item1);
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item1);
                             break;
                         case "iv_item2":
                             chooseMenu.put(1, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item2);
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item2);
                             break;
                         case "iv_item3":
                             chooseMenu.put(2, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item3);
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item3);
                             break;
                         case "iv_item4":
                             chooseMenu.put(3, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(food.getImage()).into(iv_item4);
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item4);
                             break;
                     }
                 } else {

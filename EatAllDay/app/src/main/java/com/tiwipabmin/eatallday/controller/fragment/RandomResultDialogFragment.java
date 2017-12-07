@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import com.tiwipabmin.eatallday.R;
 
@@ -29,7 +29,7 @@ public class RandomResultDialogFragment extends DialogFragment {
     @BindView(R.id.tv_foodName)
     TextView tv_foodName;
 
-    private Food mFood;
+    private Menu mMenu;
     private Context mContext;
 
     public void setContext(Context mContext) {
@@ -41,7 +41,7 @@ public class RandomResultDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mFood = args.getParcelable("food");
+        mMenu = args.getParcelable("menu");
     }
 
     @NonNull
@@ -52,8 +52,8 @@ public class RandomResultDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_random_result, null);
 
         ButterKnife.bind(this, view);
-        Glide.with(getContext()).load(mFood.getImage()).into(iv_food);
-        tv_foodName.setText(mFood.getName());
+        Glide.with(getContext()).load(mMenu.getImage()).into(iv_food);
+        tv_foodName.setText(mMenu.getName());
         alertDialog.setView(view);
 
         return alertDialog.create();
@@ -61,15 +61,15 @@ public class RandomResultDialogFragment extends DialogFragment {
 
     @OnClick(R.id.btn_accept)
     public void onBtnAcceptTouched(){
-        DialogFragment topicsDialog = new AddTopicDialogFragment().newInstance(mContext, mFood);
+        DialogFragment topicsDialog = new AddTopicDialogFragment().newInstance(mContext, mMenu);
         topicsDialog.setCancelable(false);
         topicsDialog.show(getActivity().getSupportFragmentManager(), "topicsDialog");
         dismiss();
     }
 
-    public static RandomResultDialogFragment newInstance(Context context, Food food) {
+    public static RandomResultDialogFragment newInstance(Context context, Menu menu) {
         Bundle args = new Bundle();
-        args.putParcelable("food", food);
+        args.putParcelable("menu", menu);
         RandomResultDialogFragment fragment = new RandomResultDialogFragment();
         fragment.setContext(context);
         fragment.setArguments(args);

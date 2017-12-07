@@ -19,7 +19,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.api.UserApi;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -99,7 +99,7 @@ public class SaveImage {
     public void saveImageToStorageFirebase(final Activity activity,
                                            final Uri uriImage,
                                            final DialogFragment progress,
-                                           final Food menu) {
+                                           final Menu menu) {
         StorageReference ref = FirebaseStorage.getInstance().getReference().child("menuImages/"
                 + menu.getId());
         ref.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -115,7 +115,7 @@ public class SaveImage {
                 }
 
                 MenuApi.getMenuApi()
-                        .newFood(activity,
+                        .newMenu(activity,
                         menu.getId(),
                         menu);
 

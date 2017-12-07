@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import java.util.ArrayList;
 
@@ -25,7 +25,7 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
     @BindView(R.id.iv_back)
     ImageView iv_back;
 
-    private ArrayList<Food> mMenu;
+    private ArrayList<Menu> mMenu;
     private MenusAdapter mMenuAdapter;
     private String item;
 

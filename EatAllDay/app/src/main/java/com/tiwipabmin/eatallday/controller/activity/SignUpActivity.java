@@ -89,31 +89,31 @@ public class SignUpActivity extends AppCompatActivity {
 
         if(!nameResult.getResult()){
 
-            et_name.setError("your name can't be special character or numeric.");
+            et_name.setError("ชื่อของคุณไม่สามารถใช้ตัวอักษรพิเศษหรือตัวเลขได้.");
             allValid = false;
         }
 
         if (!emailResult.getResult()) {
 
-            et_email.setError("you can't be this email please fill in new email.");
+            et_email.setError("อีเมล์นี้ไม่สามารถใช้ได้ กรุณากรอกใหม่.");
             allValid = false;
         }
 
         if(!passwordResult.getResult()){
 
-            et_password.setError("your password can't be special character and there are 8 character up.");
+            et_password.setError("รหัสผ่านของคุณไม่สามารถใช้ตัวอักษรพิเศษได้และต้องมีตัวอักษรอย่างน้อย 8 ตัวขึ้นไป.");
             allValid = false;
         }
 
         if(!et_password.getText().toString().equals(et_verify_password.getText().toString())){
 
-            et_verify_password.setError("your password verify don't pass.");
+            et_verify_password.setError("รหัสผ่านของคุณไม่ตรงกัน.");
             allValid = false;
         }
 
         if(!facebookResult.getResult()){
 
-            et_facebook.setError("your facebook invalid.");
+            et_facebook.setError("facebook ของคุณไม่ถูกต้อง.");
             allValid = false;
         }
 

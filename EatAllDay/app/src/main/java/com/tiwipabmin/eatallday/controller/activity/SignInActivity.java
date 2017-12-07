@@ -244,7 +244,7 @@ public class SignInActivity extends AppCompatActivity
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     DialogFragment alertDialog = new AlertDialogFragment()
-                            .newInstance("Email or password invalid.");
+                            .newInstance("อีเมล์หรือรหัสผ่านไม่ถูกต้อง.");
                     alertDialog.show(getSupportFragmentManager(), "alertDialog");
                     mIsTouched = true;
                     mProgress.dismiss();
@@ -255,7 +255,7 @@ public class SignInActivity extends AppCompatActivity
                 .isConnected()){
 
             DialogFragment alertDialog = new AlertDialogFragment()
-                    .newInstance("Please enter your email or password");
+                    .newInstance("กรุณากรอกอีเมล์และรหัสผ่านด้วยค่ะ.");
             alertDialog.show(getSupportFragmentManager(), "alertDialog");
         } else {
 

@@ -12,7 +12,7 @@ import com.tiwipabmin.eatallday.adapter.holder.ItemShowMenuViewHolder;
 import com.tiwipabmin.eatallday.controller.activity.TabBarActivity;
 import com.tiwipabmin.eatallday.controller.fragment.EditMenuDialogFragment;
 import com.tiwipabmin.eatallday.controller.fragment.MenuDetailDialogFragment;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final int FEATURE1 = 0, FEATURE2 = 1;
 
     private Context mContext;
-    private ArrayList<Food> mMenu;
+    private ArrayList<Menu> mMenu;
     private MenusAdapter.MenusListener mListener;
     private int mFeature = 0;
 
@@ -32,14 +32,14 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public void onBtnAddTouched(int position);
     }
 
-    public MenusAdapter(Context context, ArrayList<Food> mMenu, MenusAdapter.MenusListener listener, int feature) {
+    public MenusAdapter(Context context, ArrayList<Menu> mMenu, MenusAdapter.MenusListener listener, int feature) {
         this.mContext = context;
         this.mMenu = mMenu;
         this.mListener = listener;
         this.mFeature = feature;
     }
 
-    public MenusAdapter(Context context, ArrayList<Food> mMenu, int mFeature) {
+    public MenusAdapter(Context context, ArrayList<Menu> mMenu, int mFeature) {
         this.mContext = context;
         this.mMenu = mMenu;
         this.mFeature = mFeature;
@@ -122,12 +122,12 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     private void configureItemRandomViewHolder(ItemRandomMenuViewHolder itemRandomMenuViewHolder, final int position){
-        Food food = mMenu.get(position);
+        Menu menu = mMenu.get(position);
 
-        Glide.with(mContext).load(food.getImage()).into(itemRandomMenuViewHolder.iv_food);
-        itemRandomMenuViewHolder.tv_name.setText(food.getName());
+        Glide.with(mContext).load(menu.getImage()).into(itemRandomMenuViewHolder.iv_food);
+        itemRandomMenuViewHolder.tv_name.setText(menu.getName());
 
-        String cost = String.valueOf(food.getCost()) + " " + food.getCurrency() + " / " + food.getAmount() + " " + food.getUnit();
+        String cost = String.valueOf(menu.getCost()) + " " + menu.getCurrency() + " / " + menu.getAmount() + " " + menu.getUnit();
 
         itemRandomMenuViewHolder.tv_cost.setText(cost);
 

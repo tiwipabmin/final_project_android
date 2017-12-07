@@ -19,7 +19,7 @@ import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.controller.activity.AddMenuActivity;
 import com.tiwipabmin.eatallday.controller.activity.RandomActivity;
 import com.tiwipabmin.eatallday.controller.activity.TabBarActivity;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class KitchenFragment extends Fragment {
     @BindView(R.id.rv_menu)
     RecyclerView rv_menu;
 
-    private ArrayList<Food> mMenus;
+    private ArrayList<Menu> mMenus;
     private MenusAdapter mMenuAdapter;
 
     public KitchenFragment() {
@@ -55,12 +55,12 @@ public class KitchenFragment extends Fragment {
 
     private void initialInstance() {
 
-        MenuApi.getMenuApi().getChildFood().orderByChild("userId").equalTo(TabBarActivity.USER.getUserId()).addValueEventListener(new ValueEventListener() {
+        MenuApi.getMenuApi().getChildMenu().orderByChild("userId").equalTo(TabBarActivity.USER.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mMenus = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mMenus.add(ds.getValue(Food.class));
+                    mMenus.add(ds.getValue(Menu.class));
                 }
                 mMenuAdapter = new MenusAdapter(getContext(), mMenus, 0);
                 rv_menu.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -88,7 +88,7 @@ public class KitchenFragment extends Fragment {
     public void onBtnAddTouched() {
         Intent intent = new Intent(getActivity(), AddMenuActivity.class);
         intent.putExtra("menu", mMenus);
-        intent.putExtra("type", "food");
+        intent.putExtra("type", "menu");
         startActivity(intent);
     }
 

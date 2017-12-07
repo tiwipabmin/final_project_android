@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.tiwipabmin.eatallday.controller.activity.RandomActivity;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 import com.tiwipabmin.eatallday.model.History;
 import com.tiwipabmin.eatallday.api.HistoryApi;
 import com.tiwipabmin.eatallday.controller.activity.TabBarActivity;
@@ -30,7 +30,7 @@ public class AddTopicDialogFragment extends DialogFragment {
     @BindView(R.id.et_topics)
     EditText et_topics;
 
-    private Food mFood;
+    private Menu mMenu;
     private Context mContext;
     private View view;
 
@@ -44,7 +44,7 @@ public class AddTopicDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
 
-        mFood = args.getParcelable("food");
+        mMenu = args.getParcelable("menu");
     }
 
     @NonNull
@@ -68,16 +68,16 @@ public class AddTopicDialogFragment extends DialogFragment {
             SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.US);
             String date = fmt.format(new Date());
 
-            History newHistory = new History(newKey, TabBarActivity.USER.getUserId(), mFood.getName(), et_topics.getText().toString(), mFood.getImage(), mFood.getCost(), mFood.getCurrency(), mFood.getAmount(), mFood.getUnit(), date, "food");
+            History newHistory = new History(newKey, TabBarActivity.USER.getUserId(), mMenu.getName(), et_topics.getText().toString(), mMenu.getImage(), mMenu.getCost(), mMenu.getCurrency(), mMenu.getAmount(), mMenu.getUnit(), date, "food");
             HistoryApi.getHistoryApi().newHistory(getActivity(), newKey, newHistory);
             ((RandomActivity)mContext).finish();
             this.dismiss();
         }
     }
 
-    public static AddTopicDialogFragment newInstance(Context context, Food food) {
+    public static AddTopicDialogFragment newInstance(Context context, Menu menu) {
         Bundle args = new Bundle();
-        args.putParcelable("food", food);
+        args.putParcelable("menu", menu);
         AddTopicDialogFragment fragment = new AddTopicDialogFragment();
         fragment.setContext(context);
         fragment.setArguments(args);

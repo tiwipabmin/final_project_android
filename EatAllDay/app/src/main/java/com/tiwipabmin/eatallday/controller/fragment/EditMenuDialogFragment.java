@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.controller.activity.EditMenuActivity;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,7 +20,7 @@ import com.tiwipabmin.eatallday.R;
 
 public class EditMenuDialogFragment extends DialogFragment {
 
-    private Food mMenu;
+    private Menu mMenu;
     private View view;
 
     @Override
@@ -28,7 +28,7 @@ public class EditMenuDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mMenu = args.getParcelable("food");
+        mMenu = args.getParcelable("menu");
     }
 
     @OnClick(R.id.item_edit_menu)
@@ -58,10 +58,10 @@ public class EditMenuDialogFragment extends DialogFragment {
         return alertDialog.create();
     }
 
-    public static EditMenuDialogFragment newInstance(Food food) {
+    public static EditMenuDialogFragment newInstance(Menu menu) {
 
         Bundle args = new Bundle();
-        args.putParcelable("food", food);
+        args.putParcelable("menu", menu);
         EditMenuDialogFragment fragment = new EditMenuDialogFragment();
         fragment.setArguments(args);
         return fragment;

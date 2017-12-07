@@ -28,7 +28,7 @@ import com.tiwipabmin.eatallday.SaveImage;
 import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.controller.fragment.AlertEditMenuDialogFragment;
 import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 public class EditMenuActivity extends AppCompatActivity {
 
@@ -59,7 +59,7 @@ public class EditMenuActivity extends AppCompatActivity {
     @BindView(R.id.iv_menu)
     CircleImageView iv_menu;
 
-    private Food mCurrentMenu;
+    private Menu mCurrentMenu;
     private Gallery gallery;
     private boolean isEdit = false;
     private Uri uriImage;
@@ -173,7 +173,7 @@ public class EditMenuActivity extends AppCompatActivity {
             progress.show(getSupportFragmentManager(), "progress");
 
             String menuId = mCurrentMenu.getId();
-            Food updateMenu = new Food(menuId, et_name.getText().toString(),
+            Menu updateMenu = new Menu(menuId, et_name.getText().toString(),
                     Long.valueOf(et_cost.getText().toString()),
                     et_description.getText().toString(),
                     TabBarActivity.USER.getUserId(),

@@ -40,7 +40,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_verify_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
-        onView(withId(R.id.et_name)).check(matches(hasErrorText("your name can't be special character or numeric.")));
+        onView(withId(R.id.et_name)).check(matches(hasErrorText("ชื่อของคุณไม่สามารถใช้ตัวอักษรพิเศษหรือตัวเลขได้.")));
         SystemClock.sleep(1000);
 
     }
@@ -54,7 +54,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_verify_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
-        onView(withId(R.id.et_email)).check(matches(hasErrorText("you can't be this email please fill in new email.")));
+        onView(withId(R.id.et_email)).check(matches(hasErrorText("อีเมล์นี้ไม่สามารถใช้ได้ กรุณากรอกใหม่.")));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_verify_password)).perform(replaceText("s1234"), closeSoftKeyboard());
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
-        onView(withId(R.id.et_password)).check(matches(hasErrorText("your password can't be special character and there are 8 character up.")));
+        onView(withId(R.id.et_password)).check(matches(hasErrorText("รหัสผ่านของคุณไม่สามารถใช้ตัวอักษรพิเศษได้และต้องมีตัวอักษรอย่างน้อย 8 ตัวขึ้นไป.")));
         SystemClock.sleep(1000);
 
     }
@@ -80,7 +80,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_verify_password)).perform(replaceText("s1234"), closeSoftKeyboard());
         onView(withId(R.id.et_facebook)).perform(replaceText("facebook"), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
-        onView(withId(R.id.et_verify_password)).check(matches(hasErrorText("your password verify don't pass.")));
+        onView(withId(R.id.et_verify_password)).check(matches(hasErrorText("รหัสผ่านของคุณไม่ตรงกัน.")));
         SystemClock.sleep(1000);
 
     }
@@ -94,7 +94,7 @@ public class SignUpActivityTest {
         onView(withId(R.id.et_verify_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.et_facebook)).perform(replaceText(""), closeSoftKeyboard());
         onView(withId(R.id.btn_verify)).perform(click());
-        onView(withId(R.id.et_facebook)).check(matches(hasErrorText("your facebook invalid.")));
+        onView(withId(R.id.et_facebook)).check(matches(hasErrorText("facebook ของคุณไม่ถูกต้อง.")));
         SystemClock.sleep(1000);
 
     }

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.tiwipabmin.eatallday.Gallery;
 import com.tiwipabmin.eatallday.api.MenuApi;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
 
 import java.io.File;
@@ -96,10 +96,12 @@ public class AddMenuActivity extends AppCompatActivity {
     @OnClick(R.id.iv_add)
     public void onIvAddTouched() {
 
-        if (mType.equals("food") && !mEt_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
+        if (mType.equals("menu")
+                && !mEt_cost.getText().toString().isEmpty()
+                && !et_name.getText().toString().isEmpty()) {
 
-            String newKey = menuApi.getChildFood().push().getKey();
-            Food newMenu = new Food(newKey, et_name.getText().toString(),
+            String newKey = menuApi.getChildMenu().push().getKey();
+            Menu newMenu = new Menu(newKey, et_name.getText().toString(),
                     Long.valueOf(mEt_cost.getText().toString()),
                     et_description.getText().toString(), TabBarActivity.USER.getUserId(),
                     "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg",
@@ -114,7 +116,7 @@ public class AddMenuActivity extends AppCompatActivity {
                 saveImage.saveImageToStorageFirebase(this, uriImage, progress, newMenu);
             } else {
 
-                MenuApi.getMenuApi().newFood(this, newKey, newMenu);
+                MenuApi.getMenuApi().newMenu(this, newKey, newMenu);
                 progress.dismiss();
                 this.finish();
             }

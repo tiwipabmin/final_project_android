@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tiwipabmin.eatallday.model.Food;
+import com.tiwipabmin.eatallday.model.Menu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +32,7 @@ public class MenuDetailDialogFragment extends DialogFragment {
     @BindView(R.id.tv_title)
     TextView tv_title;
 
-    private Food mFood;
+    private Menu mMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MenuDetailDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
 
-        mFood = args.getParcelable("food");
+        mMenu = args.getParcelable("menu");
     }
 
     @NonNull
@@ -50,12 +50,12 @@ public class MenuDetailDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_detail_menu, null);
         ButterKnife.bind(this, view);
 
-        String cost = String.valueOf(mFood.getCost()) + " " + mFood.getCurrency() + " / " + mFood.getAmount() + " " + mFood.getUnit();
+        String cost = String.valueOf(mMenu.getCost()) + " " + mMenu.getCurrency() + " / " + mMenu.getAmount() + " " + mMenu.getUnit();
 
-        tv_title.setText(mFood.getName());
+        tv_title.setText(mMenu.getName());
         tv_cost.setText(cost);
-        tv_description.setText(mFood.getDescription());
-        Glide.with(getActivity()).load(mFood.getImage()).into(iv_food);
+        tv_description.setText(mMenu.getDescription());
+        Glide.with(getActivity()).load(mMenu.getImage()).into(iv_food);
 
         alertDialog.setView(view);
 
@@ -67,10 +67,10 @@ public class MenuDetailDialogFragment extends DialogFragment {
         this.dismiss();
     }
 
-    public static MenuDetailDialogFragment newInstance(Food food) {
+    public static MenuDetailDialogFragment newInstance(Menu menu) {
         Bundle args = new Bundle();
         MenuDetailDialogFragment fragment = new MenuDetailDialogFragment();
-        args.putParcelable("food", food);
+        args.putParcelable("menu", menu);
         fragment.setArguments(args);
         return fragment;
     }

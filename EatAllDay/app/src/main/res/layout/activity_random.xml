@@ -38,7 +38,7 @@
                 android:id="@+id/iv_item1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/splash_screen_v1"
+                android:background="@drawable/ic_add_image_gray_512dp"
                 android:scaleType="centerCrop" />
 
         </LinearLayout>
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/splash_screen_v1"
+                android:background="@drawable/ic_add_image_gray_512dp"
                 android:scaleType="centerCrop" />
 
         </LinearLayout>
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/splash_screen_v1"
+                android:background="@drawable/ic_add_image_gray_512dp"
                 android:scaleType="centerCrop" />
 
 
@@ -102,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/splash_screen_v1"
+                android:background="@drawable/ic_add_image_gray_512dp"
                 android:scaleType="centerCrop" />
 
         </LinearLayout>
