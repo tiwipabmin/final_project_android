@@ -123,7 +123,7 @@ public class SignInActivity extends AppCompatActivity
 
         mCallbackManager = CallbackManager.Factory.create();
 
-        mFirebaseAuth = AuthenticationApi.getAuthenticationApi().getFirebaseAuth();
+        mFirebaseAuth = AuthenticationApi.getAuthenticationApi().getFirebaseAuthentication();
 
         mCheckNetworkConnection = CheckNetworkConnection.getCheckNetworkConnection();
 

@@ -21,16 +21,16 @@ import com.tiwipabmin.eatallday.R;
 public class MenuDetailDialogFragment extends DialogFragment {
 
     @BindView(R.id.tv_cost)
-    TextView tv_cost;
+    TextView mTv_cost;
 
     @BindView(R.id.tv_description)
-    TextView tv_description;
+    TextView mTv_description;
 
-    @BindView(R.id.iv_food)
-    CircleImageView iv_food;
+    @BindView(R.id.iv_menu)
+    CircleImageView mIv_menu;
 
     @BindView(R.id.tv_title)
-    TextView tv_title;
+    TextView mTv_title;
 
     private Menu mMenu;
 
@@ -52,10 +52,10 @@ public class MenuDetailDialogFragment extends DialogFragment {
 
         String cost = String.valueOf(mMenu.getCost()) + " " + mMenu.getCurrency() + " / " + mMenu.getAmount() + " " + mMenu.getUnit();
 
-        tv_title.setText(mMenu.getName());
-        tv_cost.setText(cost);
-        tv_description.setText(mMenu.getDescription());
-        Glide.with(getActivity()).load(mMenu.getImage()).into(iv_food);
+        mTv_title.setText(mMenu.getName());
+        mTv_cost.setText(cost);
+        mTv_description.setText(mMenu.getDescription());
+        Glide.with(getActivity()).load(mMenu.getImage()).into(mIv_menu);
 
         alertDialog.setView(view);
 
@@ -63,7 +63,7 @@ public class MenuDetailDialogFragment extends DialogFragment {
     }
 
     @OnClick(R.id.iv_cancel)
-    public void onIvCancelTouched(){
+    public void onImageViewCancelTouched(){
         this.dismiss();
     }
 

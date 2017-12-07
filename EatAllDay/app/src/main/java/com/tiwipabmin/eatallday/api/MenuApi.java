@@ -9,38 +9,38 @@ import com.tiwipabmin.eatallday.model.Menu;
 
 public class MenuApi {
 
-    private static MenuApi menuApi;
-    private DatabaseReference childMenu;
+    private static MenuApi mMenuApi;
+    private DatabaseReference mChildMenu;
 
     private MenuApi() {
 
-        childMenu = FirebaseDatabase.getInstance().getReference("menu");
+        mChildMenu = FirebaseDatabase.getInstance().getReference("menu");
     }
 
     public static MenuApi getMenuApi() {
-        if (menuApi == null) {
-            menuApi = new MenuApi();
+        if (mMenuApi == null) {
+            mMenuApi = new MenuApi();
         }
-        return menuApi;
+        return mMenuApi;
     }
 
     public DatabaseReference getChildMenu() {
-        return childMenu;
+        return mChildMenu;
     }
 
     public void newMenu(Context context, String newKey, Menu newMenu) {
-        childMenu.child(newKey).setValue(newMenu);
+        mChildMenu.child(newKey).setValue(newMenu);
         Toast.makeText(context, "เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteMenu(Context context, Menu menu) {
-        childMenu.child(menu.getId()).removeValue();
+        mChildMenu.child(menu.getId()).removeValue();
         Toast.makeText(context, "ลบรายการอาหารเรียบร้อยแล้วขอรับ.", Toast.LENGTH_SHORT).show();
 
     }
 
     public void updateMenu(Context context, String menuId, Menu updateMenu) {
-        childMenu.child(menuId).setValue(updateMenu);
+        mChildMenu.child(menuId).setValue(updateMenu);
         Toast.makeText(context, "แก้ไขประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
 
     }

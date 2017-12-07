@@ -111,7 +111,7 @@ public class MenusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
         });
 
-        itemShowMenuViewHolder.item.setOnClickListener(new View.OnClickListener() {
+        itemShowMenuViewHolder.cv_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MenuDetailDialogFragment menuDetailDialogFragment = new MenuDetailDialogFragment().newInstance(mMenu.get(position));

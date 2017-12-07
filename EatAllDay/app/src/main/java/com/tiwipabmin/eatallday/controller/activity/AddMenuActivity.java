@@ -34,33 +34,33 @@ public class AddMenuActivity extends AppCompatActivity {
     EditText mEt_cost;
 
     @BindView(R.id.et_name)
-    EditText et_name;
+    EditText mEt_name;
 
     @BindView(R.id.et_currency)
-    EditText et_currency;
+    EditText mEt_currency;
 
     @BindView(R.id.et_amount)
-    EditText et_amount;
+    EditText mEt_amount;
 
     @BindView(R.id.et_unit)
-    EditText et_unit;
+    EditText mEt_unit;
 
     @BindView(R.id.et_description)
-    EditText et_description;
+    EditText mEt_description;
 
     @BindView(R.id.iv_back)
-    ImageView iv_back;
+    ImageView mIv_back;
 
     @BindView(R.id.iv_add)
-    ImageView iv_add;
+    ImageView mIv_add;
 
     @BindView(R.id.iv_menu)
-    CircleImageView iv_menu;
+    CircleImageView mIv_menu;
 
     private String mType;
-    private MenuApi menuApi;
-    private Gallery gallery;
-    private Uri uriImage;
+    private MenuApi mMenuApi;
+    private Gallery mGallery;
+    private Uri mUriImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +76,15 @@ public class AddMenuActivity extends AppCompatActivity {
 
     private void initialInstance() {
 
-        menuApi = MenuApi.getMenuApi();
+        mMenuApi = MenuApi.getMenuApi();
 
-        gallery = new Gallery();
+        mGallery = new Gallery();
 
     }
 
     @OnClick(R.id.iv_menu)
     public void onIvMenuTouched() {
-        gallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
+        mGallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
     }
 
 
@@ -98,22 +98,22 @@ public class AddMenuActivity extends AppCompatActivity {
 
         if (mType.equals("menu")
                 && !mEt_cost.getText().toString().isEmpty()
-                && !et_name.getText().toString().isEmpty()) {
+                && !mEt_name.getText().toString().isEmpty()) {
 
-            String newKey = menuApi.getChildMenu().push().getKey();
-            Menu newMenu = new Menu(newKey, et_name.getText().toString(),
+            String newKey = mMenuApi.getChildMenu().push().getKey();
+            Menu newMenu = new Menu(newKey, mEt_name.getText().toString(),
                     Long.valueOf(mEt_cost.getText().toString()),
-                    et_description.getText().toString(), TabBarActivity.USER.getUserId(),
+                    mEt_description.getText().toString(), TabBarActivity.USER.getUserId(),
                     "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg",
-                    et_currency.getText().toString(),
-                    Long.valueOf(et_amount.getText().toString()), et_unit.getText().toString());
+                    mEt_currency.getText().toString(),
+                    Long.valueOf(mEt_amount.getText().toString()), mEt_unit.getText().toString());
 
             DialogFragment progress = new ProgressDialogFragment();
             progress.show(getSupportFragmentManager(), "progress");
 
-            if(uriImage != null) {
+            if(mUriImage != null) {
                 SaveImage saveImage = new SaveImage(this);
-                saveImage.saveImageToStorageFirebase(this, uriImage, progress, newMenu);
+                saveImage.saveImageToStorageFirebase(this, mUriImage, progress, newMenu);
             } else {
 
                 MenuApi.getMenuApi().newMenu(this, newKey, newMenu);
@@ -134,13 +134,13 @@ public class AddMenuActivity extends AppCompatActivity {
 
             if (requestCode == TabBarActivity.SELECT_IMAGE) {
 
-                uriImage = data.getData();
-                String strPath = gallery.getRealPathFromURI(this, uriImage);
+                mUriImage = data.getData();
+                String strPath = mGallery.getRealPathFromURI(this, mUriImage);
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-                iv_menu.setImageBitmap(imageBitmap);
+                mIv_menu.setImageBitmap(imageBitmap);
 
             }
 

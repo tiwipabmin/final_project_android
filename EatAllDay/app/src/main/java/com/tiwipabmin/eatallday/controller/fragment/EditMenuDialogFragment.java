@@ -21,7 +21,7 @@ import com.tiwipabmin.eatallday.R;
 public class EditMenuDialogFragment extends DialogFragment {
 
     private Menu mMenu;
-    private View view;
+    private View mView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class EditMenuDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_menu, null);
-        ButterKnife.bind(this, view);
-        alertDialog.setView(view);
+        mView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_edit_menu, null);
+        ButterKnife.bind(this, mView);
+        alertDialog.setView(mView);
         return alertDialog.create();
     }
 
@@ -70,6 +70,6 @@ public class EditMenuDialogFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.bind(this, view).unbind();
+        ButterKnife.bind(this, mView).unbind();
     }
 }

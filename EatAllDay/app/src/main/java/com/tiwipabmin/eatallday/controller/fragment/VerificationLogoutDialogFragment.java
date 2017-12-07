@@ -14,7 +14,7 @@ import com.tiwipabmin.eatallday.EatAllDayPreferences;
 import com.tiwipabmin.eatallday.controller.activity.SignInActivity;
 import com.tiwipabmin.eatallday.controller.activity.TabBarActivity;
 
-public class VerifyLogoutDialogFragment extends DialogFragment {
+public class VerificationLogoutDialogFragment extends DialogFragment {
 
     @NonNull
     @Override
@@ -27,19 +27,19 @@ public class VerifyLogoutDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         LoginManager.getInstance().logOut();
                         EatAllDayPreferences
-                                .clearEatAllDayPreferences(VerifyLogoutDialogFragment
+                                .clearEatAllDayPreferences(VerificationLogoutDialogFragment
                                 .this
                                 .getContext());
 
-                        Intent intent = new Intent(VerifyLogoutDialogFragment
+                        Intent intent = new Intent(VerificationLogoutDialogFragment
                                 .this.getActivity(),
                                 SignInActivity.class);
                         startActivity(intent);
-                        ((TabBarActivity) VerifyLogoutDialogFragment
+                        ((TabBarActivity) VerificationLogoutDialogFragment
                                 .this
                                 .getActivity())
                                 .finish();
-                        Toast.makeText(VerifyLogoutDialogFragment
+                        Toast.makeText(VerificationLogoutDialogFragment
                                         .this.getContext(),
                                 "ออกจากระบบเรียบร้อย.",
                                 Toast.LENGTH_SHORT).show();

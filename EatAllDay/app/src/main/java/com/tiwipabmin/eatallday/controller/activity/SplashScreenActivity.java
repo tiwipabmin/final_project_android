@@ -42,8 +42,8 @@ implements ValueEventListener{
             @Override
             public void run() {
 
-                SharedPreferences sharedPreferences = EatAllDayPreferences.getSharedPreferences(SplashScreenActivity.this);
-                if(sharedPreferences.getString(EatAllDayPreferences.PREF_USER_NAME, "null").equals("null")
+                if(EatAllDayPreferences.getUserName(SplashScreenActivity
+                .this).equals("")
                         || !mCheckNetworkConnection.isConnected()) {
 
                     Intent intent = new Intent(SplashScreenActivity.this, SignInActivity.class);
@@ -58,7 +58,8 @@ implements ValueEventListener{
                     UserApi.getUserApi()
                             .getChildUser()
                             .orderByChild("userId")
-                            .equalTo(sharedPreferences.getString(EatAllDayPreferences.PREF_USER_NAME, "null"))
+                            .equalTo(EatAllDayPreferences.getUserName(SplashScreenActivity
+                            .this))
                             .addListenerForSingleValueEvent(SplashScreenActivity.this);
 
                 }

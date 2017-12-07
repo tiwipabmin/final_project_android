@@ -36,10 +36,10 @@ import com.tiwipabmin.eatallday.adapter.MenusAdapter;
 public class KitchenFragment extends Fragment {
 
     @BindView(R.id.btn_add)
-    Button btn_add;
+    Button mBtn_add;
 
     @BindView(R.id.rv_menu)
-    RecyclerView rv_menu;
+    RecyclerView mRv_menu;
 
     private ArrayList<Menu> mMenus;
     private MenusAdapter mMenuAdapter;
@@ -63,8 +63,8 @@ public class KitchenFragment extends Fragment {
                     mMenus.add(ds.getValue(Menu.class));
                 }
                 mMenuAdapter = new MenusAdapter(getContext(), mMenus, 0);
-                rv_menu.setLayoutManager(new LinearLayoutManager(getContext()));
-                rv_menu.setAdapter(mMenuAdapter);
+                mRv_menu.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRv_menu.setAdapter(mMenuAdapter);
             }
 
             @Override
@@ -80,12 +80,11 @@ public class KitchenFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_kitchen, container, false);
         ButterKnife.bind(this, rootView);
         initialInstance();
-        // Inflate the layout for this fragment
         return rootView;
     }
 
     @OnClick(R.id.btn_add)
-    public void onBtnAddTouched() {
+    public void onButtonAddTouched() {
         Intent intent = new Intent(getActivity(), AddMenuActivity.class);
         intent.putExtra("menu", mMenus);
         intent.putExtra("type", "menu");
@@ -93,7 +92,7 @@ public class KitchenFragment extends Fragment {
     }
 
     @OnClick(R.id.btn_random)
-    public void onBtnRandomTouched() {
+    public void onButtonRandomTouched() {
         Intent intent = new Intent(getActivity(), RandomActivity.class);
         intent.putExtra("menu", mMenus);
         startActivity(intent);

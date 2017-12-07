@@ -4,22 +4,22 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AuthenticationApi {
 
-    private static AuthenticationApi authenticationApi;
-    private FirebaseAuth firebaseAuth;
+    private static AuthenticationApi mAuthenticationApi;
+    private FirebaseAuth mFirebaseAuthentication;
 
     private AuthenticationApi(){
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseAuthentication = FirebaseAuth.getInstance();
     }
 
     public static AuthenticationApi getAuthenticationApi() {
-        if(authenticationApi == null){
-            authenticationApi = new AuthenticationApi();
+        if(mAuthenticationApi == null){
+            mAuthenticationApi = new AuthenticationApi();
         }
-        return authenticationApi;
+        return mAuthenticationApi;
     }
 
-    public FirebaseAuth getFirebaseAuth() {
-        return firebaseAuth;
+    public FirebaseAuth getFirebaseAuthentication() {
+        return mFirebaseAuthentication;
     }
 }

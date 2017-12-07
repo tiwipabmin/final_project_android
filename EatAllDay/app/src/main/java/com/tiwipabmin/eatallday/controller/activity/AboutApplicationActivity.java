@@ -10,7 +10,7 @@ import com.tiwipabmin.eatallday.R;
 public class AboutApplicationActivity extends AppCompatActivity {
 
     @OnClick(R.id.iv_back)
-    void onIvBackTouched(){
+    void onImageViewBackTouched(){
 
         finish();
     }

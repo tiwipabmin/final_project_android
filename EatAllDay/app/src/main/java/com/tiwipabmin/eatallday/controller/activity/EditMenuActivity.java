@@ -33,36 +33,36 @@ import com.tiwipabmin.eatallday.model.Menu;
 public class EditMenuActivity extends AppCompatActivity {
 
     @BindView(R.id.et_cost)
-    EditText et_cost;
+    EditText mEt_cost;
 
     @BindView(R.id.et_name)
-    EditText et_name;
+    EditText mEt_name;
 
     @BindView(R.id.et_currency)
-    EditText et_currency;
+    EditText mEt_currency;
 
     @BindView(R.id.et_amount)
-    EditText et_amount;
+    EditText mEt_amount;
 
     @BindView(R.id.et_unit)
-    EditText et_unit;
+    EditText mEt_unit;
 
     @BindView(R.id.et_description)
-    EditText et_description;
+    EditText mEt_description;
 
     @BindView(R.id.iv_back)
-    ImageView iv_back;
+    ImageView mIv_back;
 
     @BindView(R.id.iv_verify)
-    ImageView iv_verify;
+    ImageView mIv_verify;
 
     @BindView(R.id.iv_menu)
-    CircleImageView iv_menu;
+    CircleImageView mIv_menu;
 
     private Menu mCurrentMenu;
-    private Gallery gallery;
-    private boolean isEdit = false;
-    private Uri uriImage;
+    private Gallery mGallery;
+    private boolean mIsEdit = false;
+    private Uri mUriImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,24 +79,24 @@ public class EditMenuActivity extends AppCompatActivity {
 
     private void initialInstance() {
 
-        gallery = new Gallery();
+        mGallery = new Gallery();
     }
 
     private void setUp() {
 
-        Glide.with(this).load(mCurrentMenu.getImage()).into(iv_menu);
-        et_name.setText(mCurrentMenu.getName());
-        et_cost.setText(String.valueOf(mCurrentMenu.getCost()));
-        et_currency.setText(mCurrentMenu.getCurrency());
-        et_amount.setText(String.valueOf(mCurrentMenu.getAmount()));
-        et_unit.setText(mCurrentMenu.getUnit());
-        et_description.setText(mCurrentMenu.getDescription());
+        Glide.with(this).load(mCurrentMenu.getImage()).into(mIv_menu);
+        mEt_name.setText(mCurrentMenu.getName());
+        mEt_cost.setText(String.valueOf(mCurrentMenu.getCost()));
+        mEt_currency.setText(mCurrentMenu.getCurrency());
+        mEt_amount.setText(String.valueOf(mCurrentMenu.getAmount()));
+        mEt_unit.setText(mCurrentMenu.getUnit());
+        mEt_description.setText(mCurrentMenu.getDescription());
     }
 
     @OnClick(R.id.iv_back)
-    public void onIvBackTouched() {
+    public void onImageViewBackTouched() {
 
-        if(isEdit){
+        if(mIsEdit){
             AlertEditMenuDialogFragment alertEditMenu = new AlertEditMenuDialogFragment();
             alertEditMenu.show(this.getSupportFragmentManager(), "alertEditMenu");
         } else {
@@ -105,86 +105,86 @@ public class EditMenuActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.iv_menu)
-    public void onIvMenuTouched() {
+    public void onImageViewMenuTouched() {
 
-        gallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
+        mGallery.goToGallery(this, TabBarActivity.SELECT_IMAGE);
     }
 
     @OnTextChanged(value = R.id.et_name,
             callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
-    public void onEtNameOnTextChanged(Editable editable){
+    public void onEditTextNameOnTextChanged(Editable editable){
 
-        if(!et_name.getText().toString().isEmpty()) {
-            isEdit = true;
+        if(!mEt_name.getText().toString().isEmpty()) {
+            mIsEdit = true;
         }
     }
 
     @OnTextChanged(value = R.id.et_cost,
             callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
-    public void onEtCostOnTextChanged(Editable editable){
+    public void onEditTextCostOnTextChanged(Editable editable){
 
-        if(!et_cost.getText().toString().isEmpty()) {
-            isEdit = true;
+        if(!mEt_cost.getText().toString().isEmpty()) {
+            mIsEdit = true;
         }
     }
 
     @OnTextChanged(value = R.id.et_currency,
             callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
-    public void onEtCurrencyOnTextChanged(Editable editable){
+    public void onEditTextCurrencyOnTextChanged(Editable editable){
 
-        if(!et_currency.getText().toString().isEmpty()) {
-            isEdit = true;
+        if(!mEt_currency.getText().toString().isEmpty()) {
+            mIsEdit = true;
         }
     }
 
     @OnTextChanged(value = R.id.et_amount,
             callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
-    public void onEtAmountTextChanged(Editable editable){
+    public void onEditTextAmountTextChanged(Editable editable){
 
-        if(!et_amount.getText().toString().isEmpty()) {
-            isEdit = true;
+        if(!mEt_amount.getText().toString().isEmpty()) {
+            mIsEdit = true;
         }
     }
 
     @OnTextChanged(value = R.id.et_unit,
             callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
-    public void onEtUnitOnTextChanged(Editable editable){
+    public void onEditTextUnitOnTextChanged(Editable editable){
 
-        if(!et_unit.getText().toString().isEmpty()) {
-            isEdit = true;
+        if(!mEt_unit.getText().toString().isEmpty()) {
+            mIsEdit = true;
         }
     }
 
     @OnTextChanged(value = R.id.et_description,
             callback = OnTextChanged.Callback.BEFORE_TEXT_CHANGED)
-    public void onEtDescriptionOnTextChanged(Editable editable){
+    public void onEditTextDescriptionOnTextChanged(Editable editable){
 
-        if(!et_description.getText().toString().isEmpty()) {
-            isEdit = true;
+        if(!mEt_description.getText().toString().isEmpty()) {
+            mIsEdit = true;
         }
     }
 
     @OnClick(R.id.iv_verify)
-    public void onIvVerifyTouched() {
+    public void onImageViewVerifyTouched() {
 
-        if (!et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
+        if (!mEt_cost.getText().toString().isEmpty() && !mEt_name.getText().toString().isEmpty()) {
 
             DialogFragment progress = new ProgressDialogFragment();
             progress.show(getSupportFragmentManager(), "progress");
 
             String menuId = mCurrentMenu.getId();
-            Menu updateMenu = new Menu(menuId, et_name.getText().toString(),
-                    Long.valueOf(et_cost.getText().toString()),
-                    et_description.getText().toString(),
+            Menu updateMenu = new Menu(menuId, mEt_name.getText().toString(),
+                    Long.valueOf(mEt_cost.getText().toString()),
+                    mEt_description.getText().toString(),
                     TabBarActivity.USER.getUserId(),
-                    mCurrentMenu.getImage(), et_currency.getText().toString(),
-                    Long.valueOf(et_amount.getText().toString()),
-                    et_unit.getText().toString());
+                    mCurrentMenu.getImage(), mEt_currency.getText().toString(),
+                    Long.valueOf(mEt_amount.getText().toString()),
+                    mEt_unit.getText().toString());
 
-            if(uriImage != null){
+            if(mUriImage != null){
 
                 SaveImage saveImage = new SaveImage(this);
-                saveImage.saveImageToStorageFirebase(this, uriImage, progress, updateMenu);
+                saveImage.saveImageToStorageFirebase(this, mUriImage, progress, updateMenu);
             } else {
 
                 MenuApi.getMenuApi().updateMenu(this, menuId, updateMenu);
@@ -208,15 +208,15 @@ public class EditMenuActivity extends AppCompatActivity {
 
             if (requestCode == TabBarActivity.SELECT_IMAGE) {
 
-                uriImage = data.getData();
-                String strPath = gallery.getRealPathFromURI(this, uriImage);
+                mUriImage = data.getData();
+                String strPath = mGallery.getRealPathFromURI(this, mUriImage);
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
-                iv_menu.setImageBitmap(imageBitmap);
+                mIv_menu.setImageBitmap(imageBitmap);
 
-                isEdit = true;
+                mIsEdit = true;
 
             }
 

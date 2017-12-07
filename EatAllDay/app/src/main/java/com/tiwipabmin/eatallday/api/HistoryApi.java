@@ -9,32 +9,32 @@ import com.tiwipabmin.eatallday.model.History;
 
 public class HistoryApi {
 
-    private static HistoryApi historyApi;
-    private DatabaseReference childHistory;
+    private static HistoryApi mHistoryApi;
+    private DatabaseReference mChildHistory;
 
     private HistoryApi() {
 
-        childHistory = FirebaseDatabase.getInstance().getReference().child("history");
+        mChildHistory = FirebaseDatabase.getInstance().getReference().child("history");
     }
 
     public static HistoryApi getHistoryApi() {
-        if (historyApi == null) {
-            historyApi = new HistoryApi();
+        if (mHistoryApi == null) {
+            mHistoryApi = new HistoryApi();
         }
-        return historyApi;
+        return mHistoryApi;
     }
 
     public DatabaseReference getChildHistory() {
-        return childHistory;
+        return mChildHistory;
     }
 
     public void newHistory(Context context, String newKey, History newHistory) {
-        childHistory.child(newKey).setValue(newHistory);
+        mChildHistory.child(newKey).setValue(newHistory);
         Toast.makeText(context, "บันทึกประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteRandomMenuHistory(final Context context, final History history) {
-        childHistory.child(history.getHisId()).removeValue();
+        mChildHistory.child(history.getHisId()).removeValue();
         Toast.makeText(context, "ลบประวัติเรียบร้อยแล้วจ้า.", Toast.LENGTH_SHORT).show();
     }
 

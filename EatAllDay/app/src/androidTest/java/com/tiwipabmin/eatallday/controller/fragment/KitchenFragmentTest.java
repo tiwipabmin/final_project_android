@@ -58,7 +58,7 @@ public class KitchenFragmentTest {
 
         onView(withText("ห้องครัว")).perform(click());
         onView(withId(R.id.rv_menu)).perform(
-                RecyclerViewActions.actionOnItemAtPosition(0, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.item)));
+                RecyclerViewActions.actionOnItemAtPosition(0, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.cv_item)));
         SystemClock.sleep(2000);
         onView(withId(R.id.iv_cancel)).perform(click());
         SystemClock.sleep(1000);

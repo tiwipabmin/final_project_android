@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.tiwipabmin.eatallday.api.UserApi;
 import com.tiwipabmin.eatallday.model.ValidationResult;
 import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
@@ -35,24 +34,23 @@ import com.tiwipabmin.eatallday.model.User;
 public class SignUpActivity extends AppCompatActivity {
 
     @BindView(R.id.et_email)
-    EditText et_email;
+    EditText mEt_email;
 
     @BindView(R.id.et_facebook)
-    EditText et_facebook;
+    EditText mEt_facebook;
 
     @BindView(R.id.et_name)
-    EditText et_name;
+    EditText mEt_name;
 
     @BindView(R.id.et_password)
-    EditText et_password;
+    EditText mEt_password;
 
     @BindView(R.id.et_verify_password)
-    EditText et_verify_password;
+    EditText mEt_verify_password;
 
-    private CheckNetworkConnection mCheckNetworkConnection;
-    private UserApi userApi;
-    private DialogFragment progress;
-    private boolean isTouched = true;
+    private UserApi mUserApi;
+    private DialogFragment mProgress;
+    private boolean mIsTouched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +63,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     void initialInstance(){
 
-        userApi = UserApi.getUserApi();
+        mUserApi = UserApi.getUserApi();
 
-        progress = new ProgressDialogFragment();
-
-        mCheckNetworkConnection = CheckNetworkConnection
-                .getCheckNetworkConnection();
+        mProgress = new ProgressDialogFragment();
     }
 
     @OnClick(R.id.btn_verify)
@@ -82,45 +77,45 @@ public class SignUpActivity extends AppCompatActivity {
         PasswordValidation passwordValidation = new PasswordValidation();
         FacebookValidation facebookValidation = new FacebookValidation();
 
-        ValidationResult nameResult = nameValidation.validate(et_name.getText().toString());
-        ValidationResult emailResult = emailValidation.validate(et_email.getText().toString());
-        ValidationResult passwordResult = passwordValidation.validate(et_password.getText().toString());
-        ValidationResult facebookResult = facebookValidation.validate(et_facebook.getText().toString());
+        ValidationResult nameResult = nameValidation.validate(mEt_name.getText().toString());
+        ValidationResult emailResult = emailValidation.validate(mEt_email.getText().toString());
+        ValidationResult passwordResult = passwordValidation.validate(mEt_password.getText().toString());
+        ValidationResult facebookResult = facebookValidation.validate(mEt_facebook.getText().toString());
 
         if(!nameResult.getResult()){
 
-            et_name.setError("ชื่อของคุณไม่สามารถใช้ตัวอักษรพิเศษหรือตัวเลขได้.");
+            mEt_name.setError("ชื่อของคุณไม่สามารถใช้ตัวอักษรพิเศษหรือตัวเลขได้.");
             allValid = false;
         }
 
         if (!emailResult.getResult()) {
 
-            et_email.setError("อีเมล์นี้ไม่สามารถใช้ได้ กรุณากรอกใหม่.");
+            mEt_email.setError("อีเมล์นี้ไม่สามารถใช้ได้ กรุณากรอกใหม่.");
             allValid = false;
         }
 
         if(!passwordResult.getResult()){
 
-            et_password.setError("รหัสผ่านของคุณไม่สามารถใช้ตัวอักษรพิเศษได้และต้องมีตัวอักษรอย่างน้อย 8 ตัวขึ้นไป.");
+            mEt_password.setError("รหัสผ่านของคุณไม่สามารถใช้ตัวอักษรพิเศษได้และต้องมีตัวอักษรอย่างน้อย 8 ตัวขึ้นไป.");
             allValid = false;
         }
 
-        if(!et_password.getText().toString().equals(et_verify_password.getText().toString())){
+        if(!mEt_password.getText().toString().equals(mEt_verify_password.getText().toString())){
 
-            et_verify_password.setError("รหัสผ่านของคุณไม่ตรงกัน.");
+            mEt_verify_password.setError("รหัสผ่านของคุณไม่ตรงกัน.");
             allValid = false;
         }
 
         if(!facebookResult.getResult()){
 
-            et_facebook.setError("facebook ของคุณไม่ถูกต้อง.");
+            mEt_facebook.setError("facebook ของคุณไม่ถูกต้อง.");
             allValid = false;
         }
 
-        if(allValid && isTouched){
-            isTouched = false;
-            progress.show(getSupportFragmentManager(), "progress");
-            createNewAccount(et_name.getText().toString(), et_email.getText().toString(), et_password.getText().toString(), et_facebook.getText().toString());
+        if(allValid && mIsTouched){
+            mIsTouched = false;
+            mProgress.show(getSupportFragmentManager(), "mProgress");
+            createNewAccount(mEt_name.getText().toString(), mEt_email.getText().toString(), mEt_password.getText().toString(), mEt_facebook.getText().toString());
         }
     }
 
@@ -144,25 +139,25 @@ public class SignUpActivity extends AppCompatActivity {
 
                                     User newUser = new User(uId, name, email, facebook);
 
-                                    userApi.newUser(SignUpActivity.this, newUser);
+                                    mUserApi.newUser(SignUpActivity.this, newUser);
                                     Toast.makeText(SignUpActivity.this, "สมัครสมาชิกสำเร็จ", Toast.LENGTH_SHORT).show();
 
                                     goToLobby(newUser);
-                                    progress.dismiss();
+                                    mProgress.dismiss();
 
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
-                                    isTouched = true;
+                                    mIsTouched = true;
                                 }
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                isTouched = true;
-                progress.dismiss();
+                mIsTouched = true;
+                mProgress.dismiss();
             }
         });
     }

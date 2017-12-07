@@ -33,7 +33,6 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
 
     private CircleImageView mProfileImage;
     private Gallery mGallery;
-    private String image;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,10 +89,6 @@ public class EditProfileDisplayDialogFragment extends DialogFragment {
             if (requestCode == SELECT_PROFILE_IMAGE) {
 
                 Uri uriSelectedImage = data.getData();
-                String strPath = mGallery.getRealPathFromURI(getContext(), uriSelectedImage);
-
-                File fImage = new File(strPath);
-                Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
 
                 DialogFragment progress = new ProgressDialogFragment();
                 progress.show(getActivity().getSupportFragmentManager(), "progress");

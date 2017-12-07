@@ -6,19 +6,19 @@ package com.tiwipabmin.eatallday.model;
 
 public class ValidationResult {
 
-    private boolean result;
-    private String errorMessage;
+    private boolean mResult;
+    private String mErrorMessage;
 
-    public ValidationResult(boolean result, String errorMessage) {
-        this.result = result;
-        this.errorMessage = errorMessage;
+    public ValidationResult(boolean mResult, String mErrorMessage) {
+        this.mResult = mResult;
+        this.mErrorMessage = mErrorMessage;
     }
 
     public boolean getResult() {
-        return result;
+        return mResult;
     }
 
     public String getErrorMessage() {
-        return errorMessage;
+        return mErrorMessage;
     }
 }

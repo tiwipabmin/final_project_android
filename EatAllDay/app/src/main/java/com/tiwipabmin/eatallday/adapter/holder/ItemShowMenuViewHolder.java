@@ -19,8 +19,8 @@ public class ItemShowMenuViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.tv_name)
     public TextView tv_name;
 
-    @BindView(R.id.item)
-    public CardView item;
+    @BindView(R.id.cv_item)
+    public CardView cv_item;
 
     @BindView(R.id.iv_config)
     public ImageView iv_config;

@@ -16,11 +16,10 @@ import com.tiwipabmin.eatallday.R;
 
 public class ProgressDialogFragment extends DialogFragment {
 
-    private ImageView download;
-    private Animation animLoading;
+    private ImageView mDownload;
+    private Animation mAnimLoading;
 
     public ProgressDialogFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -39,10 +38,10 @@ public class ProgressDialogFragment extends DialogFragment {
             }
         });
 
-        animLoading = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+        mAnimLoading = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
 
-        download = rootView.findViewById(R.id.loading);
-        download.setAnimation(animLoading);
+        mDownload = rootView.findViewById(R.id.loading);
+        mDownload.setAnimation(mAnimLoading);
 
         return rootView;
     }
@@ -50,7 +49,7 @@ public class ProgressDialogFragment extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        download.clearAnimation();
+        mDownload.clearAnimation();
     }
 
 

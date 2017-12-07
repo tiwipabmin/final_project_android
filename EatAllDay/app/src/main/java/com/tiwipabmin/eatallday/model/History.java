@@ -7,9 +7,9 @@ public class History implements Parcelable {
 
     private String hisId;
     private String userId;
-    private String foodName;
+    private String menuName;
     private String historyName;
-    private String foodImage;
+    private String menuImage;
     private Long cost;
     private String currency;
     private Long amount;
@@ -20,12 +20,12 @@ public class History implements Parcelable {
     public History() {
     }
 
-    public History(String hisId, String userId, String foodName, String historyName, String foodImage, Long cost, String currency, Long amount, String unit, String date, String type) {
+    public History(String hisId, String userId, String menuName, String historyName, String menuImage, Long cost, String currency, Long amount, String unit, String date, String type) {
         this.hisId = hisId;
         this.userId = userId;
-        this.foodName = foodName;
+        this.menuName = menuName;
         this.historyName = historyName;
-        this.foodImage = foodImage;
+        this.menuImage = menuImage;
         this.cost = cost;
         this.currency = currency;
         this.amount = amount;
@@ -37,9 +37,9 @@ public class History implements Parcelable {
     protected History(Parcel in) {
         hisId = in.readString();
         userId = in.readString();
-        foodName = in.readString();
+        menuName = in.readString();
         historyName = in.readString();
-        foodImage = in.readString();
+        menuImage = in.readString();
         if (in.readByte() == 0) {
             cost = null;
         } else {
@@ -84,12 +84,12 @@ public class History implements Parcelable {
         this.userId = userId;
     }
 
-    public String getFoodName() {
-        return foodName;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
     public String getHistoryName() {
@@ -100,12 +100,12 @@ public class History implements Parcelable {
         this.historyName = historyName;
     }
 
-    public String getFoodImage() {
-        return foodImage;
+    public String getMenuImage() {
+        return menuImage;
     }
 
-    public void setFoodImage(String foodImage) {
-        this.foodImage = foodImage;
+    public void setMenuImage(String menuImage) {
+        this.menuImage = menuImage;
     }
 
     public Long getCost() {
@@ -165,9 +165,9 @@ public class History implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(hisId);
         dest.writeString(userId);
-        dest.writeString(foodName);
+        dest.writeString(menuName);
         dest.writeString(historyName);
-        dest.writeString(foodImage);
+        dest.writeString(menuImage);
         if (cost == null) {
             dest.writeByte((byte) 0);
         } else {

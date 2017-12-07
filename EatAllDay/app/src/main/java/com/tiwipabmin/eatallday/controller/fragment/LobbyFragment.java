@@ -35,15 +35,14 @@ import com.tiwipabmin.eatallday.R;
 public class LobbyFragment extends Fragment {
 
     @BindView(R.id.rv_profile)
-    RecyclerView rv_profile;
+    RecyclerView mRv_profile;
 
     private LobbyAdapter mLobbyAdapter;
-    private DatabaseReference childHistory;
+    private DatabaseReference mChildHistory;
     private ArrayList<Object> mStorage;
     private ArrayList<String> mViewType;
 
     public LobbyFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -54,7 +53,7 @@ public class LobbyFragment extends Fragment {
 
     private void initialInstance(Context context){
 
-        childHistory = HistoryApi.getHistoryApi().getChildHistory();
+        mChildHistory = HistoryApi.getHistoryApi().getChildHistory();
 
         mLobbyAdapter = new LobbyAdapter(context);
 
@@ -70,13 +69,13 @@ public class LobbyFragment extends Fragment {
 
     private void queryMenuHistory(){
 
-        childHistory.orderByChild("userId")
+        mChildHistory.orderByChild("userId")
                 .equalTo(TabBarActivity.USER.getUserId())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //จะเก็บข้อมูลชัประวัติไว้ชั่วคราว
+                        //record memory
                         ArrayList<History> memoryContent = new ArrayList<>();
                         ArrayList<String> memoryType = new ArrayList<>();
 
@@ -112,7 +111,7 @@ public class LobbyFragment extends Fragment {
                 mStorage.add(dataSnapshot.getValue(User.class));
                 mViewType.add("profile");
 
-                //เอาประวัติล่าสุดขึ้นมาไว้ลำดับแรก
+                //reverse history
                 for(int i = memoryContent.size() - 1; i >= 0 ; i--){
                     mStorage.add(memoryContent.get(i));
                     mViewType.add(memoryType.get(i));
@@ -120,9 +119,9 @@ public class LobbyFragment extends Fragment {
 
                 mLobbyAdapter.setStorage(mStorage);
                 mLobbyAdapter.setViewType(mViewType);
-                rv_profile.setAdapter(mLobbyAdapter);
-                rv_profile.setLayoutManager(new LinearLayoutManager(getActivity()));
-                rv_profile.invalidateItemDecorations();
+                mRv_profile.setAdapter(mLobbyAdapter);
+                mRv_profile.setLayoutManager(new LinearLayoutManager(getActivity()));
+                mRv_profile.invalidateItemDecorations();
             }
 
             @Override

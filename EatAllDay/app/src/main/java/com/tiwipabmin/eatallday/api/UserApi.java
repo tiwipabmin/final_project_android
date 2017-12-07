@@ -11,43 +11,43 @@ import com.tiwipabmin.eatallday.model.User;
 
 public class UserApi {
 
-    private static UserApi userApi;
-    private DatabaseReference childUser;
+    private static UserApi mUserApi;
+    private DatabaseReference mChildUser;
 
     private UserApi(){
 
-        childUser = FirebaseDatabase.getInstance().getReference("user");
+        mChildUser = FirebaseDatabase.getInstance().getReference("user");
     }
 
     public static UserApi getUserApi() {
-        if(userApi == null){
-            userApi = new UserApi();
+        if(mUserApi == null){
+            mUserApi = new UserApi();
         }
-        return userApi;
+        return mUserApi;
     }
 
     public DatabaseReference getChildUser() {
-        return childUser;
+        return mChildUser;
     }
 
 
 
     public void newUser(Context context, User newUser){
-        childUser.child(newUser.getUserId()).setValue(newUser);
+        mChildUser.child(newUser.getUserId()).setValue(newUser);
     }
 
     public void updateUser(User updateUser){
-        childUser.child(updateUser.getUserId()).setValue(updateUser);
+        mChildUser.child(updateUser.getUserId()).setValue(updateUser);
     }
 
     public void deleteProfileImage() {
-        childUser.child(TabBarActivity.USER.getUserId())
+        mChildUser.child(TabBarActivity.USER.getUserId())
                 .child("image")
                 .setValue("https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/User-info.svg/1024px-User-info.svg.png");
     }
 
     public void editProfileImage(Context context, String profileImage) {
-        childUser.child(TabBarActivity.USER.getUserId())
+        mChildUser.child(TabBarActivity.USER.getUserId())
                 .child("image")
                 .setValue(profileImage);
         Toast.makeText(context, "เปลี่ยนรูปภาพโปรไฟล์เรียบร้อยแล้วจ้าาา.", Toast.LENGTH_SHORT).show();

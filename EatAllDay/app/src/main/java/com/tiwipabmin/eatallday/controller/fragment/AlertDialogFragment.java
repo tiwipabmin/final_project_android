@@ -14,22 +14,24 @@ import android.support.v7.app.AlertDialog;
 
 public class AlertDialogFragment extends DialogFragment {
 
-    private String content;
+    private String mContent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        content = args.getString("content");
+
+        assert args != null;
+        mContent = args.getString("mContent");
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        alertDialog.setMessage(content)
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getActivity());
+        alertDialog.setMessage(mContent)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -44,16 +46,16 @@ public class AlertDialogFragment extends DialogFragment {
 
         Bundle args = new Bundle();
         AlertDialogFragment fragment = new AlertDialogFragment();
-        args.putString("content", content);
+        args.putString("mContent", content);
         fragment.setArguments(args);
         return fragment;
     }
 
     public String getContent() {
-        return content;
+        return mContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContent(String mContent) {
+        this.mContent = mContent;
     }
 }

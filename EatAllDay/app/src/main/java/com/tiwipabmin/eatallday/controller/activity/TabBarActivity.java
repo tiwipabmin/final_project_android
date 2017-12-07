@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.facebook.login.LoginManager;
 import com.tiwipabmin.eatallday.EatAllDayPreferences;
 import com.tiwipabmin.eatallday.controller.fragment.LobbyFragment;
 
@@ -23,7 +22,7 @@ import butterknife.OnClick;
 import com.tiwipabmin.eatallday.R;
 
 import com.tiwipabmin.eatallday.controller.fragment.KitchenFragment;
-import com.tiwipabmin.eatallday.controller.fragment.VerifyLogoutDialogFragment;
+import com.tiwipabmin.eatallday.controller.fragment.VerificationLogoutDialogFragment;
 import com.tiwipabmin.eatallday.model.User;
 
 public class TabBarActivity extends AppCompatActivity {
@@ -32,10 +31,10 @@ public class TabBarActivity extends AppCompatActivity {
     public static User USER;
 
     @BindView(R.id.tabs)
-    TabLayout tabLayout;
+    TabLayout mTabLayout;
 
     @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +45,19 @@ public class TabBarActivity extends AppCompatActivity {
         Intent intent = getIntent();
         USER = intent.getParcelableExtra("user");
 
+        if(EatAllDayPreferences.getUserName(this).equals("")){
+            EatAllDayPreferences.setUserName(this, USER.getUserId());
+        }
+
+
         setUp();
     }
 
     private void setUp(){
 
-        setupViewPager(viewPager);
+        setupViewPager(mViewPager);
 
-        tabLayout.setupWithViewPager(viewPager);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -66,7 +70,7 @@ public class TabBarActivity extends AppCompatActivity {
     @OnClick(R.id.iv_logout)
     void onLogOutTouched(){
 
-        DialogFragment verifyLogoutDialog = new VerifyLogoutDialogFragment();
+        DialogFragment verifyLogoutDialog = new VerificationLogoutDialogFragment();
         verifyLogoutDialog.show(this.getSupportFragmentManager(), "verifyLogoutDialog");
     }
 

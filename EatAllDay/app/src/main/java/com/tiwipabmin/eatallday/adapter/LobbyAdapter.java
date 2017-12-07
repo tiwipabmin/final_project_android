@@ -83,7 +83,7 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 break;
             case FOOD:
                 RandomMenuHistoryViewHolder randomMenuHistoryViewHolder = (RandomMenuHistoryViewHolder) holder;
-                configureFoodHistoryViewHolder(randomMenuHistoryViewHolder, position);
+                configureMenuHistoryViewHolder(randomMenuHistoryViewHolder, position);
                 break;
             default: break;
         }
@@ -123,12 +123,12 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         profileViewHolder.iv_edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onIvEditProfileTouched(profileViewHolder, mUser);
+                onImageViewEditProfileTouched(profileViewHolder, mUser);
             }
         });
     }
 
-    private void onIvEditProfileTouched(final ProfileViewHolder profileViewHolder, final User user){
+    private void onImageViewEditProfileTouched(final ProfileViewHolder profileViewHolder, final User user){
 
         profileViewHolder.tv_name.setVisibility(View.GONE);
         profileViewHolder.tv_description.setVisibility(View.GONE);
@@ -167,12 +167,12 @@ public class LobbyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         });
     }
 
-    private void configureFoodHistoryViewHolder(final RandomMenuHistoryViewHolder randomMenuHistoryViewHolder, final int position){
+    private void configureMenuHistoryViewHolder(final RandomMenuHistoryViewHolder randomMenuHistoryViewHolder, final int position){
         final History randomMenuHistory = (History) mStorage.get(position);
         Glide.with(mContext).load(mUser.getImage()).into(randomMenuHistoryViewHolder.iv_userImage);
-        Glide.with(mContext).load(randomMenuHistory.getFoodImage()).into(randomMenuHistoryViewHolder.iv_foodImage);
+        Glide.with(mContext).load(randomMenuHistory.getMenuImage()).into(randomMenuHistoryViewHolder.iv_foodImage);
         randomMenuHistoryViewHolder.tv_cost.setText(String.valueOf(randomMenuHistory.getCost()).concat(" " + randomMenuHistory.getCurrency()));
-        randomMenuHistoryViewHolder.tv_foodName.setText(randomMenuHistory.getFoodName());
+        randomMenuHistoryViewHolder.tv_foodName.setText(randomMenuHistory.getMenuName());
         randomMenuHistoryViewHolder.tv_username.setText(mUser.getName());
         randomMenuHistoryViewHolder.tv_piece.setText(String.valueOf(randomMenuHistory.getAmount()).concat(" " + randomMenuHistory.getUnit()));
         randomMenuHistoryViewHolder.tv_topic.setText(randomMenuHistory.getHistoryName());

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 public class Gallery {
 
     public Gallery(){
-
     }
 
     public void goToGallery(Activity activity, int resultActivity) {

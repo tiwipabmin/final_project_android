@@ -26,30 +26,30 @@ import com.tiwipabmin.eatallday.controller.fragment.RandomResultDialogFragment;
 
 public class RandomActivity extends AppCompatActivity {
 
-    public static final int FOODITEM = 69;
+    public static final int ITEM_MENU = 69;
 
     @BindView(R.id.iv_back)
-    ImageView iv_back;
+    ImageView mIv_back;
 
     @BindView(R.id.iv_item1)
-    ImageView iv_item1;
+    ImageView mIv_item1;
 
     @BindView(R.id.iv_item2)
-    ImageView iv_item2;
+    ImageView mIv_item2;
 
     @BindView(R.id.iv_item3)
-    ImageView iv_item3;
+    ImageView mIv_item3;
 
     @BindView(R.id.iv_item4)
-    ImageView iv_item4;
+    ImageView mIv_item4;
 
     private ArrayList<Menu> mMenu;
-    private Intent intent;
-    private ProgressDialogFragment progress;
-    private Map<Integer, Menu> chooseMenu;
-    private int amount_random = 0;
-    private boolean isTouched = true;
-    private String defaultImage = "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg";
+    private Intent mIntent;
+    private ProgressDialogFragment mProgress;
+    private Map<Integer, Menu> mChooseMenu;
+    private int mAmountRandom = 0;
+    private boolean mIsTouched = true;
+    private String mDefaultImage = "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,55 +67,55 @@ public class RandomActivity extends AppCompatActivity {
 
         mMenu = intent.getParcelableArrayListExtra("menu");
 
-        this.intent = new Intent(this, ShowMenusActivity.class);
+        this.mIntent = new Intent(this, ShowMenusActivity.class);
 
-        progress = new ProgressDialogFragment();
+        mProgress = new ProgressDialogFragment();
 
-        chooseMenu = new HashMap<>();
+        mChooseMenu = new HashMap<>();
     }
 
     private void setUp() {
 
-        intent.putExtra("menu", mMenu);
+        mIntent.putExtra("menu", mMenu);
     }
 
     @OnClick(R.id.iv_item1)
     public void onIvItem1Touched() {
-        intent.putExtra("item", "iv_item1");
+        mIntent.putExtra("cv_item", "mIv_item1");
 
-        if(chooseMenu.get(0) == null) {
-            amount_random++;
+        if(mChooseMenu.get(0) == null) {
+            mAmountRandom++;
         }
-        startActivityForResult(intent, FOODITEM);
+        startActivityForResult(mIntent, ITEM_MENU);
     }
 
     @OnClick(R.id.iv_item2)
     public void onIvItem2Touched() {
-        intent.putExtra("item", "iv_item2");
-        if(chooseMenu.get(1) == null) {
-            amount_random++;
+        mIntent.putExtra("cv_item", "mIv_item2");
+        if(mChooseMenu.get(1) == null) {
+            mAmountRandom++;
         }
-        startActivityForResult(intent, FOODITEM);
+        startActivityForResult(mIntent, ITEM_MENU);
     }
 
     @OnClick(R.id.iv_item3)
     public void onIvItem3Touched() {
-        intent.putExtra("item", "iv_item3");
+        mIntent.putExtra("cv_item", "mIv_item3");
 
-        if(chooseMenu.get(2) == null) {
-            amount_random++;
+        if(mChooseMenu.get(2) == null) {
+            mAmountRandom++;
         }
-        startActivityForResult(intent, FOODITEM);
+        startActivityForResult(mIntent, ITEM_MENU);
     }
 
     @OnClick(R.id.iv_item4)
     public void onIvItem4Touched() {
-        intent.putExtra("item", "iv_item4");
+        mIntent.putExtra("cv_item", "mIv_item4");
 
-        if(chooseMenu.get(3) == null) {
-            amount_random++;
+        if(mChooseMenu.get(3) == null) {
+            mAmountRandom++;
         }
-        startActivityForResult(intent, FOODITEM);
+        startActivityForResult(mIntent, ITEM_MENU);
     }
 
     @OnClick(R.id.iv_back)
@@ -125,9 +125,9 @@ public class RandomActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_random_now)
     public void btnRandomNowTouched(){
-        if(amount_random > 1 && isTouched) {
-            isTouched = false;
-            progress.show(getSupportFragmentManager(), "progress");
+        if(mAmountRandom > 1 && mIsTouched) {
+            mIsTouched = false;
+            mProgress.show(getSupportFragmentManager(), "mProgress");
 
             Handler handler = new Handler();
 
@@ -138,14 +138,14 @@ public class RandomActivity extends AppCompatActivity {
                     int key = 0;
                     while(true) {
                         key = random.nextInt(4);
-                        if(chooseMenu.get(key) != null){
+                        if(mChooseMenu.get(key) != null){
                             break;
                         }
                     }
-                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(RandomActivity.this, chooseMenu.get(key));
+                    DialogFragment dialogFragment = new RandomResultDialogFragment().newInstance(RandomActivity.this, mChooseMenu.get(key));
                     dialogFragment.setCancelable(false);
                     dialogFragment.show(getSupportFragmentManager(), "random_result");
-                    progress.dismiss();
+                    mProgress.dismiss();
                 }
             };
 
@@ -161,28 +161,28 @@ public class RandomActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
 
-            if (requestCode == FOODITEM) {
+            if (requestCode == ITEM_MENU) {
 
                 int position = data.getIntExtra("position", -1);
-                String item = data.getStringExtra("item");
-                if (position != -1 && !mMenu.get(position).getImage().equals(defaultImage)) {
+                String item = data.getStringExtra("cv_item");
+                if (position != -1 && !mMenu.get(position).getImage().equals(mDefaultImage)) {
                     Menu menu = mMenu.get(position);
                     switch (item) {
-                        case "iv_item1":
-                            chooseMenu.put(0, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item1);
+                        case "mIv_item1":
+                            mChooseMenu.put(0, mMenu.get(position));
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(mIv_item1);
                             break;
-                        case "iv_item2":
-                            chooseMenu.put(1, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item2);
+                        case "mIv_item2":
+                            mChooseMenu.put(1, mMenu.get(position));
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(mIv_item2);
                             break;
-                        case "iv_item3":
-                            chooseMenu.put(2, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item3);
+                        case "mIv_item3":
+                            mChooseMenu.put(2, mMenu.get(position));
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(mIv_item3);
                             break;
-                        case "iv_item4":
-                            chooseMenu.put(3, mMenu.get(position));
-                            Glide.with(RandomActivity.this).load(menu.getImage()).into(iv_item4);
+                        case "mIv_item4":
+                            mChooseMenu.put(3, mMenu.get(position));
+                            Glide.with(RandomActivity.this).load(menu.getImage()).into(mIv_item4);
                             break;
                     }
                 } else {

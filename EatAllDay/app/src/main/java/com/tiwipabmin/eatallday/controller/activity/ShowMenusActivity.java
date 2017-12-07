@@ -20,14 +20,14 @@ import com.tiwipabmin.eatallday.adapter.MenusAdapter;
 public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter.MenusListener{
 
     @BindView(R.id.rv_foodItem)
-    RecyclerView rv_foodItem;
+    RecyclerView mRv_foodItem;
 
     @BindView(R.id.iv_back)
-    ImageView iv_back;
+    ImageView mIv_back;
 
     private ArrayList<Menu> mMenu;
     private MenusAdapter mMenuAdapter;
-    private String item;
+    private String mItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,13 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
 
         mMenuAdapter = new MenusAdapter(this, mMenu, this, 1);
 
-        item = intent.getStringExtra("item");
+        mItem = intent.getStringExtra("cv_item");
     }
 
     private void setUp(){
 
-        rv_foodItem.setAdapter(mMenuAdapter);
-        rv_foodItem.setLayoutManager(new LinearLayoutManager(this));
+        mRv_foodItem.setAdapter(mMenuAdapter);
+        mRv_foodItem.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @OnClick(R.id.iv_back)
@@ -65,7 +65,7 @@ public class ShowMenusActivity extends AppCompatActivity implements MenusAdapter
     public void onBtnAddTouched(int position) {
         Intent intent = new Intent(this, RandomActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("item", item);
+        intent.putExtra("cv_item", mItem);
         setResult(RESULT_OK, intent);
         finish();
     }
