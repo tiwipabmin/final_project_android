@@ -11,12 +11,15 @@ import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.tiwipabmin.eatallday.R;
 import com.tiwipabmin.eatallday.controller.activity.SignInActivity;
+import com.tiwipabmin.eatallday.controller.activity.SignInActivityTest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -35,13 +38,19 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class LobbyFragmentTest {
 
+    private SignInActivityTest mSignInActivityTest = new SignInActivityTest();
+
     @Rule
     public ActivityTestRule<SignInActivity> mActivityTestRule = new ActivityTestRule<>(SignInActivity.class);
+
+    @Before
+    public void signIn(){
+        mSignInActivityTest.signInSuccessful();
+    }
 
     @Test
     public void editProfile() {
 
-        signIn();
         onView(withId(R.id.iv_edit_profile)).perform(click());
         onView(withId(R.id.et_facebook)).perform(replaceText("test facebook"), closeSoftKeyboard());
         onView(withId(R.id.et_description)).perform(replaceText("test description"), closeSoftKeyboard());
@@ -54,15 +63,13 @@ public class LobbyFragmentTest {
     @Test
     public void goToKitchen() {
 
-        signIn();
         onView(withText("ห้องครัว")).perform(click());
-        SystemClock.sleep(1000);
+        SystemClock.sleep(2000);
     }
 
     @Test
     public void deleteRandomMenuHistory() {
 
-        signIn();
         randomMenu();
         onView(withId(R.id.rv_profile)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(1, MyViewAction.clickChildViewWithId(R.id.iv_delete)));
@@ -73,17 +80,8 @@ public class LobbyFragmentTest {
     }
 
     @Test
-    public void editProfileImage() {
-
-        signIn();
-        onView(withId(R.id.iv_image)).perform(click());
-        SystemClock.sleep(2000);
-    }
-
-    @Test
     public void deleteProfileImage() {
 
-        signIn();
         onView(withId(R.id.iv_image)).perform(click());
         onView(withId(R.id.item_delete_profile_display)).perform(click());
         onView(withText("ลบรูปภาพประจำตัวเรียบร้อยแล้วขอรับ.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
@@ -93,7 +91,6 @@ public class LobbyFragmentTest {
     @Test
     public void goToRandomAndBackToLobby() {
 
-        signIn();
         onView(withText("ห้องครัว")).perform(click());
         onView(withId(R.id.btn_random)).perform(click());
         onView(withId(R.id.iv_back)).perform(click());
@@ -136,14 +133,10 @@ public class LobbyFragmentTest {
         onView(withText("หน้ากระดาน")).perform(click());
     }
 
-    private void signIn(){
+    @After
+    public void logout(){
 
-        SystemClock.sleep(4000);
-        closeSoftKeyboard();
-        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
-        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
-        onView(withId(R.id.btn_sign_in)).perform(click());
-        SystemClock.sleep(3000);
+        mSignInActivityTest.logout();
     }
 
     private void addMenu() {

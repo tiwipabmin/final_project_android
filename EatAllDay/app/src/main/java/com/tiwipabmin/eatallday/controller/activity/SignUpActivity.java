@@ -117,17 +117,10 @@ public class SignUpActivity extends AppCompatActivity {
             allValid = false;
         }
 
-        if(allValid && isTouched && mCheckNetworkConnection
-                .isConnected()){
+        if(allValid && isTouched){
             isTouched = false;
             progress.show(getSupportFragmentManager(), "progress");
             createNewAccount(et_name.getText().toString(), et_email.getText().toString(), et_password.getText().toString(), et_facebook.getText().toString());
-        } else {
-
-            Toast.makeText(
-                    this,
-                    "ไม่มีการเชื่อมต่อกับอินเทอร์เน็ต.",
-                    Toast.LENGTH_SHORT).show();
         }
     }
 

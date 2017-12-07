@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tiwipabmin.eatallday.Gallery;
-import com.tiwipabmin.eatallday.api.FoodApi;
+import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.model.Food;
 import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
 
@@ -31,7 +31,7 @@ import com.tiwipabmin.eatallday.SaveImage;
 public class AddMenuActivity extends AppCompatActivity {
 
     @BindView(R.id.et_cost)
-    EditText et_cost;
+    EditText mEt_cost;
 
     @BindView(R.id.et_name)
     EditText et_name;
@@ -58,7 +58,7 @@ public class AddMenuActivity extends AppCompatActivity {
     CircleImageView iv_menu;
 
     private String mType;
-    private FoodApi foodApi;
+    private MenuApi menuApi;
     private Gallery gallery;
     private Uri uriImage;
 
@@ -76,7 +76,7 @@ public class AddMenuActivity extends AppCompatActivity {
 
     private void initialInstance() {
 
-        foodApi = FoodApi.getFoodApi();
+        menuApi = MenuApi.getMenuApi();
 
         gallery = new Gallery();
 
@@ -96,11 +96,11 @@ public class AddMenuActivity extends AppCompatActivity {
     @OnClick(R.id.iv_add)
     public void onIvAddTouched() {
 
-        if (mType.equals("food") && !et_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
+        if (mType.equals("food") && !mEt_cost.getText().toString().isEmpty() && !et_name.getText().toString().isEmpty()) {
 
-            String newKey = foodApi.getChildFood().push().getKey();
+            String newKey = menuApi.getChildFood().push().getKey();
             Food newMenu = new Food(newKey, et_name.getText().toString(),
-                    Long.valueOf(et_cost.getText().toString()),
+                    Long.valueOf(mEt_cost.getText().toString()),
                     et_description.getText().toString(), TabBarActivity.USER.getUserId(),
                     "https://i.pinimg.com/originals/21/b8/ff/21b8ff6b2cc2731d72ccc4b7472fd915.jpg",
                     et_currency.getText().toString(),
@@ -114,7 +114,7 @@ public class AddMenuActivity extends AppCompatActivity {
                 saveImage.saveImageToStorageFirebase(this, uriImage, progress, newMenu);
             } else {
 
-                FoodApi.getFoodApi().newFood(this, newKey, newMenu);
+                MenuApi.getMenuApi().newFood(this, newKey, newMenu);
                 progress.dismiss();
                 this.finish();
             }
@@ -137,9 +137,6 @@ public class AddMenuActivity extends AppCompatActivity {
 
                 File fImage = new File(strPath);
                 Bitmap imageBitmap = BitmapFactory.decodeFile(fImage.getAbsolutePath());
-
-//                SaveImage saveImage = new SaveImage(this);
-//                mImage = saveImage.addImageToGallery(imageBitmap);
 
                 iv_menu.setImageBitmap(imageBitmap);
 

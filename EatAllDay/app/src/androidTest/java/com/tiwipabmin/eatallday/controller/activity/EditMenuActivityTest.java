@@ -9,6 +9,8 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.tiwipabmin.eatallday.controller.fragment.LobbyFragmentTest;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,15 +33,21 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class EditMenuActivityTest {
 
+    private SignInActivityTest mSignInActivityTest = new SignInActivityTest();
+
     @Rule
     public ActivityTestRule<SignInActivity> mActivityTestRule = new ActivityTestRule<>(SignInActivity.class);
+
+    @Before
+    public void signIn(){
+        mSignInActivityTest.signInSuccessful();
+        onView(withText("ห้องครัว")).perform(click());
+        addMenu();
+    }
 
     @Test
     public void editMenu() {
 
-        signIn();
-        onView(withText("ห้องครัว")).perform(click());
-        addMenu();
         onView(withId(R.id.rv_menu)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(1, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
         SystemClock.sleep(1000);
@@ -58,13 +66,11 @@ public class EditMenuActivityTest {
 
     }
 
-    private void signIn(){
+    @After
+    public void logout(){
+        deleteMenu();
+        mSignInActivityTest.logout();
 
-        closeSoftKeyboard();
-        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
-        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
-        onView(withId(R.id.btn_sign_in)).perform(click());
-        SystemClock.sleep(3000);
     }
 
     private void addMenu() {
@@ -78,7 +84,16 @@ public class EditMenuActivityTest {
         onView(withId(R.id.et_description)).perform(replaceText("test description") ,closeSoftKeyboard());
         onView(withId(R.id.iv_add)).perform(click());
         onView(withText("เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-        SystemClock.sleep(5000);
+        SystemClock.sleep(3000);
+    }
+
+    public void deleteMenu(){
+        onView(withId(R.id.rv_menu)).perform(
+                RecyclerViewActions.actionOnItemAtPosition(1, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
+        SystemClock.sleep(2000);
+        onView(withId(R.id.item_delete_menu)).perform(click());
+        onView(withText("ลบรายการอาหารเรียบร้อยแล้วขอรับ.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        SystemClock.sleep(2000);
     }
 
 }

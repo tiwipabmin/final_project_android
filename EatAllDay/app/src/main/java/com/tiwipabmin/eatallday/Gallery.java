@@ -8,10 +8,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 
-/**
- * Created by tiwip on 11/22/2017.
- */
-
 public class Gallery {
 
     public Gallery(){

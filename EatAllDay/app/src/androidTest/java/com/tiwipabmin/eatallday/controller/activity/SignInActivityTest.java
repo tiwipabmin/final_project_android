@@ -47,10 +47,22 @@ public class SignInActivityTest {
     @Test
     public void signInSuccessful() {
 
-        onView(withId(R.id.et_email)).perform(replaceText("tiwipabmin@gmail.com"), closeSoftKeyboard());
-        onView(withId(R.id.et_password)).perform(replaceText("min261139"), closeSoftKeyboard());
+        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
         SystemClock.sleep(1000);
+    }
+
+    @Test
+    public void doNotVerifyLogout() {
+
+        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
+        onView(withId(R.id.btn_sign_in)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.iv_logout)).perform(click());
+        onView(withText("ไม่ใช่.")).perform(click());
+        logout();
     }
 
     @Test
@@ -58,7 +70,7 @@ public class SignInActivityTest {
 
         onView(withId(R.id.login_button)).perform(click());
         SystemClock.sleep(3000);
-        onView(withId(R.id.iv_logout)).perform(click());
+        logout();
         SystemClock.sleep(1000);
 
     }
@@ -66,20 +78,22 @@ public class SignInActivityTest {
     @Test
     public void doNotEnterEmail() {
 
+        SystemClock.sleep(2000);
         onView(withId(R.id.et_email)).perform(replaceText(""), closeSoftKeyboard());
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
-        onView(withText("Please enter your email or password")).check(matches(isDisplayed()));
+        onView(withText("OK")).perform(click());
         SystemClock.sleep(1000);
     }
 
     @Test
     public void enterEmailOrPasswordInvalid() {
 
+        SystemClock.sleep(2000);
         onView(withId(R.id.et_email)).perform(replaceText("test@testt.com"), closeSoftKeyboard());
         onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
         onView(withId(R.id.btn_sign_in)).perform(click());
-        onView(withText("Email or password invalid.")).check(matches(isDisplayed()));
+        onView(withText("OK")).perform(click());
         SystemClock.sleep(1000);
     }
 
@@ -90,6 +104,12 @@ public class SignInActivityTest {
         SystemClock.sleep(2000);
         onView(withId(R.id.iv_back)).perform(click());
         SystemClock.sleep(1000);
+    }
+
+    public void logout(){
+
+        onView(withId(R.id.iv_logout)).perform(click());
+        onView(withText("ใช่.")).perform(click());
     }
 
     private static Matcher<View> childAtPosition(

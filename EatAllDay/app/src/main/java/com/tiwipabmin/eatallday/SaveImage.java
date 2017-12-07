@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.tiwipabmin.eatallday.api.FoodApi;
+import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.api.UserApi;
 import com.tiwipabmin.eatallday.model.Food;
 
@@ -35,7 +35,7 @@ import com.tiwipabmin.eatallday.model.User;
 public class SaveImage {
 
     private Context mContext;
-    private String mAlbumName = "EatAllDay", mNameFile = "EatAllDay_";
+    private String mNameFile = "EatAllDay_";
 
     public SaveImage(Context context) {
         this.mContext = context;
@@ -46,7 +46,6 @@ public class SaveImage {
         File imageFile = createImageFile("EatAllDay");
 
         try {
-//            String imagePath = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, imageName, "Capture");
 
             FileOutputStream fileOutputStream = new FileOutputStream(imageFile);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fileOutputStream);
@@ -55,12 +54,9 @@ public class SaveImage {
 
             galleryAddImage(Uri.fromFile(imageFile));
 
-//            Toast.makeText(context, "Successed : " + imageFile, Toast.LENGTH_SHORT).show();
-
             return imageFile.getAbsolutePath();
         } catch (Exception e) {
             Log.i("error", String.valueOf(e));
-//            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
         }
 
         return "error";
@@ -100,7 +96,10 @@ public class SaveImage {
         mContext.sendBroadcast(mediaScanIntent);
     }
 
-    public void saveImageToStorageFirebase(final Activity activity, final Uri uriImage, final DialogFragment progress, final Food menu) {
+    public void saveImageToStorageFirebase(final Activity activity,
+                                           final Uri uriImage,
+                                           final DialogFragment progress,
+                                           final Food menu) {
         StorageReference ref = FirebaseStorage.getInstance().getReference().child("menuImages/"
                 + menu.getId());
         ref.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -110,10 +109,16 @@ public class SaveImage {
                 progress.dismiss();
 
                 if(uriImage != null){
-                    menu.setImage(taskSnapshot.getDownloadUrl().toString());
+                    menu.setImage(taskSnapshot
+                            .getDownloadUrl()
+                            .toString());
                 }
 
-                FoodApi.getFoodApi().newFood(activity, menu.getId(), menu);
+                MenuApi.getMenuApi()
+                        .newFood(activity,
+                        menu.getId(),
+                        menu);
+
                 activity.finish();
 
             }
@@ -129,9 +134,17 @@ public class SaveImage {
 
     }
 
-    public void saveImageToStorageFirebase(final Activity activity, final Uri uriImage, final DialogFragment progress, final User user, final CircleImageView iv_Profile) {
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child("menuImages/"
+    public void saveImageToStorageFirebase(final Activity activity,
+                                           final Uri uriImage,
+                                           final DialogFragment progress,
+                                           final User user,
+                                           final CircleImageView iv_Profile) {
+        StorageReference ref = FirebaseStorage
+                .getInstance()
+                .getReference()
+                .child("menuImages/"
                 + user.getUserId());
+
         ref.putFile(uriImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -150,7 +163,8 @@ public class SaveImage {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progress.dismiss();
-                        Toast.makeText(activity, "Failed " + e.getMessage()
+                        Toast.makeText(activity,
+                                "Failed " + e.getMessage()
                                 , Toast.LENGTH_SHORT).show();
                     }
                 });

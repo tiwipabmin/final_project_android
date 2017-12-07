@@ -10,7 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.tiwipabmin.eatallday.api.FoodApi;
+import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.controller.activity.EditMenuActivity;
 import com.tiwipabmin.eatallday.model.Food;
 
@@ -43,7 +43,7 @@ public class EditMenuDialogFragment extends DialogFragment {
     @OnClick(R.id.item_delete_menu)
     public void onItemDeleteMenuTouched(){
 
-        FoodApi.getFoodApi().deleteMenu(getActivity(), mMenu);
+        MenuApi.getMenuApi().deleteMenu(getActivity(), mMenu);
         this.dismiss();
     }
 

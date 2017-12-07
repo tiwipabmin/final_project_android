@@ -7,22 +7,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tiwipabmin.eatallday.model.Food;
 
-public class FoodApi {
+public class MenuApi {
 
-    private static FoodApi foodApi;
+    private static MenuApi menuApi;
     private DatabaseReference childFood;
 
-    private FoodApi() {
+    private MenuApi() {
 
 
         childFood = FirebaseDatabase.getInstance().getReference("food");
     }
 
-    public static FoodApi getFoodApi() {
-        if (foodApi == null) {
-            foodApi = new FoodApi();
+    public static MenuApi getMenuApi() {
+        if (menuApi == null) {
+            menuApi = new MenuApi();
         }
-        return foodApi;
+        return menuApi;
     }
 
     public DatabaseReference getChildFood() {

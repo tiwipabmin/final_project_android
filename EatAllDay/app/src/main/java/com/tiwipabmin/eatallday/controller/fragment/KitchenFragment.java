@@ -15,7 +15,7 @@ import android.widget.Button;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.tiwipabmin.eatallday.api.FoodApi;
+import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.controller.activity.AddMenuActivity;
 import com.tiwipabmin.eatallday.controller.activity.RandomActivity;
 import com.tiwipabmin.eatallday.controller.activity.TabBarActivity;
@@ -55,7 +55,7 @@ public class KitchenFragment extends Fragment {
 
     private void initialInstance() {
 
-        FoodApi.getFoodApi().getChildFood().orderByChild("userId").equalTo(TabBarActivity.USER.getUserId()).addValueEventListener(new ValueEventListener() {
+        MenuApi.getMenuApi().getChildFood().orderByChild("userId").equalTo(TabBarActivity.USER.getUserId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mMenus = new ArrayList<>();

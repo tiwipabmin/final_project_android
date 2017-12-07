@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import com.tiwipabmin.eatallday.Gallery;
 import com.tiwipabmin.eatallday.R;
 import com.tiwipabmin.eatallday.SaveImage;
-import com.tiwipabmin.eatallday.api.FoodApi;
+import com.tiwipabmin.eatallday.api.MenuApi;
 import com.tiwipabmin.eatallday.controller.fragment.AlertEditMenuDialogFragment;
 import com.tiwipabmin.eatallday.controller.fragment.ProgressDialogFragment;
 import com.tiwipabmin.eatallday.model.Food;
@@ -187,7 +187,7 @@ public class EditMenuActivity extends AppCompatActivity {
                 saveImage.saveImageToStorageFirebase(this, uriImage, progress, updateMenu);
             } else {
 
-                FoodApi.getFoodApi().updateMenu(this, menuId, updateMenu);
+                MenuApi.getMenuApi().updateMenu(this, menuId, updateMenu);
                 progress.dismiss();
                 this.finish();
             }

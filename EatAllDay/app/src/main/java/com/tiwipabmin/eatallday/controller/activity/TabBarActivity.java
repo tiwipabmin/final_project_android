@@ -2,6 +2,7 @@ package com.tiwipabmin.eatallday.controller.activity;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,6 +23,7 @@ import butterknife.OnClick;
 import com.tiwipabmin.eatallday.R;
 
 import com.tiwipabmin.eatallday.controller.fragment.KitchenFragment;
+import com.tiwipabmin.eatallday.controller.fragment.VerifyLogoutDialogFragment;
 import com.tiwipabmin.eatallday.model.User;
 
 public class TabBarActivity extends AppCompatActivity {
@@ -63,12 +65,9 @@ public class TabBarActivity extends AppCompatActivity {
 
     @OnClick(R.id.iv_logout)
     void onLogOutTouched(){
-        LoginManager.getInstance().logOut();
-        EatAllDayPreferences.setUserName(this, "null");
 
-        Intent intent = new Intent(this, SignInActivity.class);
-        startActivity(intent);
-        finish();
+        DialogFragment verifyLogoutDialog = new VerifyLogoutDialogFragment();
+        verifyLogoutDialog.show(this.getSupportFragmentManager(), "verifyLogoutDialog");
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {

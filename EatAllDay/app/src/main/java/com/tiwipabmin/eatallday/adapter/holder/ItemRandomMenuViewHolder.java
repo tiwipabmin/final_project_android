@@ -10,10 +10,6 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import com.tiwipabmin.eatallday.R;
 
-/**
- * Created by tiwip on 11/21/2017.
- */
-
 public class ItemRandomMenuViewHolder extends RecyclerView.ViewHolder{
 
     @BindView(R.id.iv_food)

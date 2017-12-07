@@ -99,19 +99,6 @@ public class SignUpActivityTest {
 
     }
 
-//    @Test
-//    public void signUpSuccessful() {
-//
-//        onView(withId(R.id.et_name)).perform(replaceText("test"), closeSoftKeyboard());
-//        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
-//        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
-//        onView(withId(R.id.et_verify_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
-//        onView(withId(R.id.et_facebook)).perform(replaceText("testtesttest"), closeSoftKeyboard());
-//        onView(withId(R.id.btn_verify)).perform(click());
-//        SystemClock.sleep(3000);
-//
-//    }
-
     @Test
     public void goToSignIn() {
 

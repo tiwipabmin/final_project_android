@@ -7,12 +7,15 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.tiwipabmin.eatallday.R;
 import com.tiwipabmin.eatallday.controller.activity.SignInActivity;
+import com.tiwipabmin.eatallday.controller.activity.SignInActivityTest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -30,13 +33,19 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class KitchenFragmentTest {
 
+    private SignInActivityTest mSignInActivityTest = new SignInActivityTest();
+
     @Rule
     public ActivityTestRule<SignInActivity> mActivityTestRule = new ActivityTestRule<>(SignInActivity.class);
+
+    @Before
+    public void signIn(){
+        mSignInActivityTest.signInSuccessful();
+    }
 
     @Test
     public void goToAddMenu() {
 
-        signIn();
         onView(withText("ห้องครัว")).perform(click());
         onView(withId(R.id.btn_add)).perform(click());
         SystemClock.sleep(2000);
@@ -47,7 +56,6 @@ public class KitchenFragmentTest {
     @Test
     public void viewMenu() {
 
-        signIn();
         onView(withText("ห้องครัว")).perform(click());
         onView(withId(R.id.rv_menu)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.item)));
@@ -59,7 +67,6 @@ public class KitchenFragmentTest {
     @Test
     public void goToEditMenu() {
 
-        signIn();
         onView(withText("ห้องครัว")).perform(click());
         onView(withId(R.id.rv_menu)).perform(
                 RecyclerViewActions.actionOnItemAtPosition(0, LobbyFragmentTest.MyViewAction.clickChildViewWithId(R.id.iv_config)));
@@ -72,7 +79,6 @@ public class KitchenFragmentTest {
     @Test
     public void deleteMenu() {
 
-        signIn();
         onView(withText("ห้องครัว")).perform(click());
         addMenu();
         onView(withId(R.id.rv_menu)).perform(
@@ -83,14 +89,10 @@ public class KitchenFragmentTest {
         SystemClock.sleep(1000);
     }
 
-    private void signIn(){
+    @After
+    public void logout(){
 
-        SystemClock.sleep(4000);
-        closeSoftKeyboard();
-        onView(withId(R.id.et_email)).perform(replaceText("test@test.com"), closeSoftKeyboard());
-        onView(withId(R.id.et_password)).perform(replaceText("secret1234"), closeSoftKeyboard());
-        onView(withId(R.id.btn_sign_in)).perform(click());
-        SystemClock.sleep(3000);
+        mSignInActivityTest.logout();
     }
 
     private void addMenu() {
@@ -104,7 +106,7 @@ public class KitchenFragmentTest {
         onView(withId(R.id.et_description)).perform(replaceText("test description") ,closeSoftKeyboard());
         onView(withId(R.id.iv_add)).perform(click());
         onView(withText("เพิ่มรายการอาหารเรียบร้อยแล้วจ้า.")).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
-        SystemClock.sleep(5000);
+        SystemClock.sleep(3000);
     }
 
 }
